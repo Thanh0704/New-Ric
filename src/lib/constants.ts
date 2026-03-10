@@ -1,0 +1,21 @@
+export const SITE_CONFIG = {
+  name: 'RIC Vietnam',
+  description: 'Công ty công nghệ hàng đầu Việt Nam',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://ricvina.vn',
+  adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin.ricvina.vn',
+  ogImage: '/images/og-image.jpg',
+  links: {
+    facebook: 'https://facebook.com/ricvietnam',
+    linkedin: 'https://linkedin.com/company/ricvietnam',
+    zalo: 'https://zalo.me/ricvietnam',
+  },
+} as const
+
+export const NAV_ITEMS = [
+  { label: 'Trang chủ', href: '/' },
+  { label: 'Về chúng tôi', href: '/about' },
+  { label: 'Sản phẩm', href: '/products' },
+  { label: 'Tin tức', href: '/news' },
+  { label: 'Tuyển dụng', href: '/careers' },
+  { label: 'Liên hệ', href: '/contact' },
+] as const
