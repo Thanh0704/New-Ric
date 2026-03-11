@@ -1,12 +1,9 @@
 export interface Product {
   id: string
-  slug: string
   name: string
-  tagline: string
   description: string
   image: string
   features: string[]
-  category: string
 }
 
 export interface NewsArticle {
@@ -28,6 +25,7 @@ export interface Career {
   department: string
   location: string
   type: 'full-time' | 'part-time' | 'contract'
+  salary?: string
   description: string
   requirements: string[]
   benefits: string[]
@@ -38,24 +36,8 @@ export interface ContactFormData {
   email: string
   phone: string
   company?: string
+  service?: string
   message: string
-}
-
-export interface Testimonial {
-  id: string
-  name: string
-  title: string
-  company: string
-  content: string
-  avatar: string
-  rating: number
-}
-
-export interface Partner {
-  id: string
-  name: string
-  logo: string
-  url?: string
 }
 
 export interface TeamMember {

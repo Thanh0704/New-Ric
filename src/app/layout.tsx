@@ -1,19 +1,15 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Be_Vietnam_Pro } from 'next/font/google'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { BackToTop } from '@/components/shared/back-to-top'
 import { SITE_CONFIG } from '@/lib/constants'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin', 'latin-ext'],
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin', 'latin-ext'],
+const beVietnamPro = Be_Vietnam_Pro({
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-sans',
+  subsets: ['latin', 'latin-ext', 'vietnamese'],
 })
 
 export const metadata: Metadata = {
@@ -68,9 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-dvh flex-col antialiased`}
-      >
+      <body className={`${beVietnamPro.variable} flex min-h-dvh flex-col antialiased`}>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

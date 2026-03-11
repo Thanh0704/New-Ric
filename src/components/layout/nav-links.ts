@@ -1,8 +1,20 @@
-export const navLinks = [
+export interface NavDropdownItem {
+  label: string
+  href: string
+  description?: string
+}
+
+export interface NavLink {
+  label: string
+  href: string
+  children?: NavDropdownItem[]
+}
+
+export const navLinks: NavLink[] = [
   { label: 'Trang chủ', href: '/' },
   { label: 'Về chúng tôi', href: '/about' },
   { label: 'Sản phẩm', href: '/products' },
   { label: 'Tin tức', href: '/news' },
-  { label: 'Tuyển dụng', href: '/careers' },
   { label: 'Liên hệ', href: '/contact' },
-] as const
+  { label: 'Tuyển dụng', href: '/careers' },
+]

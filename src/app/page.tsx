@@ -1,9 +1,10 @@
 import { Hero } from '@/components/sections/hero'
+import { VisionMission } from '@/components/sections/vision-mission'
 import { Features } from '@/components/sections/features'
 import { Stats } from '@/components/sections/stats'
-import { Testimonials } from '@/components/sections/testimonials'
-import { Partners } from '@/components/sections/partners'
 import { CTA } from '@/components/sections/cta'
+import { Partners } from '@/components/sections/partners'
+import { Testimonials } from '@/components/sections/testimonials'
 import { StructuredData } from '@/components/shared/structured-data'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -16,7 +17,7 @@ export default function HomePage() {
     logo: `${SITE_CONFIG.url}/images/logo.svg`,
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+84-123-456-789',
+      telephone: '+84-975-769-323',
       contactType: 'customer service',
       areaServed: 'VN',
       availableLanguage: 'Vietnamese',
@@ -28,11 +29,12 @@ export default function HomePage() {
     <>
       <StructuredData data={orgSchema} />
       <Hero />
+      <VisionMission />
       <Features />
       <Stats />
-      <Testimonials />
-      <Partners />
       <CTA />
+      <Partners />
+      <Testimonials />
     </>
   )
 }

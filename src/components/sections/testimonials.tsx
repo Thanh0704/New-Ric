@@ -1,45 +1,23 @@
-import { Star } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Quote } from 'lucide-react'
 import { Container } from '@/components/shared/container'
-import { SectionHeading } from '@/components/shared/section-heading'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
-import { testimonials } from '@/data/testimonials'
 
 export function Testimonials() {
   return (
-    <section className="py-20">
-      <Container>
-        <SectionHeading
-          title="Khách hàng nói gì về chúng tôi"
-          description="Hơn 100 doanh nghiệp đã tin tưởng và đồng hành cùng RIC Vietnam."
-        />
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((item) => (
-            <AnimateOnScroll key={item.id}>
-              <Card className="h-full">
-                <CardContent className="p-6">
-                  <div className="flex gap-1">
-                    {Array.from({ length: item.rating }).map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mt-4 text-sm">&ldquo;{item.content}&rdquo;</p>
-                  <div className="mt-6 flex items-center gap-3">
-                    <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold">
-                      {item.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold">{item.name}</p>
-                      <p className="text-muted-foreground text-xs">
-                        {item.title}, {item.company}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </AnimateOnScroll>
-          ))}
-        </div>
+    <section className="py-24">
+      <Container className="text-center">
+        <AnimateOnScroll>
+          <Quote className="text-primary mx-auto mb-6 h-12 w-12" />
+          <h2 className="mx-auto mb-10 max-w-4xl text-2xl leading-relaxed font-medium text-slate-800 italic md:text-3xl dark:text-slate-200">
+            &ldquo;Giải pháp của RIC Việt Nam đã giúp quy trình quản lý của chúng tôi rút ngắn 40%
+            thời gian vận hành và tăng doanh thu vượt ngoài mong đợi trong năm vừa qua.&rdquo;
+          </h2>
+          <div className="flex flex-col items-center">
+            <div className="border-primary/20 mb-4 size-16 overflow-hidden rounded-full border-2 bg-slate-300" />
+            <p className="font-bold">Nguyễn Văn A</p>
+            <p className="text-sm text-slate-500">Giám đốc điều hành - Doanh nghiệp X</p>
+          </div>
+        </AnimateOnScroll>
       </Container>
     </section>
   )
