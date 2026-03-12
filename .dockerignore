@@ -1,0 +1,32 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+.next
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Env files (use env_file in docker-compose instead)
+.env
+.env.*
+!.env.production.example
+
+# Dev & docs
+landing-page-guide
+.github
+.husky
+*.md
+!README.md
+
+# OS files
+.DS_Store
+Thumbs.db

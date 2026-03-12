@@ -1,11 +1,10 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [],
   },
-  // Bật khi deploy bằng Docker
-  // output: 'standalone',
 }
 
 export default nextConfig
