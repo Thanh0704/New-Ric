@@ -1,5 +1,5 @@
 import { Hero } from '@/components/sections/hero'
-import { VisionMission } from '@/components/sections/vision-mission'
+import { Solutions } from '@/components/sections/solutions'
 import { Features } from '@/components/sections/features'
 import { Stats } from '@/components/sections/stats'
 import { CTA } from '@/components/sections/cta'
@@ -29,7 +29,7 @@ export default function HomePage() {
     <>
       <StructuredData data={orgSchema} />
       <Hero />
-      <VisionMission />
+      <Solutions />
       <Features />
       <Stats />
       <CTA />

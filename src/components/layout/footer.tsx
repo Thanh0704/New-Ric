@@ -1,59 +1,57 @@
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Globe, BarChart3 } from 'lucide-react'
 import { RicLogo } from './header'
 
-const footerLinks = {
-  about: [
-    { label: 'Về chúng tôi', href: '/about' },
-    { label: 'Tuyển dụng', href: '/careers' },
-  ],
-  newsPolicy: [
-    { label: 'Blog công nghệ', href: '/news' },
-    { label: 'Chính sách bảo mật', href: '/privacy-policy' },
-    { label: 'Quy định dịch vụ', href: '/terms' },
-    { label: 'Hỗ trợ khách hàng', href: '/faq' },
-  ],
-}
+const productLinks = [
+  { label: 'Hệ thống Quản trị', href: '/products' },
+  { label: 'Hệ thống Hỗ trợ Kinh doanh', href: '/products' },
+  { label: 'Hệ thống Truyền thông', href: '/products' },
+  { label: 'Hệ thống Chăm sóc khách hàng', href: '/products' },
+  { label: 'Giải pháp', href: '/products' },
+]
 
-const socialLinks = [
-  { icon: BarChart3, href: '#' },
-  { icon: Mail, href: '#' },
-  { icon: Globe, href: '#' },
+const aboutLinks = [
+  { label: 'Câu chuyện thương hiệu', href: '/about' },
+  { label: 'Đội ngũ chuyên gia', href: '/about' },
+  { label: 'Đối tác chiến lược', href: '/about' },
+  { label: 'Cơ hội nghề nghiệp', href: '/careers' },
+  { label: 'Tin tức công nghệ', href: '/news' },
 ]
 
 export function Footer() {
   return (
-    <footer className="bg-slate-900 px-6 py-16 text-slate-300 md:px-20">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-20 bg-slate-900 px-4 py-20 text-slate-300">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
         {/* Column 1 — Company Info */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
             <RicLogo className="text-primary" />
             <span className="text-xl font-bold tracking-tight text-white">RIC VIỆT NAM</span>
           </div>
-          <p className="text-sm leading-relaxed opacity-70">
-            <b>RIC Việt Nam</b> xây dựng mô hình hệ sinh thái đa ngành, tập trung vào việc tạo ra
-            giá trị bền vững.
+          <p className="text-sm leading-relaxed">
+            Công ty Cổ phần Đầu tư và Phát triển RIC Việt Nam — Đơn vị tiên phong trong lĩnh vực
+            giải pháp số và marketing automation.
           </p>
-          <div className="flex gap-4">
-            {socialLinks.map(({ icon: Icon, href }, i) => (
-              <a
-                key={i}
-                href={href}
-                className="hover:bg-primary flex size-10 items-center justify-center rounded-full bg-slate-800 transition-all hover:text-slate-900"
-              >
-                <Icon className="size-[18px]" />
-              </a>
-            ))}
+          <div className="space-y-2 text-sm">
+            <p>
+              <span className="font-medium text-white">MST:</span> 0110014823
+            </p>
+            <p>
+              <span className="font-medium text-white">Trụ sở:</span> Số 05, ngõ 58, đường Chùa Võ,
+              Dương Nội, Hà Nội
+            </p>
+            <p>
+              <span className="font-medium text-white">VP giao dịch:</span> 38 Thâm Tâm, Phường Xuân
+              Phương, Quận Nam Từ Liêm, Hà Nội
+            </p>
           </div>
         </div>
 
-        {/* Column 2 — Về chúng tôi */}
-        <div className="space-y-6">
-          <h4 className="text-sm font-bold tracking-widest text-white uppercase">Về chúng tôi</h4>
+        {/* Column 2 — Sản phẩm */}
+        <div>
+          <h5 className="mb-6 text-lg font-bold text-white">Sản phẩm</h5>
           <ul className="space-y-4 text-sm">
-            {footerLinks.about.map((link) => (
-              <li key={link.href}>
+            {productLinks.map((link) => (
+              <li key={link.label}>
                 <Link href={link.href} className="hover:text-primary transition-colors">
                   {link.label}
                 </Link>
@@ -62,14 +60,12 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Column 3 — Tin tức & Chính sách */}
-        <div className="space-y-6">
-          <h4 className="text-sm font-bold tracking-widest text-white uppercase">
-            Tin tức &amp; Chính sách
-          </h4>
+        {/* Column 3 — Về chúng tôi */}
+        <div>
+          <h5 className="mb-6 text-lg font-bold text-white">Về chúng tôi</h5>
           <ul className="space-y-4 text-sm">
-            {footerLinks.newsPolicy.map((link) => (
-              <li key={link.href}>
+            {aboutLinks.map((link) => (
+              <li key={link.label}>
                 <Link href={link.href} className="hover:text-primary transition-colors">
                   {link.label}
                 </Link>
@@ -79,29 +75,33 @@ export function Footer() {
         </div>
 
         {/* Column 4 — Liên hệ */}
-        <div className="space-y-6">
-          <h4 className="text-sm font-bold tracking-widest text-white uppercase">Liên hệ</h4>
-          <ul className="space-y-4 text-sm">
-            <li className="flex items-start gap-3">
-              <MapPin className="text-primary mt-0.5 size-5 shrink-0" />
-              <span>38 Thâm Tâm, Yên Hoà, Hà Nội, Việt Nam</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="text-primary size-5 shrink-0" />
-              <span>+84 (0) 975 769 323</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Mail className="text-primary size-5 shrink-0" />
-              <span>contact@ricvina.vn</span>
-            </li>
-          </ul>
+        <div>
+          <h5 className="mb-6 text-lg font-bold text-white">Liên hệ</h5>
+          <p className="mb-6 text-sm">
+            Đăng ký để nhận tư vấn chuyển đổi số miễn phí từ chuyên gia của chúng tôi.
+          </p>
+          <div className="flex flex-col gap-3">
+            <input
+              className="focus:ring-primary rounded-xl border-none bg-slate-800 px-4 py-2.5 text-sm focus:ring-2 focus:outline-none"
+              placeholder="Email của bạn"
+              type="email"
+            />
+            <Link
+              href="/contact"
+              className="bg-primary hover:bg-primary/90 rounded-xl py-2.5 text-center text-sm font-bold text-white transition-all"
+            >
+              Gửi yêu cầu
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="mx-auto mt-16 max-w-[1200px] border-t border-slate-800 pt-8 text-center text-xs opacity-50">
-        © {new Date().getFullYear()} RIC Việt Nam. Bảo lưu mọi quyền. Thiết kế cho kỷ nguyên chuyển
-        đổi số.
+      <div className="mx-auto mt-20 max-w-7xl border-t border-slate-800 pt-8 text-center text-xs">
+        <p>
+          © {new Date().getFullYear()} RIC Việt Nam. All rights reserved. Designed for digital
+          excellence.
+        </p>
       </div>
     </footer>
   )

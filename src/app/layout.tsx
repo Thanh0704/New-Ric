@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
-import { Be_Vietnam_Pro } from 'next/font/google'
+import { Newsreader } from 'next/font/google'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { BackToTop } from '@/components/shared/back-to-top'
 import { SITE_CONFIG } from '@/lib/constants'
 import './globals.css'
 
-const beVietnamPro = Be_Vietnam_Pro({
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-sans',
-  subsets: ['latin', 'latin-ext', 'vietnamese'],
+const newsreader = Newsreader({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-serif',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${beVietnamPro.variable} flex min-h-dvh flex-col antialiased`}>
+      <body className={`${newsreader.variable} flex min-h-dvh flex-col antialiased`}>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

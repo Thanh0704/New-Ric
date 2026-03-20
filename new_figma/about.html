@@ -1,0 +1,578 @@
+<!doctype html>
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#5c98d7',
+              'accent-electric': '#00FFFF',
+              'background-light': '#f6f7f8',
+              'background-dark': '#13191f',
+            },
+            fontFamily: {
+              display: ['Be Vietnam Pro'],
+            },
+            borderRadius: { DEFAULT: '0.5rem', lg: '1rem', xl: '1.5rem', full: '9999px' },
+          },
+        },
+      }
+    </script>
+    <title>Về chúng tôi - RIC Việt Nam</title>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100"
+  >
+    <!-- Top Navigation Bar (Updated to match SCREEN_39) -->
+    <header
+      class="border-primary/10 dark:bg-background-dark/80 sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md"
+    >
+      <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-10">
+        <div class="flex items-center gap-3">
+          <img alt="RIC Việt Nam Logo" class="h-12 w-auto" src="" />
+          <h1 class="text-primary text-xl font-bold tracking-tight" style=""> </h1>
+        </div>
+        <nav class="hidden items-center gap-6 md:flex">
+          <a class="hover:text-primary text-sm font-medium transition-colors" href="#" style=""
+            >Trang chủ</a
+          >
+          <a
+            class="text-primary border-primary border-b-2 text-sm font-bold transition-colors"
+            href="#"
+            style=""
+            >Về chúng tôi</a
+          >
+          <a class="hover:text-primary text-sm font-medium transition-colors" href="#" style=""
+            >Sản phẩm</a
+          >
+          <a class="hover:text-primary text-sm font-medium transition-colors" href="#" style=""
+            >Tin tức</a
+          >
+          <a class="hover:text-primary text-sm font-medium transition-colors" href="#" style=""
+            >Liên hệ</a
+          >
+          <a class="hover:text-primary text-sm font-medium transition-colors" href="#" style=""
+            >Tuyển dụng</a
+          >
+        </nav>
+        <div class="flex items-center gap-4">
+          <button
+            class="bg-primary hover:bg-primary/90 rounded-xl px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-all"
+            style=""
+          >
+            Đăng nhập dành cho Đối tác
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <!-- Hero Section: RIC Ecosystem (Preserved from SCREEN_23) -->
+      <section class="relative overflow-hidden py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mb-16 text-center">
+            <span
+              class="bg-primary/10 text-primary mb-4 inline-block rounded-full px-4 py-1.5 text-xs font-bold tracking-widest uppercase"
+              style=""
+              >Hệ sinh thái chiến lược</span
+            >
+            <h2 class="mb-6 text-4xl font-black md:text-6xl" style="">Hệ sinh thái RIC</h2>
+            <p class="mx-auto max-w-3xl text-lg text-slate-600 dark:text-slate-400" style="">
+              <b data-index-in-node="0" data-path-to-node="3">RIC Việt Nam</b> xây dựng mô hình hệ
+              sinh thái đa ngành, tập trung vào việc tạo ra giá trị bền vững.
+            </p>
+          </div>
+          <div class="grid gap-8 md:grid-cols-2">
+            <!-- RITECH -->
+            <div
+              class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-8 transition-all hover:-translate-y-2 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            >
+              <div class="absolute top-0 right-0 p-4 opacity-10">
+                <span class="material-symbols-outlined text-primary text-8xl" style="">memory</span>
+              </div>
+              <div
+                class="bg-primary/20 text-primary mb-6 flex size-16 items-center justify-center rounded-xl"
+              >
+                <span class="material-symbols-outlined text-4xl" style="">developer_board</span>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold" style="">RITECH</h3>
+              <p class="mb-6 leading-relaxed text-slate-600 dark:text-slate-400" style="">
+                Là "bộ não" của hệ sinh thái, RITECH tập trung vào việc nghiên cứu và phát triển các
+                nền tảng kỹ thuật số, các giải pháp công nghệ hiện đại.
+              </p>
+              <ul class="mb-8 space-y-3">
+                <li class="flex items-center gap-2 text-sm font-medium" style="">
+                  <span class="material-symbols-outlined text-accent-electric" style=""
+                    >check_circle</span
+                  >
+                  Phát triển phần mềm
+                </li>
+                <li class="flex items-center gap-2 text-sm font-medium" style="">
+                  <span class="material-symbols-outlined text-accent-electric" style=""
+                    >check_circle</span
+                  >
+                  Giải pháp công nghệ
+                </li>
+              </ul>
+              <button
+                class="text-primary flex items-center gap-2 font-bold transition-all hover:gap-4"
+                style=""
+              >
+                Tìm hiểu RITECH
+                <span class="material-symbols-outlined" style="">arrow_forward</span>
+              </button>
+            </div>
+            <!-- RIC Travel -->
+            <div
+              class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-8 transition-all hover:-translate-y-2 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            >
+              <div class="absolute top-0 right-0 p-4 opacity-10">
+                <span class="material-symbols-outlined text-accent-electric text-8xl" style=""
+                  >explore</span
+                >
+              </div>
+              <div
+                class="bg-accent-electric/20 text-accent-electric mb-6 flex size-16 items-center justify-center rounded-xl"
+              >
+                <span class="material-symbols-outlined text-4xl" style="">travel_explore</span>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold" style="">RIC Travel</h3>
+              <p class="mb-6 leading-relaxed text-slate-600 dark:text-slate-400" style="">
+                Đơn vị lữ hành và quản lý cơ sở lưu trú hàng đầu, mang đến những hành trình trải
+                nghiệm độc bản và dịch vụ nghỉ dưỡng tiêu chuẩn quốc tế.
+              </p>
+              <ul class="mb-8 space-y-3">
+                <li class="flex items-center gap-2 text-sm font-medium" style="">
+                  <span class="material-symbols-outlined text-primary" style="">check_circle</span>
+                  Tour du lịch cao cấp
+                </li>
+                <li class="flex items-center gap-2 text-sm font-medium" style="">
+                  <span class="material-symbols-outlined text-primary" style="">check_circle</span
+                  >Quản lý và vận hành hệ thống khách sạn, resort, homestay
+                </li>
+              </ul>
+              <button
+                class="text-accent-electric flex items-center gap-2 font-bold transition-all hover:gap-4"
+                style=""
+              >
+                Khám phá RIC Travel
+                <span class="material-symbols-outlined" style="">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Vision & Mission Section (Preserved from SCREEN_23) -->
+      <section class="relative overflow-hidden bg-slate-950 px-6 py-32 md:px-20">
+        <div class="absolute inset-0 z-0">
+          <img
+            alt="Advanced Technology Background"
+            class="h-full w-full object-cover opacity-60 mix-blend-screen"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7f5dDtvFqKjxUARohhqGN2ya4xjZsxKK_Awi3bZIHj8AJTUBiTCAfO4HMelp3ZyUXx29n0-PakPRWKCK-EV7UK5nUCSLYK1wxrAFJlutQNwfLRpSMtIDCt7zWdUj34NTfXgQS7k-NP8TiFXJJrgIP7H4sFdNq7Xb94EddvrQA95AwyHoBVRIs5ouOmDNCCgjr1WfcPGUSB1Jp5YDE-NEgK9aVgDj56JhbUHriUYyh-h5SbevZiK-hOr_zSRhA_T7H1HKDXKsb_MM"
+            style=""
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/70 to-slate-900"
+          ></div>
+          <div
+            class="bg-accent-electric/20 absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full blur-[120px]"
+          ></div>
+          <div
+            class="bg-primary/20 absolute right-1/4 bottom-1/4 h-[500px] w-[500px] rounded-full blur-[150px]"
+          ></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-7xl">
+          <div class="mb-20 space-y-4 text-center">
+            <span
+              class="text-accent-electric inline-block text-xs font-bold tracking-[0.2em] uppercase"
+              style=""
+              >Vươn tới tương lai</span
+            >
+            <h2 class="text-4xl font-black text-white md:text-5xl" style="">
+              Tầm nhìn &amp; Sứ mệnh
+            </h2>
+          </div>
+          <div class="relative flex min-h-[500px] flex-col justify-center">
+            <div class="relative mx-auto w-full max-w-5xl">
+              <!-- Vision Card -->
+              <div class="group z-20 w-full lg:absolute lg:top-0 lg:left-0 lg:w-[60%]">
+                <div
+                  class="hover:shadow-accent-electric/30 border-l-accent-electric rounded-[2.5rem] border border-l-4 border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 md:p-12"
+                >
+                  <div class="mb-6 flex items-center gap-6">
+                    <div
+                      class="bg-accent-electric/20 text-accent-electric border-accent-electric/30 rounded-2xl border p-4 shadow-[0_0_15px_rgba(0,255,255,0.3)]"
+                    >
+                      <span class="material-symbols-outlined text-4xl" style="">visibility</span>
+                    </div>
+                    <h3 class="text-3xl font-black tracking-tight text-white" style="">Tầm nhìn</h3>
+                  </div>
+                  <p class="text-lg leading-relaxed font-medium text-slate-100 md:text-xl" style="">
+                    Trong 5-10 năm tới, RIC Việt Nam hướng tới việc xây dựng một hệ sinh thái công
+                    nghệ chuẩn mực, nơi mọi doanh nghiệp vừa và nhỏ đều có thể tiếp cận và làm chủ
+                    các giải pháp hỗ trợ kinh doanh hiện đại nhất để vươn tầm quốc tế.
+                  </p>
+                  <div class="mt-6 text-sm text-slate-300 italic" style="">
+                    RIC hướng tới hệ sinh thái công nghệ chuẩn mực toàn cầu.
+                  </div>
+                </div>
+              </div>
+              <!-- Mission Card -->
+              <div
+                class="group z-10 mt-8 w-full lg:absolute lg:right-0 lg:bottom-0 lg:mt-0 lg:w-[60%]"
+              >
+                <div
+                  class="hover:shadow-primary/30 border-r-primary rounded-[2.5rem] border border-r-4 border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 md:p-12 lg:translate-y-12"
+                >
+                  <div class="mb-6 flex items-center justify-end gap-6 lg:flex-row-reverse">
+                    <div
+                      class="bg-primary/20 text-primary border-primary/30 rounded-2xl border p-4 shadow-[0_0_15px_rgba(92,152,213,0.3)]"
+                    >
+                      <span class="material-symbols-outlined text-4xl" style="">ads_click</span>
+                    </div>
+                    <h3 class="text-3xl font-black tracking-tight text-white" style="">Sứ mệnh</h3>
+                  </div>
+                  <p
+                    class="text-right text-lg leading-relaxed font-medium text-slate-100 md:text-xl"
+                    style=""
+                  >
+                    Chúng tôi không ngừng sáng tạo để biến những giải pháp phần mềm phức tạp thành
+                    những công cụ dễ sử dụng, hiệu quả cao, giúp doanh nghiệp Việt tối ưu hóa nguồn
+                    lực và gắn kết cộng đồng khách hàng bền vững.
+                  </p>
+                  <div class="mt-6 text-right text-sm text-slate-300 italic" style="">
+                    Đơn giản hóa sức mạnh công nghệ cho mọi doanh nghiệp.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Brand Story (Preserved Content) -->
+      <section class="bg-slate-50 py-20 dark:bg-slate-900/50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col items-center gap-16 lg:flex-row">
+            <div class="w-full lg:w-1/2">
+              <div class="relative aspect-video overflow-hidden rounded-xl shadow-2xl">
+                <div
+                  class="from-primary/40 absolute inset-0 bg-gradient-to-tr to-transparent"
+                ></div>
+                <img
+                  alt="Brand Story"
+                  class="h-full w-full object-cover"
+                  data-alt="Modern office team collaborating in a bright workspace"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9DOVYCSYCF80ejwMqLYfqQdGbnU-Zd4G6ZdYAtOZzcpnwvkvJBWPIAZK8IbZt8qC41MnY8eOAygFKDJbh0z0fefFC0TbYigbFiYsy9393h-kxZtyy5FQFf3i5HLIWl1hctNVcKXVU9vu0C0OgZ931sdW5GmG2wsTC28BJz-Np3U2ftBlhbmJsnSUlbaylUFZ3dARUdg5m7zkvDIeEUw7Mxrz2f5_MUxGKK5O-Ja20paHEM0GFcmvEFd728dv8vchA2SSxo-rO-sU"
+                  style=""
+                />
+              </div>
+            </div>
+            <div class="w-full lg:w-1/2">
+              <h2 class="mb-6 text-3xl font-black" style="">Câu chuyện thương hiệu</h2>
+              <div class="space-y-4 text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+                <p class="" style="">
+                  RIC Việt Nam ra đời từ khát vọng kết nối con người và công nghệ. Chúng tôi tin
+                  rằng, trong kỷ nguyên số, công nghệ không chỉ là công cụ mà còn là cầu nối để nâng
+                  tầm những giá trị nhân văn và trải nghiệm truyền thống.
+                </p>
+                <p class="" style="">
+                  Bắt đầu từ một đội ngũ nhỏ các chuyên gia nhiệt huyết, RIC đã không ngừng chuyển
+                  mình để trở thành một hệ sinh thái đa ngành, lấy sự hài lòng của khách hàng làm
+                  kim chỉ nam cho mọi hoạt động nghiên cứu và phát triển.
+                </p>
+                <div
+                  class="grid grid-cols-2 gap-8 border-t border-slate-200 pt-6 dark:border-slate-800"
+                >
+                  <div>
+                    <div class="text-primary text-3xl font-black" style="">8+</div>
+                    <div class="text-sm font-medium" style="">Năm kinh nghiệm</div>
+                  </div>
+                  <div>
+                    <div class="text-primary text-3xl font-black" style="">30+</div>
+                    <div class="text-sm font-medium" style="">Đối tác tin cậy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Expert Team -->
+      <section class="py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mb-16 text-center">
+            <h2 class="mb-4 text-3xl font-black" style="">Đội ngũ chuyên gia</h2>
+            <p class="text-slate-600 dark:text-slate-400" style="">
+              Những người dẫn dắt RIC Việt Nam vươn xa.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+            <div class="group text-center">
+              <div class="relative mb-4 aspect-[3/4] overflow-hidden rounded-xl">
+                <img
+                  alt="CEO"
+                  class="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+                  data-alt="Professional male executive in a formal suit"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR99S1FlsJy-DPX6qxizl7WT7_wlI_z0j4kjcXlzCexzGLuMp86y8VNU0rb1BTD-pp7BsuzwWg64QG0Th4jlYptQAgvR57CnRXzCxpN3Apbr0wZog4RCB_fyik7y4qY4JQUAQi3m4XmTYTZJT-lauBhRBGf29FKHE-Rh1hOxJLNrcHbvzsz1sQ6f2-nnYLK2zTPq4OqL7HAm0jD2XIe8bMXH5iRRsMFgRYqaTS87RvN2gbLmIn3FDQNetotgyJiSBdoGRGQ_SUbL8"
+                  style=""
+                />
+              </div>
+              <h4 class="text-lg font-bold" style="">Nguyễn Văn A</h4>
+              <p class="text-sm text-slate-500" style="">Tổng Giám Đốc</p>
+            </div>
+            <div class="group text-center">
+              <div class="relative mb-4 aspect-[3/4] overflow-hidden rounded-xl">
+                <img
+                  alt="CTO"
+                  class="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+                  data-alt="Professional female executive in business attire"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuARYrl3Vr2gxG2NEikkUvVxZHoiGSEm1ZmxRz0UgOJHPiuQy4wcH6_pfKK7O9ZNdDkzRwxM5CNYmDFU95sGmVD3A2my8v4Bcoe53wtEHLPrFfxhJmp1pRzvBD1Hb7V0SUTPWplqntWw-Dfyy3K6sDb1Kg2HKsafDjarmsGWqHhoea_NKWt6n_jn6A9DXWJWsaWi10zqliLT97UJKvyQcxTyJMul_ui5AY7sGaQvAIT1luT3_6rhldU2TI2YJkX8tOET6g1j4wKp66Y"
+                  style=""
+                />
+              </div>
+              <h4 class="text-lg font-bold" style="">Trần Thị B</h4>
+              <p class="text-sm text-slate-500" style="">Giám Đốc Công Nghệ</p>
+            </div>
+            <div class="group text-center">
+              <div class="relative mb-4 aspect-[3/4] overflow-hidden rounded-xl">
+                <img
+                  alt="Director"
+                  class="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+                  data-alt="Modern professional smiling in office setting"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtD27gyfoPhlNsJC5AmgCv8iOboxr4VIKbLYykQs-IZmFlL-tK2oDownfFgiuNduTWEX7GS3fn5ltl4waN_kXFiB_RXYfTvBIXt08bZw63bIW_sKDKpE21HXQsQFgRAycsX70BRNk_IAaJhOuu2QNe3c0xmf07-U1Hgwu-Z-UlUqeUTFGVcpkU5SZ364Spf309jgLOBIkFW-zH3O9VbGsn-dfDZ12gAXj9VzTWYLNxhJ-8dWXd9MnJHnW4vfN2j-AWfAwCTxFfUBE"
+                  style=""
+                />
+              </div>
+              <h4 class="text-lg font-bold" style="">Lê Văn C</h4>
+              <p class="text-sm text-slate-500" style="">Giám Đốc Vận Hành</p>
+            </div>
+            <div class="group text-center">
+              <div class="relative mb-4 aspect-[3/4] overflow-hidden rounded-xl">
+                <img
+                  alt="Marketing Head"
+                  class="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+                  data-alt="Young professional female executive portrait"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdyY8gDFTEw2zApuGd1bJyuVP-uW6G5nFEtQlnuAQZ1f75auIekbbQfH5APraHHl-egoCsmZdFXfCmdN0uVM-kf2pHEpswKAWdwON8fyZAGdXB3Eg21-t1GtDp-hs2xgMU5thyC6MfRmyzdXfe4uHaxaikPBao6NS7aHeGt1ukH_pT_1PtbE7FoWJJ7I0g2Hqac_-5SwixpXgR2b3gvyzmx656JUp0e7C5Y68ERwhIx2miVRCQ1GtRJfOtu5MgDaiw-B8JlelYHZ0"
+                  style=""
+                />
+              </div>
+              <h4 class="text-lg font-bold" style="">Phạm Thị D</h4>
+              <p class="text-sm text-slate-500" style="">Giám Đốc Marketing</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Featured Projects -->
+      <section class="bg-slate-900 py-20 text-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mb-16 flex items-end justify-between">
+            <div>
+              <h2 class="mb-4 text-3xl font-black" style="">Dự án tiêu biểu</h2>
+              <p class="text-slate-400" style="">
+                Những dấu ấn khẳng định vị thế của RIC Việt Nam.
+              </p>
+            </div>
+            <button class="text-primary hidden font-bold hover:underline md:block" style="">
+              Xem tất cả dự án
+            </button>
+          </div>
+          <div class="grid gap-6 md:grid-cols-3">
+            <div class="group relative aspect-square overflow-hidden rounded-xl">
+              <img
+                alt="Smart City Solution"
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Modern high-rise office building architectural view"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeCBQvLC4sRMOXLrI-UshC01jdGSDOdYBT4ElKJF_zz3-SHWub8DrptZ9-AWu3EITTzNZg96tMrLk1aSPsg5-RUr15XGWv_4G-FHZcCgkkw320wRiWhV3TfQvReMfLhJUUwMJZfyC-UZDOQumLOkd6GUbBm9Q_SZhpCHc7V4bZy-Vw_CaCGC5h4bUIvj8v1JT4MTJOhZRG95bYhThFmX77g9Qj6ngzNIBQEMQ1WwYsF3QB9bNnkUvrQtPot8r3Znz0KZGdgk48Oyw"
+                style=""
+              />
+              <div
+                class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900 via-transparent to-transparent p-6"
+              >
+                <h5 class="text-xl font-bold" style="">Hệ thống quản trị tập trung</h5>
+                <p class="text-sm text-slate-300" style="">Công nghệ - RITECH</p>
+              </div>
+            </div>
+            <div class="group relative aspect-square overflow-hidden rounded-xl">
+              <img
+                alt="Resort Management"
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Luxury coastal resort with swimming pool"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMJQC29WAohQ9F_cX3NyhwzApp7dkuO01VmYr7DEpUcvWzROx8meM94wVunDUMJtQ9cXVGkGX1GpFJJvf27Z5XAdf4ceo04kwlsQ2ZL3cGUyilRXaeM6MQiHBsGsiVN6TMwErBPhm3zK2luQHUGkmaPCuw7FPJF_03FZ-93XAeEkB-GDshrf-q1VmncV3xbk1kML-9Yd_jgzWQCNYffXzlXvSe6O3_K3mtLKUuitkl6476AjOpdFRR6bucBwxu73-W7K0ApeVo6o4"
+                style=""
+              />
+              <div
+                class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900 via-transparent to-transparent p-6"
+              >
+                <h5 class="text-xl font-bold" style="">Nền tảng OTA Bookvilla</h5>
+                <p class="text-sm text-slate-300" style="">Công nghệ - RITECH</p>
+              </div>
+            </div>
+            <div class="group relative aspect-square overflow-hidden rounded-xl">
+              <img
+                alt="App Development"
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Abstract digital technology network concept"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSE_xZE-hC6wWBIcuj5fw9y4Irf28_Gd468TDEQgdoAYyG6H9qHt3Rb2Fpxj_IWqdRXtl6bnT7eDcpsJWF48lZF1-0n32cM51SGAVXgrz5A5N-nXTWjBHfFlj1ISpyZmIj7sQHGD4eLnawOgPuj6ljtHHCY71HDlm56J3yYmJKjLlYkqplIA8e1_gTNe0uo0qVh6PMR3SaJosMsiohqJAX1X3SVdz1vNsLR9qn2oNLSd8vw2Z433SwxtKZ2UDy8iz86CwUZ1SPQMQ"
+                style=""
+              />
+              <div
+                class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900 via-transparent to-transparent p-6"
+              >
+                <h5 class="text-xl font-bold" style="">Hệ thống E-commerce thương hiệu Kem 35</h5>
+                <p class="text-sm text-slate-300" style="">Công nghệ - RITECH</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Careers -->
+      <section class="py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div
+            class="bg-primary/10 flex flex-col items-center justify-between gap-12 rounded-xl p-8 md:flex-row md:p-16"
+          >
+            <div class="max-w-2xl text-center md:text-left">
+              <h2 class="mb-6 text-3xl font-black" style="">Gia nhập đội ngũ RIC</h2>
+              <p class="mb-8 text-lg text-slate-600 dark:text-slate-400" style="">
+                Chúng tôi luôn tìm kiếm những tài năng đam mê công nghệ và dịch vụ để cùng nhau kiến
+                tạo tương lai. Hãy bắt đầu sự nghiệp của bạn tại một môi trường làm việc sáng tạo và
+                năng động.
+              </p>
+              <div class="flex flex-wrap justify-center gap-4 md:justify-start">
+                <button
+                  class="bg-primary rounded-xl px-8 py-3 font-bold text-white transition-all hover:shadow-lg"
+                  style=""
+                >
+                  Xem vị trí trống
+                </button>
+                <button
+                  class="rounded-xl border border-slate-200 bg-white px-8 py-3 font-bold text-slate-900 transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  style=""
+                >
+                  Gửi CV ứng tuyển
+                </button>
+              </div>
+            </div>
+            <div class="relative hidden lg:block">
+              <div
+                class="bg-accent-electric/30 absolute -z-10 size-64 animate-pulse rounded-full blur-3xl"
+              ></div>
+              <span class="material-symbols-outlined text-primary text-[160px]" style=""
+                >groups</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer (Updated to match SCREEN_39) -->
+    <footer class="mt-20 bg-slate-900 px-4 py-20 text-slate-300">
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Company Info -->
+        <div class="space-y-6">
+          <div class="flex items-center gap-3">
+            <img alt="RIC Logo" class="h-8 brightness-200" src="" style="" />
+            <span class="text-xl font-bold text-white" style="">RIC VIỆT NAM</span>
+          </div>
+          <p class="text-sm leading-relaxed" style="">
+            Công ty Cổ phần Đầu tư và Phát triển RIC Việt Nam - Đơn vị tiên phong trong lĩnh vực
+            giải pháp số và marketing automation.
+          </p>
+          <div class="space-y-2 text-sm">
+            <p class="" style="">
+              <span class="font-medium text-white" style="">MST:</span> 0110014823
+            </p>
+            <p class="" style="">
+              <span class="font-medium text-white" style="">Trụ sở:</span> Số 05, ngõ 58, đường Chùa
+              Võ, Dương Nội, Hà Nội
+            </p>
+            <p class="" style="">
+              <span class="font-medium text-white" style="">VP giao dịch:</span> 38 Thâm Tâm, Phường
+              Xuân Phương, Quận Nam Từ Liêm, Hà Nội
+            </p>
+          </div>
+        </div>
+        <!-- Products Menu -->
+        <div>
+          <h5 class="mb-6 text-lg font-bold text-white" style="">Sản phẩm</h5>
+          <ul class="space-y-4 text-sm">
+            <li class="" style="">Hệ thống Quản trị</li>
+            <li class="" style="">Hệ thống Hỗ trợ Kinh doanh</li>
+            <li class="" style="">Hệ thống Truyền thông</li>
+            <li class="" style="">Hệ thống Chăm sóc khách hàng</li>
+            <li class="" style="">Giải pháp</li>
+          </ul>
+        </div>
+        <!-- About Menu -->
+        <div>
+          <h5 class="mb-6 text-lg font-bold text-white" style="">Về chúng tôi</h5>
+          <ul class="space-y-4 text-sm">
+            <li class="" style="">
+              <a class="hover:text-primary transition-colors" href="#" style=""
+                >Câu chuyện thương hiệu</a
+              >
+            </li>
+            <li class="" style="">
+              <a class="hover:text-primary transition-colors" href="#" style=""
+                >Tầm nhìn và sứ mệnh</a
+              >
+            </li>
+            <li class="" style="">
+              <a class="hover:text-primary transition-colors" href="#" style=""
+                >Đội ngũ chuyên gia</a
+              >
+            </li>
+            <li class="" style="">
+              <a class="hover:text-primary transition-colors" href="#" style=""
+                >Đối tác chiến lược</a
+              >
+            </li>
+            <li class="" style="">
+              <a class="hover:text-primary transition-colors" href="#" style=""
+                >Cơ hội nghề nghiệp</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- Contact/Support -->
+        <div>
+          <h5 class="mb-6 text-lg font-bold text-white" style="">Liên hệ</h5>
+          <p class="mb-6 text-sm" style="">
+            Đăng ký để nhận tư vấn chuyển đổi số miễn phí từ chuyên gia của chúng tôi.
+          </p>
+          <div class="flex flex-col gap-3">
+            <input
+              class="focus:ring-primary rounded-xl border-none bg-slate-800 px-4 py-2.5 text-sm focus:ring-2"
+              placeholder="Email của bạn"
+              type="email"
+            />
+            <button
+              class="bg-primary hover:bg-primary/90 rounded-xl py-2.5 text-sm font-bold text-white transition-all"
+              style=""
+            >
+              Gửi yêu cầu
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mt-20 max-w-7xl border-t border-slate-800 pt-8 text-center text-xs">
+        <p class="" style="">
+          © 2024 RIC Việt Nam. All rights reserved. Designed for digital excellence.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

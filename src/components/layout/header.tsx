@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -40,14 +41,17 @@ export function Header() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
 
   return (
-    <header className="dark:bg-background-dark/80 sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 px-6 py-4 backdrop-blur-md md:px-20 dark:border-slate-800">
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between">
+    <header className="border-primary/10 dark:bg-background-dark/80 sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md dark:border-slate-800">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <RicLogo className="text-primary" />
-          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-            RIC VIỆT NAM
-          </span>
+          <Image
+            src="/images/logo.png"
+            alt="RIC Việt Nam Logo"
+            width={48}
+            height={48}
+            className="h-12 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -102,9 +106,9 @@ export function Header() {
             href={SITE_CONFIG.adminUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary hidden rounded-lg px-6 py-2 text-sm font-bold text-slate-900 transition-opacity hover:opacity-90 sm:flex"
+            className="bg-primary hover:bg-primary/90 hidden rounded-xl px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-all sm:flex"
           >
-            Đăng nhập
+            Đăng nhập dành cho Đối tác
           </a>
 
           {/* Mobile Navigation */}
@@ -171,9 +175,9 @@ export function Header() {
                   href={SITE_CONFIG.adminUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary mt-2 rounded-lg px-6 py-2 text-center text-sm font-bold text-white"
+                  className="bg-primary mt-2 rounded-xl px-6 py-2.5 text-center text-sm font-bold text-white"
                 >
-                  Đăng nhập
+                  Đăng nhập dành cho Đối tác
                 </a>
               </nav>
             </SheetContent>
