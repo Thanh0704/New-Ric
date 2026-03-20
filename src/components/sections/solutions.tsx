@@ -1,17 +1,17 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
+import { Container } from '@/components/shared/container'
 import {
-  MessageCircle,
+  ArrowRight,
+  Globe,
   Mail,
   Megaphone,
-  Store,
-  Globe,
-  Smartphone,
-  ArrowRight,
+  MessageCircle,
   Search,
+  Smartphone,
+  Store,
 } from 'lucide-react'
-import { Container } from '@/components/shared/container'
-import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const solutionIcons = [
   { icon: MessageCircle, label: 'ZBS' },
@@ -106,7 +106,7 @@ export function Solutions() {
           <SolutionCard
             category="ZBS & SMS"
             title="Giải pháp Chăm sóc khách hàng đa kênh toàn diện"
-            image="https://lh3.googleusercontent.com/aida-public/AB6AXuCSp7nebczRH24ycdkWkTcQ6YMpMCYeXDkSXn1SA9RtlAlSUrNnuCetj_Ar_4ccr-7u3VRH9NsEOEICSV1DYykDO0tikHQmHU0gieZRkAAjGVo9NXSLSEM7xDuNnBEBFtUfYOYdQ8JLtxy6RqFnZF0NyAhgl3c7hk5VRLJq3eJHaxWjw8AWDyEUwUdX2XiL9V_FjOeqquC1ru0wzUn8U2L0N_60Ld6a60pRFeiXll1rRe8c7CacdnLHjUQ7QM_u91AU1nxDKdGYB6Q"
+            image="/images/solutions/zbs-customer-care.png"
             description={
               <div className="space-y-2">
                 <p>
@@ -127,7 +127,7 @@ export function Solutions() {
           <SolutionCard
             category="Phát triển Phần mềm"
             title="Xây dựng Hệ sinh thái App & Web Custom"
-            image="https://lh3.googleusercontent.com/aida-public/AB6AXuB2VOAETCAsIchbN-BX_D1FHbT6hf2YRXBcM2dDn3GUQli5JCkoli5unXKyw1JYA6OkVA4uTxyvUu7ZSPXuhj-atc2i2E6psc-iq6aUPZZGp2EDq5yD33ktt6dp_FnZiBXwJ85X2hHb5Y71Q0KYle0jsdY9zYefF5J4kfKxZYjlSBXG85TI7yTJZPggbedSHbxv81sS1G_lFR7gy1m5ODk5FfeJEfhg0j3ynJoit_V2XSZ_nesncFwUlITqy_0428kzB0F1w0Rrf_Q"
+            image="/images/solutions/zalo-mini-app.png"
             reversed
             description="Chúng tôi cung cấp dịch vụ thiết kế và phát triển ứng dụng di động, trang web doanh nghiệp với hiệu năng cao, bảo mật tuyệt đối và giao diện thân thiện."
           />
@@ -146,7 +146,7 @@ export function Solutions() {
           <SolutionCard
             category="Zalo Official Account"
             title="Quản trị & Vận hành ZOA Chuyên Nghiệp"
-            image="https://lh3.googleusercontent.com/aida-public/AB6AXuAt5HU59BROQH7wJnlyWj_Gl_rarOiDGqZSdwESogt9qd3YzDOiVYyxEaONXDUWK4pGf9HzRmvHFgVH81wuACqE-XiCxIvm5yrryGYCYruDFRymeQQdgxT-KiOcIxChCm-ank8JcP06m0tSaD42A7OFEBvc0bYhTrIgfMYWXGqLVS3xp_im8V_VdTrLhSB2SvL529yhz68EWUaC0CLq4oyeL3eGLVyo0ePib9iLKcoW5A226t6FIaaELs2rXGKPcLAXq6QuIln99AA"
+            image="/images/solutions/zalo-oa.png"
             reversed
             description="Xây dựng bộ nhận diện thương hiệu uy tín trên Zalo. Quản lý tương tác hai chiều, chăm sóc khách hàng tự động và triển khai các tiện ích OA đa dạng."
           />

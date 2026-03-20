@@ -241,13 +241,13 @@ export default function AboutPage() {
               <div className="flex flex-wrap justify-center gap-4 md:justify-start">
                 <Link
                   href="/careers"
-                  className="bg-primary rounded-xl px-8 py-3 font-bold text-white transition-all hover:shadow-lg"
+                  className="bg-primary min-w-45 rounded-xl px-8 py-3 text-center font-bold text-white transition-all hover:shadow-lg"
                 >
                   Xem vị trí trống
                 </Link>
                 <Link
                   href="/contact"
-                  className="rounded-xl border border-slate-200 bg-white px-8 py-3 font-bold text-slate-900 transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="min-w-45 rounded-xl border border-slate-200 bg-white px-8 py-3 text-center font-bold text-slate-900 transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 >
                   Gửi CV ứng tuyển
                 </Link>

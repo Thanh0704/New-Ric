@@ -48,11 +48,11 @@ export default function CareersPage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="#openings"
-                className="bg-primary shadow-primary/20 hover:bg-primary/90 rounded-xl px-8 py-4 text-lg font-bold text-white shadow-lg transition-all"
+                className="bg-primary shadow-primary/20 hover:bg-primary/90 min-w-50 rounded-xl px-8 py-4 text-center text-lg font-bold text-white shadow-lg transition-all"
               >
                 Xem vị trí đang tuyển
               </Link>
-              <button className="rounded-xl border-2 border-white/20 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
+              <button className="min-w-50 rounded-xl border-2 border-white/20 px-8 py-4 text-center text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
                 Văn hóa công ty
               </button>
             </div>

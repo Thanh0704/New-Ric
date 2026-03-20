@@ -1,110 +1,126 @@
-# RIC Vietnam Landing Page — Copilot Instructions
+# RIC Vietnam Landing Page
 
-## Project Overview
+## Overview
 
-Corporate landing page for **RIC Vietnam** (ricvina.vn) — a Vietnamese tech company providing enterprise software solutions (ERP, HRM, WMS). Static site with SSG, no backend database. All data is mock data in `src/data/`.
+Corporate landing page for **RIC Vietnam** ([ricvina.vn](https://ricvina.vn)) — a Vietnamese tech company providing enterprise software solutions (ERP, HRM, WMS).
+
+**Current phase**: Phase 1 — Build UI with mock data only (SSG, no backend database). All data lives in `src/data/`. Phase 2 will replace mock data with a real API from `ric-system`, integrate Resend email, and add Google Analytics.
 
 ## Tech Stack
 
-- **Runtime**: Node.js v22, pnpm 10 (monorepo via pnpm-workspace.yaml)
-- **Framework**: Next.js 16 (App Router, Turbopack, React 19)
-- **Language**: TypeScript 5.9 (strict mode)
-- **Styling**: Tailwind CSS v4 (uses `@theme` block in `src/app/globals.css`, NOT `tailwind.config.js`)
-- **UI Library**: shadcn/ui v4 with **Base UI** (`@base-ui/react`) — NOT Radix UI
-- **Animation**: Framer Motion 12
-- **Form**: React Hook Form 7 + Zod v4 + @hookform/resolvers v5
-- **Icons**: Lucide React
-- **Toast**: Sonner
-- **Linting**: ESLint 9 (flat config) + Prettier 3 + eslint-config-prettier
-- **Git hooks**: Husky 9 + lint-staged 16 + commitlint (conventional commits)
-
-## Critical: Base UI Compatibility
-
-shadcn/ui in this project uses `@base-ui/react`, NOT `@radix-ui`. Key differences:
-
-- **NO `asChild` prop** on Button, SheetTrigger, or any Base UI component
-- For styled links use: `<Link className={buttonVariants({ variant, size })}>` instead of `<Button asChild><Link /></Button>`
-- SheetTrigger: apply className directly, no `asChild`
-- `buttonVariants()` is exported from a `'use client'` module — any server component calling it must be converted to `'use client'`
+| Category        | Technology                 | Version                  | Notes                                                                 |
+| --------------- | -------------------------- | ------------------------ | --------------------------------------------------------------------- |
+| Runtime         | Node.js                    | v22+                     | LTS required                                                          |
+| Package Manager | pnpm                       | 10                       | Monorepo via `pnpm-workspace.yaml`                                    |
+| Framework       | Next.js                    | 16                       | App Router, Turbopack, SSG                                            |
+| UI Library      | React                      | 19                       | Server Components by default                                          |
+| Language        | TypeScript                 | 5.9                      | Strict mode enabled                                                   |
+| Styling         | Tailwind CSS               | v4                       | `@theme` block in `src/app/globals.css`, **NOT** `tailwind.config.js` |
+| Components      | shadcn/ui v4               | base-nova style          | Uses **Base UI** (`@base-ui/react`), **NOT Radix UI**                 |
+| Animation       | Framer Motion              | 12                       | Scroll-triggered animations via `AnimateOnScroll`                     |
+| Forms           | React Hook Form 7 + Zod v4 | + @hookform/resolvers v5 | Type-safe validation                                                  |
+| Icons           | Lucide React               | latest                   | Tree-shakable, shadcn default                                         |
+| Toast           | Sonner                     | latest                   | Toast notifications                                                   |
+| Linting         | ESLint 9 + Prettier 3      | flat config              | `eslint-config-prettier` integration                                  |
+| Git Hooks       | Husky 9 + lint-staged 16   | + commitlint             | Conventional commits enforced                                         |
 
 ## Commands
 
-Always run `pnpm install` first if `node_modules/` is missing.
+Run `pnpm install` first if `node_modules/` is missing.
 
 ```bash
 pnpm dev              # Dev server with Turbopack (http://localhost:3000)
-pnpm build            # Production build — ALWAYS run after changes to verify
+pnpm build            # Production build — MUST run after every change, zero errors required
 pnpm lint             # ESLint check
 pnpm lint:fix         # ESLint auto-fix
 pnpm format           # Prettier format all src files
 pnpm format:check     # Prettier check without writing
 pnpm typecheck        # TypeScript type check (tsc --noEmit)
-pnpm validate         # Full validation: lint + typecheck + build
+pnpm validate         # Full validation: lint + typecheck + build (run before commits)
 ```
-
-**After every code change, run `pnpm build`. The build must pass with zero errors.**
 
 ## Project Structure
 
 ```
 src/
-├── app/                    # Next.js App Router pages
-│   ├── layout.tsx          # Root layout (full SEO metadata, fonts, Header/Footer)
-│   ├── page.tsx            # Homepage (6 sections + Organization JSON-LD)
-│   ├── not-found.tsx       # Custom 404 page
-│   ├── about/page.tsx      # About page (team, mission/vision)
-│   ├── products/           # Product list + [slug] detail pages
-│   ├── news/               # News list + [slug] detail pages
-│   ├── careers/            # Careers list + [slug] detail pages
-│   ├── contact/page.tsx    # Contact page with form
-│   └── api/contact/route.ts # Mock contact API endpoint
+├── app/                        # Next.js App Router (all SSG)
+│   ├── layout.tsx              # Root layout (fonts, SEO metadata, Header/Footer)
+│   ├── page.tsx                # Homepage (hero, features, stats, vision-mission, testimonials, partners, CTA)
+│   ├── not-found.tsx           # Custom 404
+│   ├── about/page.tsx          # About (team, mission/vision)
+│   ├── products/page.tsx       # Product list
+│   ├── news/                   # News list + [slug] detail
+│   ├── careers/                # Careers list + [slug] detail (with filter)
+│   ├── contact/page.tsx        # Contact form
+│   ├── faq/page.tsx            # FAQ with accordion
+│   ├── privacy-policy/page.tsx # Privacy policy
+│   ├── terms/page.tsx          # Terms of service
+│   └── api/contact/route.ts    # Mock contact API (returns { success: true })
 ├── components/
-│   ├── ui/                 # shadcn/ui components (DO NOT manually edit)
-│   ├── layout/             # Header, Footer, nav-links
-│   ├── sections/           # Homepage sections (hero, features, stats, etc.)
-│   ├── shared/             # Reusable: Container, SectionHeading, AnimateOnScroll, StructuredData, BackToTop
-│   └── forms/              # Form components (contact-form)
-├── data/                   # Mock data files (products, news, careers, team, testimonials, partners)
-├── hooks/                  # Custom React hooks
+│   ├── ui/                     # shadcn/ui (auto-generated — DO NOT manually edit)
+│   ├── layout/                 # Header, Footer, nav-links.ts
+│   ├── sections/               # Homepage: hero, features, stats, vision-mission, testimonials, partners, cta
+│   ├── shared/                 # Container, SectionHeading, AnimateOnScroll, StructuredData, BackToTop
+│   ├── forms/                  # ContactForm (Zod + RHF)
+│   ├── careers/                # CareersFilter
+│   └── faq/                    # FaqClient
+├── data/                       # Mock data: products, news, careers, team (+ testimonials, partners inline)
+├── hooks/                      # Custom React hooks
 ├── lib/
-│   ├── constants.ts        # SITE_CONFIG, NAV_ITEMS
-│   └── utils.ts            # cn() helper (clsx + tailwind-merge)
+│   ├── constants.ts            # SITE_CONFIG, NAV_ITEMS
+│   └── utils.ts                # cn() helper (clsx + tailwind-merge)
 └── types/
-    └── index.ts            # All TypeScript interfaces (Product, NewsArticle, Career, etc.)
+    └── index.ts                # All interfaces: Product, NewsArticle, Career, ContactFormData, TeamMember
 ```
+
+## Key Files
+
+| File                           | Purpose                                                                               |
+| ------------------------------ | ------------------------------------------------------------------------------------- |
+| `src/types/index.ts`           | All TypeScript interfaces                                                             |
+| `src/lib/constants.ts`         | `SITE_CONFIG` (name, URL, social links) and `NAV_ITEMS`                               |
+| `src/components/ui/button.tsx` | `buttonVariants` export for styled links                                              |
+| `src/app/globals.css`          | Tailwind v4 theme (`@theme` block), brand colors (`--color-electric`, `--color-navy`) |
+| `components.json`              | shadcn/ui config (base-nova style, Base UI, `@/` aliases)                             |
+| `.prettierrc`                  | No semicolons, single quotes, trailing commas, 100 char width                         |
+| `eslint.config.mjs`            | ESLint 9 flat config (next/core-web-vitals + typescript + prettier)                   |
 
 ## Coding Conventions
 
-- **No semicolons**, single quotes, trailing commas — enforced by Prettier
+- **No semicolons**, single quotes, trailing commas — Prettier enforced (`.prettierrc`)
 - **Print width**: 100 characters
-- **Imports**: Use `@/` path alias (maps to `src/`)
-- **Components**: Named exports, PascalCase filenames
-- **Data files**: camelCase exports (`export const products: Product[]`)
-- **Pages**: Default exports with `export const metadata` for static SEO or `generateMetadata()` for dynamic routes
-- **Dynamic routes**: Always use `params: Promise<{ slug: string }>` pattern and `await params` (Next.js 16+)
-- **Client components**: Only add `'use client'` when hooks/interactivity/browser APIs are needed
-- **New shadcn components**: `pnpm dlx shadcn@latest add <component-name>` (uses `base-nova` style)
+- **Imports**: `@/` path alias (maps to `src/`)
+- **Components**: Named exports, PascalCase filenames (e.g., `export function HeroSection()`)
+- **Data files**: camelCase exports with explicit types (e.g., `export const products: Product[]`)
+- **Pages**: Default export + `export const metadata` (static) or `generateMetadata()` (dynamic)
+- **Dynamic routes**: `params: Promise<{ slug: string }>` — must `await params` (Next.js 16+)
+- **Client components**: Only `'use client'` when hooks, interactivity, or browser APIs are required
+- **shadcn components**: `pnpm dlx shadcn@latest add <name>` — never create manually in `ui/`
+- **Commits**: Conventional commits — `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`, `chore:`, `ci:`, `build:`
 
-## Commit Messages
+## Critical: Base UI (NOT Radix)
 
-Follow conventional commits enforced by commitlint:
-`feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`, `chore:`, `ci:`, `build:`
+shadcn/ui in this project uses `@base-ui/react`, **NOT** `@radix-ui`. Key differences:
 
-## Key Files to Reference
+- **NO `asChild` prop** on Button, SheetTrigger, or any Base UI component
+- Styled links: `<Link className={buttonVariants({ variant, size })}>` — NOT `<Button asChild><Link /></Button>`
+- SheetTrigger: apply `className` directly, no `asChild`
+- `buttonVariants()` requires `'use client'` in the consuming component
 
-| File                           | Purpose                                                |
-| ------------------------------ | ------------------------------------------------------ |
-| `src/types/index.ts`           | All TypeScript interfaces                              |
-| `src/lib/constants.ts`         | SITE_CONFIG and NAV_ITEMS                              |
-| `src/components/ui/button.tsx` | `buttonVariants` export for styled links               |
-| `src/app/globals.css`          | Tailwind v4 theme with `@theme` block and brand colors |
-| `components.json`              | shadcn/ui configuration (base-nova style, Base UI)     |
-| `.prettierrc`                  | Prettier config                                        |
-| `eslint.config.mjs`            | ESLint flat config                                     |
+## Environment Variables
+
+| Variable                | Default                    | Purpose             |
+| ----------------------- | -------------------------- | ------------------- |
+| `NEXT_PUBLIC_SITE_URL`  | `https://ricvina.vn`       | Production site URL |
+| `NEXT_PUBLIC_ADMIN_URL` | `https://admin.ricvina.vn` | Admin panel URL     |
+
+Create `.env.local` to override locally: `NEXT_PUBLIC_SITE_URL=http://localhost:3000`
 
 ## Known Gotchas
 
-- Geist font only supports `latin` and `latin-ext` subsets — no `vietnamese`
-- Tailwind v4 theme tokens are defined via `@theme` in CSS, not a JS config file
-- All images reference `/public/images/` paths that may not exist yet — SSG still works
-- The mock contact API (`/api/contact`) returns `{ success: true }` without sending email
+- Geist font supports `latin` and `latin-ext` only — no `vietnamese` subset
+- Tailwind v4 theme tokens are in `@theme` block in CSS, not a JS config file
+- Images reference `/public/images/` paths that may not exist — SSG still builds
+- Mock contact API (`/api/contact`) returns `{ success: true }` without sending email
+- Zod v4 API is used (`^4.3.6`), needs `@hookform/resolvers` v5+
+- `next-themes` is installed but dark mode is not fully implemented yet
