@@ -127,7 +127,7 @@ export function Solutions() {
           <SolutionCard
             category="Phát triển Phần mềm"
             title="Xây dựng Hệ sinh thái App & Web Custom"
-            image="/images/solutions/zalo-mini-app.png"
+            image="/images/solutions/app-web-ecosystem.png"
             reversed
             description="Chúng tôi cung cấp dịch vụ thiết kế và phát triển ứng dụng di động, trang web doanh nghiệp với hiệu năng cao, bảo mật tuyệt đối và giao diện thân thiện."
           />

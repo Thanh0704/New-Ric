@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Quote } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
@@ -14,8 +15,18 @@ export function Testimonials() {
           </h2>
           <div className="flex flex-col items-center">
             <div className="border-primary/20 mb-4 size-16 overflow-hidden rounded-full border-2 bg-slate-300" />
-            <p className="font-bold">Nguyễn Văn A</p>
-            <p className="text-sm text-slate-500">Giám đốc điều hành - Doanh nghiệp X</p>
+            <p className="font-bold">Phạm Hiếu</p>
+            <p className="text-sm text-slate-500">
+              Trưởng phòng Marketing -{' '}
+              <Link
+                href="https://dichvu3t.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Dichvu3T.com
+              </Link>
+            </p>
           </div>
         </AnimateOnScroll>
       </Container>
