@@ -25,12 +25,10 @@ export function Footer() {
         <div className="space-y-6">
           <div className="flex items-center gap-3">
             <RicLogo className="text-primary" />
-            <span className="text-xl font-bold tracking-tight text-white">RIC VIỆT NAM</span>
+            <span className="text-sm font-bold tracking-tight text-white uppercase">
+              Công ty Cổ phần Đầu tư và Phát triển RIC Việt Nam
+            </span>
           </div>
-          <p className="text-sm leading-relaxed">
-            Công ty Cổ phần Đầu tư và Phát triển RIC Việt Nam — Đơn vị tiên phong trong lĩnh vực
-            giải pháp số và marketing automation.
-          </p>
           <div className="space-y-2 text-sm">
             <p>
               <span className="font-medium text-white">MST:</span> 0110014823

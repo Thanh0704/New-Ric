@@ -134,7 +134,7 @@ export function Solutions() {
           <SolutionCard
             category="ZALO MINI APP"
             title="Zalo Mini App (ZMA)"
-            image="https://lh3.googleusercontent.com/aida-public/AB6AXuBEi8mpFssdhg6wpV61KMv21EbXr0BLELra5kJvMje-1rOoZ2KK2w0xhAUiGOID8YqNKuFNPeK0YtfgWOLN_Nc0t-lTfPekYchckAh6ZssY1lN9OozZTp6lmOcAhAfT-LpYo06qCqCo7yFmZI1oC_1cp6E_H3La1RRAwFajUbD0IE3sBNaxK2D11Gg0zpnIbMFv9GE7BUaA1eTAsqskDywoxdg0w62IeZd57vzCM9RvybiuPDOWHZPiAlFh2j-bEDVgSDiXV093Aps"
+            image="/images/solutions/zalo-mini-app.png"
             description={
               <>
                 Xây dựng các ứng dụng nhỏ trên hệ sinh thái Zalo, dễ dàng tiếp cận tệp người dùng

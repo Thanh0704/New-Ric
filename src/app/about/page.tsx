@@ -126,10 +126,12 @@ export default function AboutPage() {
           <div className="flex flex-col items-center gap-16 lg:flex-row">
             <div className="w-full lg:w-1/2">
               <div className="relative aspect-video overflow-hidden rounded-xl shadow-2xl">
-                <div className="from-primary/40 absolute inset-0 bg-gradient-to-tr to-transparent" />
-                <div className="bg-primary/10 flex h-full items-center justify-center">
-                  <span className="text-primary text-6xl font-black opacity-20">RIC</span>
-                </div>
+                <Image
+                  src="/images/about/brand-story.png"
+                  alt="Câu chuyện thương hiệu RIC Việt Nam"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
             <AnimateOnScroll className="w-full lg:w-1/2">

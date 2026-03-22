@@ -63,8 +63,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi">
-      <body className={`${newsreader.variable} flex min-h-dvh flex-col antialiased`}>
+    <html lang="vi" className={newsreader.variable}>
+      <body className="flex min-h-dvh flex-col antialiased">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
