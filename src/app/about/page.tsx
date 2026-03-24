@@ -68,9 +68,9 @@ export default function AboutPage() {
   return (
     <>
       {/* Ecosystem Hero */}
-      <section className="relative overflow-hidden py-20">
+      <section className="relative overflow-hidden py-14 md:py-20">
         <Container>
-          <div className="mb-16 text-center">
+          <div className="mb-12 text-center md:mb-16">
             <span className="bg-primary/10 text-primary mb-4 inline-block rounded-full px-4 py-1.5 text-xs font-bold tracking-widest uppercase">
               Hệ sinh thái chiến lược
             </span>
@@ -83,7 +83,7 @@ export default function AboutPage() {
           <div className="grid gap-8 md:grid-cols-2">
             {ecosystem.map((item) => (
               <AnimateOnScroll key={item.title}>
-                <div className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-8 transition-all hover:-translate-y-2 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900">
+                <div className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-2 hover:shadow-2xl md:p-8 dark:border-slate-800 dark:bg-slate-900">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <item.icon className={`${item.color} h-24 w-24`} />
                   </div>

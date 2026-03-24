@@ -76,7 +76,7 @@ export function Solutions() {
         </div>
 
         {/* Icon Grid */}
-        <div className="mx-auto mb-8 grid max-w-5xl grid-cols-3 gap-4 md:grid-cols-6">
+        <div className="mx-auto mb-8 grid max-w-5xl grid-cols-4 gap-4 sm:grid-cols-6">
           {solutionIcons.map(({ icon: Icon, label }) => (
             <div
               key={label}

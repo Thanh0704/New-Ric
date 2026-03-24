@@ -5,11 +5,11 @@ import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 
 export function Testimonials() {
   return (
-    <section className="py-24">
+    <section className="py-16 md:py-24">
       <Container className="text-center">
         <AnimateOnScroll>
           <Quote className="text-primary mx-auto mb-6 h-12 w-12" />
-          <h2 className="mx-auto mb-10 max-w-4xl text-2xl leading-relaxed font-medium text-slate-800 italic md:text-3xl dark:text-slate-200">
+          <h2 className="mx-auto mb-10 max-w-4xl text-xl leading-relaxed font-medium text-slate-800 italic md:text-2xl lg:text-3xl dark:text-slate-200">
             &ldquo;Giải pháp của RIC Việt Nam đã giúp quy trình quản lý của chúng tôi rút ngắn 40%
             thời gian vận hành và tăng doanh thu vượt ngoài mong đợi trong năm vừa qua.&rdquo;
           </h2>

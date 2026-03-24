@@ -21,13 +21,13 @@ export function Hero() {
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/products"
-            className="bg-primary min-w-[200px] rounded-xl px-10 py-4 text-center text-lg font-bold text-white transition-transform hover:scale-105"
+            className="bg-primary w-full rounded-xl px-10 py-4 text-center text-lg font-bold text-white transition-transform hover:scale-105 sm:w-auto sm:min-w-[200px]"
           >
             Khám phá ngay
           </Link>
           <Link
             href="/contact"
-            className="min-w-[200px] rounded-xl border border-white/20 bg-white/10 px-10 py-4 text-center text-lg font-bold text-white backdrop-blur-md transition-all hover:bg-white/20"
+            className="w-full rounded-xl border border-white/20 bg-white/10 px-10 py-4 text-center text-lg font-bold text-white backdrop-blur-md transition-all hover:bg-white/20 sm:w-auto sm:min-w-[200px]"
           >
             Liên hệ tư vấn
           </Link>

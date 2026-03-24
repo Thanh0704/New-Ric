@@ -42,7 +42,7 @@ export function Header() {
 
   return (
     <header className="border-primary/10 dark:bg-background-dark/80 sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md dark:border-slate-800">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-10">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:h-20 md:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <Image
@@ -50,7 +50,7 @@ export function Header() {
             alt="RIC Việt Nam Logo"
             width={80}
             height={80}
-            className="h-16 w-auto object-contain"
+            className="h-12 w-auto object-contain md:h-16"
           />
         </Link>
 

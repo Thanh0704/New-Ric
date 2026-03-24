@@ -2,7 +2,7 @@ import { Eye, MousePointer2 } from 'lucide-react'
 
 export function VisionMission() {
   return (
-    <section className="relative overflow-hidden bg-slate-950 px-6 py-32 md:px-20">
+    <section className="relative overflow-hidden bg-slate-950 px-6 py-16 md:px-20 md:py-32">
       <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-[#00FFFF]/20 blur-[120px]" />
       <div className="bg-primary/20 absolute right-1/4 bottom-1/4 h-[500px] w-[500px] rounded-full blur-[150px]" />
 

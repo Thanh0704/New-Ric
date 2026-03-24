@@ -125,9 +125,9 @@ export default function ContactPage() {
             {services.map((service) => (
               <div
                 key={service.title}
-                className="hover:shadow-electric/20 hover:border-electric/50 group transform cursor-pointer rounded-2xl border border-slate-100 bg-white p-8 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl dark:border-slate-700 dark:bg-slate-800"
+                className="hover:shadow-electric/20 hover:border-electric/50 group transform cursor-pointer rounded-2xl border border-slate-100 bg-white p-5 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl md:p-8 dark:border-slate-700 dark:bg-slate-800"
               >
-                <div className="group-hover:bg-electric/10 group-hover:text-electric mb-6 inline-flex rounded-xl bg-slate-100 p-4 text-slate-600 transition-colors duration-300 dark:bg-slate-700 dark:text-slate-400">
+                <div className="group-hover:bg-electric/10 group-hover:text-electric mb-4 inline-flex rounded-xl bg-slate-100 p-4 text-slate-600 transition-colors duration-300 md:mb-6 dark:bg-slate-700 dark:text-slate-400">
                   <service.icon className="h-6 w-6" />
                 </div>
                 <h3 className="group-hover:text-electric mb-3 text-xl font-bold transition-colors duration-300">

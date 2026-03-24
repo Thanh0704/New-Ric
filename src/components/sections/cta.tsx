@@ -25,16 +25,17 @@ const pillars = [
 
 export function CTA() {
   return (
-    <section className="bg-slate-50 py-24 dark:bg-slate-900/50">
+    <section className="bg-slate-50 py-16 md:py-24 dark:bg-slate-900/50">
       <Container>
         <AnimateOnScroll>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-12">
             {pillars.map((pillar, index) => (
               <div
                 key={pillar.title}
                 className={cn(
                   'flex flex-col gap-4',
-                  index > 0 && 'border-l border-slate-200 lg:pl-12 dark:border-slate-800',
+                  index > 0 &&
+                    'border-t border-slate-200 pt-10 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12 dark:border-slate-800',
                 )}
               >
                 <pillar.icon className="text-primary h-10 w-10" />

@@ -35,9 +35,9 @@ const values = [
 
 export function Features() {
   return (
-    <section className="bg-slate-50 py-20 dark:bg-slate-900/50">
+    <section className="bg-slate-50 py-16 md:py-20 dark:bg-slate-900/50">
       <Container className="text-center">
-        <div className="mb-16 space-y-4">
+        <div className="mb-12 space-y-4 md:mb-16">
           <span className="text-primary text-xs font-bold tracking-widest uppercase">
             Phát triển bền vững
           </span>
@@ -49,11 +49,11 @@ export function Features() {
             khách hàng.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           {values.map((item) => (
             <AnimateOnScroll key={item.title}>
-              <div className="group hover:border-electric/50 hover:shadow-electric/10 transform rounded-2xl border border-slate-100 bg-white p-8 text-left transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl dark:border-slate-700 dark:bg-slate-800">
-                <div className="group-hover:bg-electric/10 group-hover:text-electric mb-6 inline-flex rounded-xl bg-slate-100 p-4 text-slate-600 transition-colors duration-300 dark:bg-slate-700 dark:text-slate-400">
+              <div className="group hover:border-electric/50 hover:shadow-electric/10 transform rounded-2xl border border-slate-100 bg-white p-5 text-left transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl md:p-8 dark:border-slate-700 dark:bg-slate-800">
+                <div className="group-hover:bg-electric/10 group-hover:text-electric mb-4 inline-flex rounded-xl bg-slate-100 p-4 text-slate-600 transition-colors duration-300 md:mb-6 dark:bg-slate-700 dark:text-slate-400">
                   <item.icon className="h-7 w-7" />
                 </div>
                 <h3 className="group-hover:text-electric mb-3 text-xl font-bold transition-colors duration-300">

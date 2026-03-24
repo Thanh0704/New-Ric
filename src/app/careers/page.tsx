@@ -26,7 +26,7 @@ export default function CareersPage() {
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative flex items-center overflow-hidden bg-slate-950 py-24 md:py-32">
+      <section className="relative flex items-center overflow-hidden bg-slate-950 py-16 md:py-24 lg:py-32">
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" />
         {/* Right glow */}
@@ -37,7 +37,7 @@ export default function CareersPage() {
             <span className="border-electric/30 bg-electric/10 text-electric inline-block rounded-full border px-4 py-1.5 text-xs font-bold tracking-widest uppercase">
               Career at RIC Việt Nam
             </span>
-            <h1 className="text-5xl leading-tight font-black tracking-tight text-white md:text-7xl">
+            <h1 className="text-3xl leading-tight font-black tracking-tight text-white sm:text-4xl md:text-5xl lg:text-7xl">
               Gia nhập đội ngũ <br />
               <span className="text-electric">RIC Việt Nam</span>
             </h1>
@@ -48,11 +48,11 @@ export default function CareersPage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="#openings"
-                className="bg-primary shadow-primary/20 hover:bg-primary/90 min-w-50 rounded-xl px-8 py-4 text-center text-lg font-bold text-white shadow-lg transition-all"
+                className="bg-primary shadow-primary/20 hover:bg-primary/90 w-full rounded-xl px-8 py-4 text-center text-lg font-bold text-white shadow-lg transition-all sm:w-auto sm:min-w-50"
               >
                 Xem vị trí đang tuyển
               </Link>
-              <button className="min-w-50 rounded-xl border-2 border-white/20 px-8 py-4 text-center text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
+              <button className="w-full rounded-xl border-2 border-white/20 px-8 py-4 text-center text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10 sm:w-auto sm:min-w-50">
                 Văn hóa công ty
               </button>
             </div>
@@ -61,7 +61,7 @@ export default function CareersPage() {
       </section>
 
       {/* ── CULTURE ── */}
-      <section className="bg-white px-6 py-24 md:px-20">
+      <section className="bg-white px-6 py-16 md:px-20 md:py-24">
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold text-slate-900 md:text-4xl">
@@ -89,7 +89,7 @@ export default function CareersPage() {
             ].map(({ icon: Icon, title, desc }) => (
               <div
                 key={title}
-                className="group hover:border-electric rounded-2xl border border-slate-100 bg-slate-50 p-8 transition-colors"
+                className="group hover:border-electric rounded-2xl border border-slate-100 bg-slate-50 p-5 transition-colors md:p-8"
               >
                 <div className="bg-electric/10 mb-6 inline-flex rounded-xl p-3">
                   <Icon className="text-electric h-7 w-7" />
@@ -103,7 +103,7 @@ export default function CareersPage() {
       </section>
 
       {/* ── BENEFITS ── */}
-      <section className="bg-slate-50 px-6 py-24 md:px-20">
+      <section className="bg-slate-50 px-6 py-16 md:px-20 md:py-24">
         <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-16 lg:flex-row">
           <div className="space-y-6 lg:w-1/2">
             <h2 className="text-3xl font-bold md:text-4xl">Chế độ đãi ngộ hấp dẫn</h2>
@@ -163,7 +163,7 @@ export default function CareersPage() {
       </section>
 
       {/* ── JOB OPENINGS ── */}
-      <section className="bg-white px-6 py-24 md:px-20" id="openings">
+      <section className="bg-white px-6 py-16 md:px-20 md:py-24" id="openings">
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-12 flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <div className="space-y-4">
@@ -178,16 +178,18 @@ export default function CareersPage() {
       </section>
 
       {/* ── HIRING PROCESS ── */}
-      <section className="overflow-hidden bg-slate-50 px-6 py-24 md:px-20">
+      <section className="overflow-hidden bg-slate-50 px-6 py-16 md:px-20 md:py-24">
         <div className="mx-auto max-w-[1200px]">
-          <div className="mb-20 text-center">
+          <div className="mb-12 text-center md:mb-20">
             <h2 className="mb-4 text-3xl font-bold md:text-4xl">Quy trình tuyển dụng</h2>
             <p className="text-slate-600">Minh bạch, nhanh chóng và tôn trọng mọi ứng viên.</p>
           </div>
           <div className="relative">
-            {/* Connecting line */}
+            {/* Connecting line — desktop only */}
             <div className="absolute top-8 left-0 hidden h-0.5 w-full bg-slate-200 md:block" />
-            <div className="relative z-10 grid grid-cols-1 gap-12 md:grid-cols-4 md:gap-4">
+            {/* Mobile vertical stepper track */}
+            <div className="absolute top-0 left-8 h-full w-0.5 bg-slate-200 md:hidden" />
+            <div className="relative z-10 grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-4">
               {[
                 {
                   step: '01',
@@ -210,11 +212,14 @@ export default function CareersPage() {
                   desc: 'Chào mừng bạn chính thức trở thành một mảnh ghép của RIC.',
                 },
               ].map(({ step, title, desc }) => (
-                <div key={step} className="flex flex-col items-center text-center">
-                  <div className="bg-primary shadow-primary/30 mb-6 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-lg">
+                <div
+                  key={step}
+                  className="flex flex-row items-start gap-6 pl-4 md:flex-col md:items-center md:pl-0 md:text-center"
+                >
+                  <div className="bg-primary shadow-primary/30 relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-xl font-bold text-white shadow-lg">
                     {step}
                   </div>
-                  <div className="w-full rounded-2xl border border-slate-100 bg-white p-6 shadow-md">
+                  <div className="w-full rounded-2xl border border-slate-100 bg-white p-5 shadow-md md:p-6">
                     <h3 className="mb-2 font-bold text-slate-900">{title}</h3>
                     <p className="text-sm leading-relaxed text-slate-600">{desc}</p>
                   </div>
