@@ -48,9 +48,9 @@ export function Header() {
           <Image
             src="/images/logo.png"
             alt="RIC Việt Nam Logo"
-            width={48}
-            height={48}
-            className="h-12 w-auto object-contain"
+            width={80}
+            height={80}
+            className="h-16 w-auto object-contain"
           />
         </Link>
 

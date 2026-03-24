@@ -1,5 +1,5 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { RicLogo } from './header'
 
 const productLinks = [
   { label: 'Hệ thống Quản trị', href: '/products' },
@@ -17,14 +17,26 @@ const aboutLinks = [
   { label: 'Tin tức công nghệ', href: '/news' },
 ]
 
+const policyLinks = [
+  { label: 'Chính sách bảo mật', href: '/privacy-policy' },
+  { label: 'Điều khoản sử dụng', href: '/terms' },
+  { label: 'Câu hỏi thường gặp', href: '/faq' },
+]
+
 export function Footer() {
   return (
     <footer className="mt-20 bg-slate-900 px-4 py-20 text-slate-300">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
         {/* Column 1 — Company Info */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <RicLogo className="text-primary" />
+            <Image
+              src="/images/logo.png"
+              alt="RIC Việt Nam Logo"
+              width={64}
+              height={64}
+              className="h-14 w-auto object-contain"
+            />
             <span className="text-sm font-bold tracking-tight text-white uppercase">
               Công ty Cổ phần Đầu tư và Phát triển RIC Việt Nam
             </span>
@@ -72,7 +84,21 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Column 4 — Liên hệ */}
+        {/* Column 4 — Chính sách */}
+        <div>
+          <h5 className="mb-6 text-lg font-bold text-white">Chính sách</h5>
+          <ul className="space-y-4 text-sm">
+            {policyLinks.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className="hover:text-primary transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Column 5 — Liên hệ */}
         <div>
           <h5 className="mb-6 text-lg font-bold text-white">Liên hệ</h5>
           <p className="mb-6 text-sm">
@@ -96,10 +122,7 @@ export function Footer() {
 
       {/* Copyright */}
       <div className="mx-auto mt-20 max-w-7xl border-t border-slate-800 pt-8 text-center text-xs">
-        <p>
-          © {new Date().getFullYear()} RIC Việt Nam. All rights reserved. Designed for digital
-          excellence.
-        </p>
+        <p>© {new Date().getFullYear()} RIC Việt Nam.</p>
       </div>
     </footer>
   )
