@@ -19,19 +19,6 @@ pnpm install
 
 > Git hooks (Husky) sẽ được tự động cài đặt sau `pnpm install` nhờ script `prepare`.
 
-## Biến môi trường
-
-| Biến                    | Mặc định                   | Mô tả                   |
-| ----------------------- | -------------------------- | ----------------------- |
-| `NEXT_PUBLIC_SITE_URL`  | `https://ricvina.vn`       | URL production của site |
-| `NEXT_PUBLIC_ADMIN_URL` | `https://admin.ricvina.vn` | URL admin panel         |
-
-Tạo file `.env.local` ở root để override khi phát triển local:
-
-```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
-
 ## Các lệnh thường dùng
 
 ```bash

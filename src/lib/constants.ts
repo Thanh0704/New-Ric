@@ -1,8 +1,8 @@
 export const SITE_CONFIG = {
   name: 'RIC Vietnam',
   description: 'Công ty công nghệ hàng đầu Việt Nam',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://landing.ricvina.vn',
-  adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL || 'https://ricvina.vn',
+  url: 'https://ricvina.vn',
+  adminUrl: 'https://ricvina.vn/#/login',
   ogImage: '/images/og-image.jpg',
   links: {
     facebook: 'https://facebook.com/ricvietnam',
