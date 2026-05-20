@@ -2,7 +2,7 @@ export const SITE_CONFIG = {
   name: 'RIC Vietnam',
   description: 'Công ty công nghệ hàng đầu Việt Nam',
   url: 'https://ricvina.vn',
-  adminUrl: 'https://ricvina.vn/#/login',
+  adminUrl: 'https://admin.ricvina.vn/',
   ogImage: '/images/og-image.jpg',
   links: {
     facebook: 'https://facebook.com/ricvietnam',
