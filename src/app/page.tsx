@@ -1,10 +1,11 @@
 import { Hero } from '@/components/sections/hero'
 import { Solutions } from '@/components/sections/solutions'
-import { Features } from '@/components/sections/features'
+// import { Features } from '@/components/sections/features'
 import { Stats } from '@/components/sections/stats'
 import { CTA } from '@/components/sections/cta'
 import { Partners } from '@/components/sections/partners'
 import { Testimonials } from '@/components/sections/testimonials'
+import { RegisterDemo } from '@/components/sections/register-demo'
 import { StructuredData } from '@/components/shared/structured-data'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -30,11 +31,12 @@ export default function HomePage() {
       <StructuredData data={orgSchema} />
       <Hero />
       <Solutions />
-      <Features />
+
       <Stats />
       <CTA />
       <Partners />
       <Testimonials />
+      <RegisterDemo />
     </>
   )
 }

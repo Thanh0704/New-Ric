@@ -5,6 +5,8 @@ import { Cpu, Compass, CheckCircle2, ArrowRight, Users } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 import { VisionMission } from '@/components/sections/vision-mission'
+// Component Giá trị cốt lõi
+import { Features } from '@/components/sections/features'
 import { teamMembers } from '@/data/team'
 
 export const metadata: Metadata = {
@@ -118,7 +120,11 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* Tầm nhìn - Sứ mệnh */}
       <VisionMission />
+
+      {/* GIÁ TRỊ CỐT LÕI ĐƯỢC ĐƯA LÊN ĐÂY (NGAY DƯỚI TẦM NHÌN SỨ MỆNH) */}
+      <Features />
 
       {/* Brand Story */}
       <section className="bg-slate-50 py-20 dark:bg-slate-900/50">

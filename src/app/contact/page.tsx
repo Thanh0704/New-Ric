@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Mail, Phone, MapPin, Monitor, ShoppingCart, Megaphone, Headphones } from 'lucide-react'
+import { Mail, Phone, MapPin } from 'lucide-react'
 import { ContactForm } from '@/components/forms/contact-form'
 
 export const metadata: Metadata = {
@@ -19,33 +19,6 @@ const contactItems = [
   },
   { icon: Phone, label: 'Hotline tư vấn', value: '+84 (0) 123 456 789' },
   { icon: Mail, label: 'Email hỗ trợ', value: 'contact@ric.vn' },
-]
-
-const services = [
-  {
-    icon: Monitor,
-    title: 'Hệ thống quản trị',
-    description:
-      'Số hóa toàn bộ quy trình quản lý doanh nghiệp trên một nền tảng duy nhất, giúp lãnh đạo đưa ra quyết định dựa trên dữ liệu thời gian thực.',
-  },
-  {
-    icon: ShoppingCart,
-    title: 'Hỗ trợ kinh doanh',
-    description:
-      'Cung cấp bộ công cụ thông minh hỗ trợ đội ngũ Sales và tích hợp các giải pháp thương mại điện tử hiện đại.',
-  },
-  {
-    icon: Megaphone,
-    title: 'Hệ thống truyền thông',
-    description:
-      'Giải pháp truyền thông đa kênh chuyên nghiệp giúp thông điệp chạm đến đúng khách hàng mục tiêu.',
-  },
-  {
-    icon: Headphones,
-    title: 'Chăm sóc khách hàng',
-    description:
-      'Tự động hóa quy trình chăm sóc sau bán hàng, biến mỗi giao dịch thành một trải nghiệm hài lòng tuyệt đối.',
-  },
 ]
 
 export default function ContactPage() {
@@ -106,36 +79,6 @@ export default function ContactPage() {
               Gửi yêu cầu cho chúng tôi
             </h3>
             <ContactForm />
-          </div>
-        </div>
-      </section>
-
-      {/* Section 2: Service cards */}
-      <section className="bg-white px-6 py-20 md:px-20 dark:bg-slate-900/30">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold md:text-4xl">Dịch vụ chiến lược</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-slate-600 dark:text-slate-400">
-              Hệ sinh thái giải pháp số hóa toàn diện giúp doanh nghiệp tối ưu hóa quy trình và tăng
-              trưởng bền vững.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service) => (
-              <div
-                key={service.title}
-                className="hover:shadow-electric/20 hover:border-electric/50 group transform cursor-pointer rounded-2xl border border-slate-100 bg-white p-5 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl md:p-8 dark:border-slate-700 dark:bg-slate-800"
-              >
-                <div className="group-hover:bg-electric/10 group-hover:text-electric mb-4 inline-flex rounded-xl bg-slate-100 p-4 text-slate-600 transition-colors duration-300 md:mb-6 dark:bg-slate-700 dark:text-slate-400">
-                  <service.icon className="h-6 w-6" />
-                </div>
-                <h3 className="group-hover:text-electric mb-3 text-xl font-bold transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-slate-500">{service.description}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
