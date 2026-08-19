@@ -2,6 +2,8 @@ import { Hero } from '@/components/sections/hero'
 import { Solutions } from '@/components/sections/solutions'
 // import { Features } from '@/components/sections/features'
 import { Stats } from '@/components/sections/stats'
+import { Process } from '@/components/sections/process'
+import { Comparison } from '@/components/sections/comparison'
 import { CTA } from '@/components/sections/cta'
 import { Partners } from '@/components/sections/partners'
 import { Testimonials } from '@/components/sections/testimonials'
@@ -33,6 +35,8 @@ export default function HomePage() {
       <Solutions />
 
       <Stats />
+      <Process />
+      <Comparison />
       <CTA />
       <Partners />
       <Testimonials />
