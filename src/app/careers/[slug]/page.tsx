@@ -30,14 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const career = careers.find((c) => c.slug === slug)
   if (!career) return {}
-  return {
-    title: career.title,
-    description: career.description,
-    openGraph: {
-      title: `${career.title} — RIC Việt Nam`,
-      description: career.description,
-    },
-  }
+  return { title: career.title, description: career.description }
 }
 
 export default async function CareerDetailPage({ params }: Props) {
@@ -48,161 +41,165 @@ export default async function CareerDetailPage({ params }: Props) {
   const relatedCareers = careers.filter((c) => c.id !== career.id).slice(0, 3)
 
   return (
-    <>
-      {/* ── HEADER ── */}
-      <section className="px-6 pt-12 pb-8 md:px-20">
-        <div className="mx-auto max-w-[1200px]">
-          <Link
-            href="/careers"
-            className="text-primary mb-8 inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-75"
-          >
+    <div className="min-h-screen bg-slate-50">
+      <div className="mx-auto max-w-[1400px] px-6 py-12">
+        <Link
+          href="/careers"
+          className="group mb-12 inline-flex items-center gap-3 text-sm font-bold text-slate-500 transition-colors hover:text-blue-600"
+        >
+          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white transition-colors group-hover:border-blue-200">
             <ArrowLeft className="h-4 w-4" />
-            Tất cả vị trí
-          </Link>
+          </div>
+          Quay lại danh sách
+        </Link>
 
-          <div className="mt-6 space-y-4">
-            <span className="bg-electric text-navy inline-block rounded-full px-4 py-1.5 text-xs font-bold tracking-widest uppercase">
-              {career.department}
-            </span>
-            <h1 className="text-navy text-3xl leading-tight font-black tracking-tight md:text-5xl">
-              {career.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-5 text-sm text-slate-500">
-              <span className="flex items-center gap-1.5">
-                <Building2 className="text-primary h-4 w-4" />
+        {/* ── SPLIT SCREEN LAYOUT ── */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
+          {/* ── CỘT TRÁI (STICKY HEADER) ── */}
+          <div className="flex flex-col lg:sticky lg:top-12 lg:col-span-5 lg:h-[calc(100vh-6rem)]">
+            <div className="mb-auto space-y-6">
+              <span className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-xs font-black tracking-widest text-white uppercase shadow-lg">
                 {career.department}
               </span>
-              <span className="flex items-center gap-1.5">
-                <MapPin className="text-primary h-4 w-4" />
-                {career.location}
-              </span>
-              {career.salary && (
-                <span className="flex items-center gap-1.5">
-                  <Banknote className="text-primary h-4 w-4" />
-                  {career.salary}
-                </span>
-              )}
-              <span className="flex items-center gap-1.5">
-                <Clock className="text-primary h-4 w-4" />
-                {typeLabel[career.type]}
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+              <h1 className="text-4xl leading-[1.1] font-black tracking-tight text-slate-900 md:text-5xl lg:text-6xl">
+                {career.title}
+              </h1>
 
-      {/* ── MAIN CONTENT ── */}
-      <section className="px-6 pb-24 md:px-20">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-            {/* ── LEFT: detail ── */}
-            <div className="space-y-10 lg:col-span-2">
-              {/* Description */}
-              <div>
-                <h2 className="mb-4 text-xl font-bold text-slate-900">Mô tả công việc</h2>
-                <p className="leading-relaxed text-slate-600">{career.description}</p>
-              </div>
-
-              {/* Requirements */}
-              <div>
-                <h2 className="mb-4 text-xl font-bold text-slate-900">Yêu cầu ứng viên</h2>
-                <ul className="space-y-3">
-                  {career.requirements.map((req) => (
-                    <li key={req} className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle2 className="text-electric mt-0.5 h-5 w-5 shrink-0" />
-                      {req}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Benefits */}
-              <div>
-                <h2 className="mb-4 text-xl font-bold text-slate-900">Quyền lợi</h2>
-                <ul className="space-y-3">
-                  {career.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Prev / next nav */}
-              {relatedCareers.length > 0 && (
-                <div className="border-t border-slate-100 pt-8">
-                  <p className="mb-4 text-sm font-semibold tracking-widest text-slate-400 uppercase">
-                    Vị trí khác
-                  </p>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {relatedCareers.slice(0, 2).map((related) => (
-                      <Link
-                        key={related.id}
-                        href={`/careers/${related.slug}`}
-                        className="group hover:border-primary/30 rounded-xl border border-slate-200 p-4 transition-all hover:shadow-md"
-                      >
-                        <p className="text-primary text-xs font-semibold tracking-widest uppercase">
-                          {related.department}
-                        </p>
-                        <p className="group-hover:text-primary mt-1 line-clamp-1 font-semibold text-slate-900 transition-colors">
-                          {related.title}
-                        </p>
-                        <p className="mt-1 text-sm text-slate-500">{related.location}</p>
-                      </Link>
-                    ))}
+              <div className="mt-8 flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center gap-4 font-medium text-slate-600">
+                  <div className="rounded-2xl bg-slate-50 p-3">
+                    <Building2 className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Bộ phận</p>
+                    <p>{career.department}</p>
                   </div>
                 </div>
-              )}
-            </div>
-
-            {/* ── SIDEBAR ── */}
-            <div className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-              {/* Related positions */}
-              {relatedCareers.length > 0 && (
-                <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <h3 className="mb-4 font-bold text-slate-900">Vị trí liên quan</h3>
-                  <ul className="space-y-4">
-                    {relatedCareers.map((related) => (
-                      <li key={related.id}>
-                        <Link
-                          href={`/careers/${related.slug}`}
-                          className="group flex items-start justify-between gap-3"
-                        >
-                          <div>
-                            <p className="group-hover:text-primary line-clamp-2 text-sm font-semibold text-slate-900 transition-colors">
-                              {related.title}
-                            </p>
-                            <p className="mt-0.5 text-xs text-slate-500">
-                              {related.location} · {related.salary ?? typeLabel[related.type]}
-                            </p>
-                          </div>
-                          <ArrowRight className="group-hover:text-primary mt-0.5 h-4 w-4 shrink-0 text-slate-300 transition-colors" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="flex items-center gap-4 font-medium text-slate-600">
+                  <div className="rounded-2xl bg-slate-50 p-3">
+                    <MapPin className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Địa điểm</p>
+                    <p>{career.location}</p>
+                  </div>
                 </div>
-              )}
-
-              {/* CTA card */}
-              <div className="bg-navy rounded-2xl p-6 text-white">
-                <h3 className="mb-2 text-lg font-bold">Sẵn sàng ứng tuyển?</h3>
-                <p className="mb-6 text-sm leading-relaxed text-slate-300">
-                  Gửi CV của bạn và chúng tôi sẽ liên hệ trong 2 ngày làm việc.
-                </p>
-                <Link
-                  href="/contact"
-                  className="bg-electric text-navy flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-opacity hover:opacity-90"
-                >
-                  Ứng tuyển ngay
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                {career.salary && (
+                  <div className="flex items-center gap-4 font-medium text-slate-600">
+                    <div className="rounded-2xl bg-slate-50 p-3">
+                      <Banknote className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-400">Mức lương</p>
+                      <p>{career.salary}</p>
+                    </div>
+                  </div>
+                )}
+                <div className="flex items-center gap-4 font-medium text-slate-600">
+                  <div className="rounded-2xl bg-slate-50 p-3">
+                    <Clock className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Loại hình</p>
+                    <p>{typeLabel[career.type]}</p>
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* Nút Ứng tuyển cố định bên dưới cột trái */}
+            <div className="mt-8">
+              <Link
+                href="/contact"
+                className="group flex w-full items-center justify-between rounded-[2rem] bg-blue-600 p-2 pr-6 text-white shadow-xl shadow-blue-600/20 transition-all hover:scale-[1.02] hover:bg-blue-700"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-blue-600 transition-transform duration-500 group-hover:rotate-45">
+                  <ArrowRight className="h-6 w-6" />
+                </div>
+                <span className="text-lg font-black">Ứng tuyển ngay</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* ── CỘT PHẢI (SCROLLING CONTENT) ── */}
+          <div className="space-y-16 pb-20 lg:col-span-7">
+            {/* Description */}
+            <div className="group rounded-[3rem] border border-slate-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl md:p-12">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-black text-slate-900">
+                <span className="h-2 w-8 rounded-full bg-blue-600 transition-all group-hover:w-12" />{' '}
+                Mô tả công việc
+              </h2>
+              <p className="text-lg leading-relaxed font-medium text-slate-600">
+                {career.description}
+              </p>
+            </div>
+
+            {/* Requirements */}
+            <div className="group rounded-[3rem] border border-slate-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl md:p-12">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-black text-slate-900">
+                <span className="h-2 w-8 rounded-full bg-blue-600 transition-all group-hover:w-12" />{' '}
+                Yêu cầu ứng viên
+              </h2>
+              <ul className="space-y-6">
+                {career.requirements.map((req, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-4 rounded-2xl p-4 text-lg font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                  >
+                    <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-blue-600" />
+                    {req}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Benefits */}
+            <div className="group rounded-[3rem] border border-slate-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl md:p-12">
+              <h2 className="mb-6 flex items-center gap-3 text-2xl font-black text-slate-900">
+                <span className="h-2 w-8 rounded-full bg-emerald-500 transition-all group-hover:w-12" />{' '}
+                Quyền lợi
+              </h2>
+              <ul className="space-y-6">
+                {career.benefits.map((benefit, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-4 rounded-2xl p-4 text-lg font-medium text-slate-600 transition-colors hover:bg-emerald-50/50"
+                  >
+                    <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Vị trí liên quan (Hiển thị dạng thẻ ngang) */}
+            {relatedCareers.length > 0 && (
+              <div className="pt-8">
+                <h3 className="mb-8 text-xl font-black text-slate-900">Có thể bạn quan tâm</h3>
+                <div className="flex flex-col gap-4">
+                  {relatedCareers.map((related) => (
+                    <Link
+                      key={related.id}
+                      href={`/careers/${related.slug}`}
+                      className="group flex items-center justify-between gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg"
+                    >
+                      <div>
+                        <p className="mb-1 text-xs font-bold tracking-widest text-slate-400 uppercase transition-colors group-hover:text-blue-500">
+                          {related.department}
+                        </p>
+                        <p className="text-lg font-black text-slate-900">{related.title}</p>
+                      </div>
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-50 transition-colors group-hover:bg-blue-600">
+                        <ArrowRight className="h-5 w-5 text-slate-400 transition-all duration-300 group-hover:-rotate-45 group-hover:text-white" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   )
 }

@@ -31,6 +31,7 @@ const errorClass = 'mt-1 ml-1 text-xs text-red-500'
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState('') // Thêm state để bắt lỗi kết nối
 
   const {
     register,
@@ -40,11 +41,33 @@ export function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactData>({ resolver: zodResolver(contactSchema) })
 
+  // ĐÃ SỬA: Hàm gửi dữ liệu thực tế đến API
   async function onSubmit(data: ContactData) {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log('Form data:', data)
-    setSubmitted(true)
-    reset()
+    setSubmitError('') // Xóa lỗi cũ trước khi gửi
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        // Gửi thành công
+        setSubmitted(true)
+        reset()
+      } else {
+        // Lỗi từ backend (VD: sai mật khẩu email, lỗi server)
+        setSubmitError(result.message || 'Có lỗi xảy ra khi gửi. Vui lòng thử lại.')
+      }
+    } catch (error) {
+      // Lỗi mạng hoặc không gọi được API
+      setSubmitError('Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.')
+    }
   }
 
   if (submitted) {
@@ -153,6 +176,13 @@ export function ContactForm() {
         />
         {errors.message && <p className={errorClass}>{errors.message.message}</p>}
       </div>
+
+      {/* Hiển thị thông báo lỗi API nếu có */}
+      {submitError && (
+        <div className="rounded-lg bg-red-50 p-3 text-center text-sm font-medium text-red-600">
+          {submitError}
+        </div>
+      )}
 
       <button
         type="submit"
