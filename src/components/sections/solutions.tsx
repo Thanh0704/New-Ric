@@ -28,74 +28,58 @@ const solutionIcons = [
 const solutionsData = [
   {
     id: '01',
-    category: 'ZBS & SMS',
-    title: 'Chăm sóc khách hàng đa kênh',
-    desc: 'Tự động hóa quy trình CSKH, gửi tin nhắn hàng loạt và tăng tỷ lệ chuyển đổi.',
-    image: '/images/solutions/zbs-customer-care.png',
+    category: 'E-Commerce',
+    title: 'ECOM',
+    desc: 'Giải pháp Bán hàng & thương mại điện tử toàn diện.',
+    image: '/images/solutions/ecom.jpg', // Nhớ thay bằng tên file ảnh thật của bạn
     href: '/products',
   },
   {
     id: '02',
-    category: 'Phát triển Phần mềm',
-    title: 'Hệ sinh thái App & Web Custom',
-    desc: 'Thiết kế và phát triển ứng dụng di động, trang web doanh nghiệp hiệu năng cao.',
-    image: '/images/solutions/app-web-ecosystem.png',
+    category: 'Marketing',
+    title: 'RIC MESSAGE MARKETING',
+    desc: 'Marketing Automation và Customer Engagement hiệu quả.',
+    image: '/images/solutions/ric-message.jpg',
     href: '/products',
   },
   {
     id: '03',
-    category: 'ZALO MINI APP',
-    title: 'Zalo Mini App (ZMA)',
-    desc: 'Tiếp cận hàng chục triệu người dùng Zalo với ứng dụng Mini App tối ưu.',
-    image: '/images/solutions/zalo-mini-app.png',
+    category: 'Hub',
+    title: 'ZHUB',
+    desc: 'Unified Chat & Conversation Hub cho doanh nghiệp.',
+    image: '/images/solutions/zhub.jpg',
     href: '/products',
   },
   {
     id: '04',
-    category: 'Zalo Official Account',
-    title: 'Quản trị & Vận hành ZOA',
-    desc: 'Xây dựng bộ nhận diện thương hiệu uy tín, quản lý tương tác tự động.',
-    image: '/images/solutions/zalo-oa.png',
+    category: 'Affiliate',
+    title: 'RIC AFFILIATE',
+    desc: 'Hệ thống Mạng lưới bán hàng & cộng tác viên.',
+    image: '/images/solutions/ric-affiliate.jpg',
     href: '/products',
   },
   {
     id: '05',
-    category: 'Hệ thống ERP',
-    title: 'Quản trị doanh nghiệp tổng thể',
-    desc: 'Số hóa và tối ưu hóa mọi nguồn lực, quy trình hoạt động của doanh nghiệp.',
-    image: '/images/solutions/zbs-customer-care.png',
+    category: 'Security',
+    title: 'RIC TRUST',
+    desc: 'Giải pháp Chống hàng giả và chống bán lấn kênh.',
+    image: '/images/solutions/ric-trust.jpg',
     href: '/products',
   },
   {
     id: '06',
-    category: 'Giải pháp CRM',
-    title: 'Quản lý quan hệ khách hàng',
-    desc: 'Lưu trữ thông tin, chăm sóc khách hàng chuyên sâu để thúc đẩy doanh số.',
-    image: '/images/solutions/app-web-ecosystem.png',
+    category: 'Management',
+    title: 'RICIO',
+    desc: 'Hệ thống CRM và PMS chuyên sâu cho villa/hotel/resort.',
+    image: '/images/solutions/ricio.jpg',
     href: '/products',
   },
   {
     id: '07',
-    category: 'Cloud Computing',
-    title: 'Điện toán đám mây an toàn',
-    desc: 'Triển khai hạ tầng máy chủ linh hoạt, bảo mật cao và dễ dàng mở rộng.',
-    image: '/images/solutions/zalo-mini-app.png',
-    href: '/products',
-  },
-  {
-    id: '08',
-    category: 'UI / UX Design',
-    title: 'Thiết kế trải nghiệm người dùng',
-    desc: 'Nghiên cứu và tạo ra giao diện đột phá, thân thiện và thu hút người dùng.',
-    image: '/images/solutions/zalo-oa.png',
-    href: '/products',
-  },
-  {
-    id: '09',
-    category: 'IT Outsourcing',
-    title: 'Cung cấp nhân sự IT',
-    desc: 'Đội ngũ kỹ sư phần mềm chất lượng cao, sẵn sàng đồng hành cùng dự án.',
-    image: '/images/solutions/zbs-customer-care.png',
+    category: 'ERP',
+    title: 'RIC ERP',
+    desc: 'KDL Quản trị doanh nghiệp theo module linh hoạt.',
+    image: '/images/solutions/ric-erp.jpg',
     href: '/products',
   },
 ]
@@ -109,8 +93,10 @@ export function Solutions() {
 
   useEffect(() => {
     const autoPlayInterval = setInterval(next, 5000)
+
+    // Clear (hủy) cái đồng hồ đếm ngược cũ đi
     return () => clearInterval(autoPlayInterval)
-  }, [next])
+  }, [next, activeIndex]) // <--- THÊM activeIndex VÀO ĐÂY
 
   return (
     <section className="relative z-20 pb-0">
