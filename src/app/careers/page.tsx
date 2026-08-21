@@ -246,8 +246,9 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── CTA (Đã thiết kế lại hiệu ứng Nút lăn theo mẫu Haravan) ── */}
       <section className="px-6 py-24">
+        {/* Ở đây giữ nguyên group cũ cho thẻ to */}
         <div className="group relative mx-auto max-w-4xl">
           <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-r from-blue-600 to-cyan-500 opacity-20 blur-xl transition-opacity duration-700 group-hover:opacity-40" />
           <div className="relative rounded-[3rem] border border-slate-200 bg-white p-12 text-center shadow-2xl transition-transform duration-700 group-hover:-translate-y-2 md:p-20">
@@ -258,12 +259,30 @@ export default function CareersPage() {
             <p className="mx-auto mb-10 max-w-lg font-medium text-slate-500">
               Đừng ngần ngại gửi hồ sơ mở. Chúng tôi luôn chào đón những nhân tài đam mê công nghệ.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-8 py-4 text-sm font-bold text-white shadow-lg transition-all hover:gap-5 hover:bg-blue-600"
-            >
-              Gửi CV ngay <ArrowRight className="h-4 w-4" />
-            </Link>
+
+            <div className="flex justify-center">
+              {/* NÚT ĐỒNG BỘ: Sử dụng "group/btn" để cô lập hiệu ứng, không bị kích hoạt chéo bởi thẻ cha */}
+              <Link
+                href="/careers/apply"
+                className="group/btn relative inline-flex items-center rounded-full border-2 border-slate-900 bg-white p-1.5 transition-colors"
+              >
+                {/* LỚP KHÓA VIỀN: Lớp này trùng khít với phần khoảng trống để màu đen lan tỏa KHÔNG đè lên viền trắng */}
+                <div className="pointer-events-none absolute inset-1.5 overflow-hidden rounded-full">
+                  {/* QUẢ BÓNG LĂN: Kéo giãn chiều ngang từ trái sang phải */}
+                  <div className="absolute top-0 left-0 h-full w-12 rounded-full bg-slate-900 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/btn:w-full" />
+                </div>
+
+                {/* Vòng tròn Icon */}
+                <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center text-white">
+                  <ArrowRight className="h-6 w-6 -rotate-45 transition-transform duration-500 ease-out group-hover/btn:translate-x-1 group-hover/btn:rotate-0" />
+                </div>
+
+                {/* Dòng chữ: Lúc đầu đen, hover thì chữ nổi thành màu trắng */}
+                <span className="relative z-10 pr-6 pl-3 text-lg font-bold text-slate-900 transition-colors duration-500 group-hover/btn:text-white">
+                  Gửi CV ngay
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

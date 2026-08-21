@@ -138,7 +138,7 @@ const products = [
     icon: MessageCircle,
     image: '/images/solutions/zhub.jpg',
     color: 'slate',
-    comingSoon: true, // Đánh dấu là sản phẩm sắp ra mắt
+    comingSoon: true,
     features: [
       'Hộp thư hợp nhất (Omnichannel)',
       'Tự động phân bổ hội thoại',
@@ -155,7 +155,7 @@ const products = [
     icon: LayoutGrid,
     image: '/images/solutions/ric-erp.jpg',
     color: 'slate',
-    comingSoon: true, // Đánh dấu là sản phẩm sắp ra mắt
+    comingSoon: true,
     features: [
       'Kế toán - Tài chính',
       'Quản trị nhân sự (HRM)',
@@ -324,13 +324,12 @@ export default function ProductsPage() {
             </p>
           </div>
 
-          {/* Sticky Tab Navigation */}
-          <div className="no-scrollbar sticky top-[68px] z-40 -mx-6 mb-10 flex gap-2 overflow-x-auto border-b border-slate-100 bg-white/90 px-6 py-6 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] backdrop-blur-xl md:mx-0 md:px-0">
+          <div className="no-scrollbar -mx-6 mb-12 flex gap-2 overflow-x-auto px-6 pb-4 md:-mx-4 md:px-4">
             {productCategories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`shrink-0 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 ${
+                className={`m-1 shrink-0 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 ${
                   activeCategory === cat.id
                     ? 'scale-105 bg-slate-900 text-white shadow-lg shadow-slate-900/20'
                     : 'border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-slate-900'
@@ -341,100 +340,93 @@ export default function ProductsPage() {
             ))}
           </div>
 
-          {/* App-Store Style Product Grid */}
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => {
               const theme = colorMap[product.color]
               return (
                 <div
                   key={product.id}
-                  className="group relative flex flex-col rounded-[2.5rem] border border-slate-200 bg-white p-2 shadow-sm transition-all duration-500 hover:border-slate-300 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)]"
+                  className="group relative flex flex-col rounded-[2rem] border border-slate-200 bg-white p-2 shadow-sm transition-all duration-500 hover:border-slate-300 hover:shadow-xl"
                 >
-                  {/* Image Header */}
-                  <div className="relative h-[300px] w-full overflow-hidden rounded-[2rem] bg-slate-100">
+                  <div className="relative h-[240px] w-full overflow-hidden rounded-[1.5rem] bg-slate-100">
                     <img
                       src={product.image}
                       alt={product.name}
-                      /* Thêm hiệu ứng ảnh mờ và trắng đen cho sản phẩm Coming Soon */
                       className={`h-full w-full object-cover transition-all duration-700 group-hover:scale-110 ${product.comingSoon ? 'opacity-80 grayscale-[60%] group-hover:opacity-100 group-hover:grayscale-0' : ''}`}
                     />
                     <div className="absolute inset-0 bg-slate-900/10 transition-colors duration-500 group-hover:bg-transparent" />
 
-                    {/* Floating Glass Badge (Category) */}
-                    <div className="absolute top-6 left-6 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-bold tracking-widest text-slate-900 uppercase shadow-xl backdrop-blur-md">
-                      <div className={`h-2 w-2 rounded-full ${theme.accent} animate-pulse`} />
+                    <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold tracking-widest text-slate-900 uppercase shadow-lg backdrop-blur-md">
+                      <div className={`h-1.5 w-1.5 rounded-full ${theme.accent} animate-pulse`} />
                       {productCategories.find((c) => c.id === product.category)?.label}
                     </div>
 
-                    {/* HIỂN THỊ BADGE SẮP RA MẮT */}
                     {product.comingSoon && (
-                      <div className="absolute top-6 right-6 inline-flex items-center gap-2 rounded-full border border-amber-400 bg-amber-500 px-4 py-2 text-xs font-bold tracking-widest text-white uppercase shadow-[0_10px_20px_rgba(245,158,11,0.4)]">
-                        <Clock className="animate-spin-slow h-4 w-4" />
+                      <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 rounded-full border border-amber-400 bg-amber-500 px-3 py-1.5 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg">
+                        <Clock className="animate-spin-slow h-3 w-3" />
                         Sắp ra mắt
                       </div>
                     )}
                   </div>
 
-                  {/* Content Body */}
-                  <div className="flex flex-1 flex-col p-8 md:p-10">
-                    <div className="mb-6 flex items-center gap-4">
-                      <div className={`rounded-2xl p-4 ${theme.bg} ${theme.text}`}>
-                        <product.icon className="h-8 w-8" />
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="mb-5 flex items-start gap-4">
+                      <div className={`shrink-0 rounded-xl p-3 ${theme.bg} ${theme.text}`}>
+                        <product.icon className="h-6 w-6" />
                       </div>
                       <div>
-                        <h3 className="text-3xl font-black tracking-tight text-slate-900">
+                        <h3 className="text-xl font-black tracking-tight text-slate-900">
                           {product.name}
                         </h3>
-                        <p className={`mt-1 font-bold ${theme.text}`}>{product.tagline}</p>
+                        <p className={`mt-1 text-sm font-bold ${theme.text}`}>{product.tagline}</p>
                       </div>
                     </div>
 
-                    <p className="mb-10 text-lg leading-relaxed font-medium text-slate-600">
+                    <p className="mb-6 line-clamp-3 text-base leading-relaxed font-medium text-slate-600">
                       {product.desc}
                     </p>
 
-                    <div className="mt-auto mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="mt-auto mb-8 grid grid-cols-1 gap-3">
                       {product.features.map((feat, i) => (
                         <div
                           key={i}
-                          className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4"
+                          className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3"
                         >
-                          <CheckCircle2 className={`h-5 w-5 shrink-0 ${theme.text}`} />
-                          <span className="text-sm font-semibold text-slate-700">{feat}</span>
+                          <CheckCircle2 className={`h-4 w-4 shrink-0 ${theme.text}`} />
+                          <span className="text-xs font-semibold text-slate-700">{feat}</span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Action Buttons (Đổi nút nếu là hàng Coming Soon) */}
-                    <div className="flex items-center justify-between border-t border-slate-100 pt-6">
+                    <div className="flex items-center justify-between border-t border-slate-100 pt-5">
                       {product.comingSoon ? (
                         <>
                           <Link
                             href={`/contact?interest=${product.id}`}
-                            className="flex items-center gap-2 font-bold text-amber-600 decoration-amber-300 decoration-2 underline-offset-4 hover:underline"
+                            className="text-sm font-bold text-amber-600 decoration-amber-300 decoration-2 underline-offset-4 hover:underline"
                           >
-                            Đăng ký nhận tin sớm
+                            Đăng ký nhận tin
                           </Link>
                           <Link
                             href={`/contact?interest=${product.id}`}
-                            className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 text-white transition-all group-hover:bg-amber-600 hover:scale-110 hover:shadow-[0_10px_20px_rgba(245,158,11,0.4)]"
+                            className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500 text-white transition-all hover:scale-110 hover:bg-amber-600 hover:shadow-lg"
                           >
-                            <Clock className="h-5 w-5" />
+                            <Clock className="h-4 w-4" />
                           </Link>
                         </>
                       ) : (
                         <>
                           <Link
                             href={`/products/${product.id}`}
-                            className="flex items-center gap-2 font-bold text-slate-900 decoration-slate-300 decoration-2 underline-offset-4 hover:underline"
+                            className="text-sm font-bold text-slate-900 decoration-slate-300 decoration-2 underline-offset-4 hover:underline"
                           >
                             Khám phá chi tiết
                           </Link>
                           <Link
                             href={`/products/${product.id}`}
-                            className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-white transition-all group-hover:bg-blue-600 hover:scale-110 hover:shadow-lg"
+                            className="group/btn flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white transition-all hover:scale-110 hover:bg-blue-600 hover:shadow-lg"
                           >
-                            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Link>
                         </>
                       )}
@@ -456,7 +448,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* 5. KHỐI CẮT CẢNH NỀN TỐI (Giữ nguyên) */}
+      {/* 5. KHỐI CẮT CẢNH NỀN TỐI */}
       <section className="relative mt-12 overflow-hidden bg-slate-950 py-32 text-white">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
         <div className="pointer-events-none absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l from-blue-600/20 to-transparent blur-[100px]" />
@@ -550,7 +542,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* 6. BOTTOM CTA (Giữ nguyên) */}
+      {/* 6. BOTTOM CTA (ĐÃ SỬA: KHÔNG TRÀN VIỀN - GIỮ NGUYÊN GAP BÊN TRONG) */}
       <section className="relative container mx-auto bg-white px-6 py-32 md:px-20">
         <div className="relative overflow-hidden rounded-[4rem] border border-slate-200 bg-slate-50 px-8 py-24 text-center shadow-2xl md:px-16 md:py-32">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] bg-[size:40px_40px]" />
@@ -567,12 +559,36 @@ export default function ProductsPage() {
             demo phù hợp nhất với mô hình của bạn.
           </p>
 
-          <div className="relative z-10 flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="relative z-10 flex justify-center">
+            {/* 
+               NÚT BẤM CHUẨN: 
+               - border-[2px]: Viền xám đậm ngoài cùng 
+               - p-1.5: Tạo khoảng trống (gap) màu trắng giữa viền và phần bên trong
+            */}
             <Link
               href="/contact"
-              className="rounded-full bg-slate-900 px-12 py-5 font-bold text-white transition-all hover:scale-105 hover:bg-blue-600 hover:shadow-[0_20px_40px_-10px_rgba(37,99,235,0.5)]"
+              className="group relative inline-flex items-center rounded-full border-2 border-slate-900 bg-white p-1.5 transition-colors"
             >
-              Yêu cầu Demo 1:1
+              {/* LỚP KHÓA VIỀN (inset-1.5): Lớp này trùng khít với phần khoảng trống (p-1.5) để màu đen lan tỏa KHÔNG đè lên viền trắng */}
+              <div className="pointer-events-none absolute inset-1.5 overflow-hidden rounded-full">
+                {/* 
+                   QUẢ BÓNG LĂN: 
+                   - Bỏ thuộc tính scale
+                   - Dùng thuộc tính kéo giãn width (từ w-12 ra w-full)
+                   => Quả bóng sẽ lăn dọc bên trong nút, dừng lại đúng bằng viền an toàn.
+                */}
+                <div className="absolute top-0 left-0 h-full w-12 rounded-full bg-slate-900 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full" />
+              </div>
+
+              {/* Vòng tròn Icon (Kích thước h-12 w-12 đúng bằng kích thước quả bóng lúc đầu) */}
+              <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center text-white">
+                <ArrowRight className="h-6 w-6 -rotate-45 transition-transform duration-500 ease-out group-hover:translate-x-1 group-hover:rotate-0" />
+              </div>
+
+              {/* Dòng chữ: Lúc đầu đen, hover thì chữ nổi thành màu trắng */}
+              <span className="relative z-10 pr-6 pl-3 text-lg font-bold text-slate-900 transition-colors duration-500 group-hover:text-white">
+                Yêu cầu Demo 1:1
+              </span>
             </Link>
           </div>
         </div>

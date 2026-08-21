@@ -1,14 +1,22 @@
 import type { Metadata } from 'next'
-import { Newsreader } from 'next/font/google'
+import { Inter, Montserrat } from 'next/font/google'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { BackToTop } from '@/components/shared/back-to-top'
 import { SITE_CONFIG } from '@/lib/constants'
 import './globals.css'
 
-const newsreader = Newsreader({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-serif',
+// 1. Cấu hình font Inter cho Body text
+const inter = Inter({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+// 2. Cấu hình font Montserrat cho Tiêu đề (Headings)
+const montserrat = Montserrat({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-montserrat',
   display: 'swap',
 })
 
@@ -63,7 +71,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi" className={newsreader.variable}>
+    // 3. Nhúng cả 2 biến font vào thẻ html
+    <html lang="vi" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="flex min-h-dvh flex-col antialiased">
         <Header />
         <main className="flex-1">{children}</main>

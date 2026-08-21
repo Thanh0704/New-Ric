@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     // 3. Soạn nội dung Email gửi đến bạn
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+      to: process.env.EMAIL_RECEIVER,
       subject: `[Website RIC] Khách hàng ${name} liên hệ mới!`,
       html: `
         <h2>Có một yêu cầu liên hệ mới từ Website</h2>

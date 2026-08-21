@@ -177,9 +177,8 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
-  html {
-    @apply font-sans;
-  }
+
+  /* Cấu hình Font Montserrat cho toàn bộ thẻ Tiêu đề */
   h1,
   h2,
   h3,
@@ -187,10 +186,20 @@
   h5,
   h6 {
     @apply tracking-tight;
+    font-family: var(--font-montserrat), sans-serif !important;
   }
-}
-@layer base {
-  html, body {
-    font-family: "Times New Roman", Times, serif !important;
+
+  /* Cấu hình Font Inter cho các đoạn text thông thường */
+  body,
+  p,
+  span,
+  a,
+  button,
+  div,
+  ul,
+  li,
+  input,
+  textarea {
+    font-family: var(--font-inter), sans-serif;
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { use } from 'react'
+import { use, useEffect, useState, useRef } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -31,7 +31,7 @@ import {
 } from 'lucide-react'
 
 // ----------------------------------------------------------------------
-// DATABASE: NỘI DUNG CHI TIẾT SẢN PHẨM (Đã sửa đường dẫn ảnh)
+// DATABASE: NỘI DUNG CHI TIẾT SẢN PHẨM
 // ----------------------------------------------------------------------
 const productDetails: Record<string, any> = {
   ecom: {
@@ -42,7 +42,7 @@ const productDetails: Record<string, any> = {
       'Được thiết kế để phục vụ bán hàng và quản trị hoạt động thương mại số. Cung cấp bộ lõi (Commerce Core) mạnh mẽ để quản lý đồng bộ từ Website, Zalo Mini App đến Native App.',
     target:
       'Đặc biệt phù hợp cho các doanh nghiệp SME, hộ kinh doanh và các thương hiệu bán lẻ đang muốn bắt đầu số hóa, tự động hóa hoặc mở rộng hệ sinh thái bán hàng của mình.',
-    image: '/images/solutions/ecom.jpg', // Đã sửa
+    image: '/images/solutions/ecom.jpg',
     theme: 'from-blue-600 to-cyan-400',
     iconColor: 'text-blue-500',
     bgLight: 'bg-blue-50',
@@ -100,7 +100,7 @@ const productDetails: Record<string, any> = {
       'Nền tảng hạ tầng tin nhắn hỗ trợ tự động hóa marketing và tối ưu hóa giao tiếp khách hàng, giúp doanh nghiệp gửi thông báo (đặc biệt qua Zalo ZNS) một cách thông minh.',
     target:
       'Rất hữu ích đối với các doanh nghiệp có lượng khách hàng lớn, cần giao tiếp qua nhiều điểm chạm như TMĐT, du lịch khách sạn, giáo dục, tài chính hoặc dịch vụ có lịch hẹn.',
-    image: '/images/solutions/ric-message.jpg', // Đã sửa
+    image: '/images/solutions/ric-message.jpg',
     theme: 'from-purple-600 to-pink-500',
     iconColor: 'text-purple-500',
     bgLight: 'bg-purple-50',
@@ -158,7 +158,7 @@ const productDetails: Record<string, any> = {
       'Unified Chat / Conversation Hub giúp gom tất cả các luồng giao tiếp với khách hàng từ nhiều kênh về một nơi duy nhất. Chuyển đổi hội thoại thành cơ hội bán hàng (Lead) hiệu quả.',
     target:
       'Sinh ra dành cho các doanh nghiệp SME có đội ngũ Sales/CSKH nhận tin nhắn từ nhiều nguồn, muốn quản lý tập trung để không bỏ sót khách và kiểm soát hiệu suất làm việc.',
-    image: '/images/solutions/zhub.jpg', // Đã sửa
+    image: '/images/solutions/zhub.jpg',
     theme: 'from-slate-700 to-slate-500',
     iconColor: 'text-slate-600',
     bgLight: 'bg-slate-100',
@@ -216,7 +216,7 @@ const productDetails: Record<string, any> = {
       'Nền tảng công nghệ chuyên sâu dùng để quản lý đội ngũ cộng tác viên (CTV) và các chương trình affiliate. Cung cấp công cụ tạo mã/link giới thiệu và theo dõi doanh số minh bạch.',
     target:
       'Phục vụ từ doanh nghiệp mới xây dựng chương trình CTV đơn giản, đến các hệ thống muốn mở rộng mạng lưới phân phối và cấu hình ma trận hoa hồng phức tạp đa tầng.',
-    image: '/images/solutions/ric-affiliate.jpg', // Đã sửa
+    image: '/images/solutions/ric-affiliate.jpg',
     theme: 'from-emerald-500 to-teal-400',
     iconColor: 'text-emerald-500',
     bgLight: 'bg-emerald-50',
@@ -274,7 +274,7 @@ const productDetails: Record<string, any> = {
       'Giải pháp tem QR thông minh đóng vai trò xác thực sản phẩm, bảo vệ thương hiệu. Quét mã QR độc nhất để chống hàng giả và theo dõi luồng hàng hóa qua các cấp phân phối.',
     target:
       'Đặc biệt phù hợp cho các doanh nghiệp sản xuất, thương hiệu mỹ phẩm, thực phẩm, dược phẩm có hệ thống phân phối phức tạp với nhiều đại lý và vùng bán hàng.',
-    image: '/images/solutions/ric-trust.jpg', // Đã sửa
+    image: '/images/solutions/ric-trust.jpg',
     theme: 'from-orange-500 to-amber-400',
     iconColor: 'text-orange-500',
     bgLight: 'bg-orange-50',
@@ -332,7 +332,7 @@ const productDetails: Record<string, any> = {
       'Nền tảng quản trị tích hợp CRM và PMS bao quát toàn bộ hành trình của khách du lịch. Giải quyết nghiệp vụ từ quản lý quỹ phòng, đặt phòng, đối soát đến kết nối OTA.',
     target:
       'Tối ưu hóa riêng cho ngành dịch vụ lưu trú (Hospitality), phục vụ hoàn hảo các mô hình từ homestay, villa, khách sạn nhỏ đến các khu resort quy mô lớn.',
-    image: '/images/solutions/ricio.jpg', // Đã sửa
+    image: '/images/solutions/ricio.jpg',
     theme: 'from-indigo-600 to-blue-500',
     iconColor: 'text-indigo-500',
     bgLight: 'bg-indigo-50',
@@ -390,7 +390,7 @@ const productDetails: Record<string, any> = {
       'Nền tảng quản trị doanh nghiệp tổng thể thiết kế theo cấu trúc phân hệ (module). Đồng bộ dữ liệu xuyên suốt từ Bán hàng, Mua hàng, Tồn kho, Kế toán đến Quản trị nhân sự.',
     target:
       'Dành cho các doanh nghiệp muốn số hóa và điều hành bài bản. Có thể mua theo từng gói module riêng lẻ tùy thuộc vào mức độ trưởng thành và quy mô vận hành.',
-    image: '/images/solutions/ric-erp.jpg', // Đã sửa
+    image: '/images/solutions/ric-erp.jpg',
     theme: 'from-slate-800 to-slate-600',
     iconColor: 'text-slate-700',
     bgLight: 'bg-slate-100',
@@ -444,7 +444,44 @@ const productDetails: Record<string, any> = {
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
-  const product = productDetails[id]
+  const product = productDetails[id] || null
+
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [activeStep, setActiveStep] = useState(-1)
+  const timelineRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!product) return
+
+    const handleScroll = () => {
+      if (!timelineRef.current) return
+
+      const rect = timelineRef.current.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+
+      const triggerPoint = windowHeight * 0.6
+      const start = rect.top - triggerPoint
+
+      let progress = 0
+      if (start < 0) {
+        progress = Math.min(100, Math.max(0, (Math.abs(start) / rect.height) * 100))
+      }
+      setScrollProgress(progress)
+
+      const stepSize = 100 / (product.roadmap.length || 1)
+      let currentStep = -1
+      product.roadmap.forEach((_: any, i: number) => {
+        if (progress > i * stepSize + 5) {
+          currentStep = i
+        }
+      })
+      setActiveStep(currentStep)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [product])
 
   if (!product) {
     notFound()
@@ -453,7 +490,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   return (
     <main className="min-h-screen bg-white">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-slate-950 pt-32 pb-20 text-white lg:pt-40 lg:pb-32">
+      <section className="relative overflow-hidden bg-slate-950 pt-8 pb-20 text-white lg:pt-12 lg:pb-32">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
         <div
           className={`absolute top-[-20%] right-[-10%] h-[800px] w-[800px] rounded-full bg-gradient-to-br ${product.theme} pointer-events-none opacity-20 blur-[120px]`}
@@ -516,8 +553,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
-
-                {/* Lớp Overlay Đối tượng phù hợp */}
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-10">
                   <div className="mb-3 inline-flex items-center gap-2 text-sm font-bold tracking-wider text-amber-400 uppercase">
                     <Target className="h-5 w-5" /> Giải pháp này dành cho ai?
@@ -532,7 +567,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* 2. KHỐI ƯU ĐIỂM NỔI BẬT */}
+      {/* 2. KHỐI ƯU ĐIỂM */}
       <section id="details" className="relative z-10 bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="mx-auto mb-16 max-w-3xl text-center">
@@ -543,7 +578,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               Sức mạnh công nghệ giúp {product.name} tạo ra sự khác biệt trên thị trường.
             </p>
           </div>
-
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {product.advantages.map((adv: any, idx: number) => (
               <div
@@ -563,7 +597,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* 3. KHỐI LỢI ÍCH & GIÁ TRỊ */}
+      {/* 3. LỢI ÍCH */}
       <section className="relative z-10 border-y border-slate-200 bg-slate-50 py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
@@ -585,21 +619,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 ))}
               </div>
             </div>
-
-            {/* Box trang trí hình ảnh/đồ họa bên phải (Đã nâng cấp ảnh nền mờ) */}
             <div className="group relative flex h-full min-h-[400px] flex-col justify-center overflow-hidden rounded-[3rem] p-10 shadow-2xl">
-              {/* Ảnh nền */}
               <Image
                 src={product.image}
                 alt="Vận hành thông minh"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
-
-              {/* Lớp phủ làm mờ đen để nổi chữ */}
               <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[3px] transition-colors duration-500 group-hover:bg-slate-900/70" />
-
-              {/* Nội dung chữ */}
               <div className="relative z-10 text-center">
                 <Database className="mx-auto mb-8 h-24 w-24 animate-pulse text-white drop-shadow-lg" />
                 <h3 className="mb-4 text-3xl font-black text-white drop-shadow-md">
@@ -614,7 +641,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* 4. LỘ TRÌNH TRIỂN KHAI (TIMELINE) */}
+      {/* 4. LỘ TRÌNH (REVEAL ANIMATION) */}
       <section className="relative z-10 bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="mx-auto mb-20 max-w-3xl text-center">
@@ -622,53 +649,69 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               Lộ trình triển khai dự kiến
             </h2>
             <p className="text-lg font-medium text-slate-500">
-              Quy trình làm việc chuyên nghiệp, rõ ràng giúp doanh nghiệp hoàn toàn an tâm khi áp
-              dụng hệ thống mới.
+              Quy trình làm việc chuyên nghiệp, rõ ràng giúp doanh nghiệp hoàn toàn an tâm.
             </p>
           </div>
 
-          <div className="relative mx-auto max-w-4xl">
-            <div className="absolute top-0 bottom-0 left-[27px] w-1 bg-slate-100 md:left-1/2 md:-translate-x-1/2" />
+          <div className="relative mx-auto max-w-4xl py-10" ref={timelineRef}>
+            {/* Đường line gốc ĐÃ SỬA CĂN GIỮA */}
+            <div className="absolute top-0 bottom-0 left-[28px] w-1.5 -translate-x-1/2 rounded-full bg-slate-100 md:left-1/2" />
 
-            {product.roadmap.map((step: any, idx: number) => (
-              <div
-                key={idx}
-                className={`relative mb-12 flex flex-col items-start justify-between md:flex-row md:items-center ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-              >
-                <div className="hidden w-[45%] md:block" />
+            {/* Đường line tiến trình ĐÃ SỬA CĂN GIỮA */}
+            <div
+              className={`absolute top-0 left-[28px] w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b ${product.theme} transition-all duration-100 ease-out md:left-1/2`}
+              style={{ height: `${scrollProgress}%` }}
+            />
 
+            {product.roadmap.map((step: any, idx: number) => {
+              const isActive = idx <= activeStep
+
+              // CSS của hiệu ứng Reveal (Ẩn & Trượt lên)
+              const boxClass = isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
+              const circleClass = isActive
+                ? `bg-gradient-to-r ${product.theme} scale-110 shadow-lg text-white border-white`
+                : 'bg-slate-100 text-slate-400 scale-50 opacity-0 border-slate-200'
+
+              return (
                 <div
-                  className={`absolute left-0 h-14 w-14 rounded-full border-4 border-white bg-gradient-to-r md:left-1/2 ${product.theme} z-10 mt-1 flex items-center justify-center font-black text-white shadow-lg md:mt-0 md:-translate-x-1/2`}
+                  key={idx}
+                  className={`relative mb-16 flex flex-col items-start justify-between md:flex-row md:items-center ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                 >
-                  {idx + 1}
-                </div>
+                  <div className="hidden w-[45%] md:block" />
 
-                <div
-                  className={`w-full pl-20 md:w-[45%] md:pl-0 ${idx % 2 === 0 ? 'md:pl-10' : 'md:pr-10 md:text-right'}`}
-                >
-                  <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
-                    <span
-                      className={`mb-3 inline-block rounded-lg px-3 py-1 text-xs font-black tracking-wider uppercase ${product.bgLight} ${product.iconColor}`}
-                    >
-                      {step.phase}
-                    </span>
-                    <h4 className="mb-2 text-xl font-black text-slate-900">{step.title}</h4>
-                    <p className="font-medium text-slate-600">{step.desc}</p>
+                  {/* Vòng tròn số ĐÃ SỬA VỊ TRÍ NẰM CHUẨN TRÊN ĐƯỜNG LINE */}
+                  <div
+                    className={`absolute left-[28px] z-10 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-4 font-black transition-all duration-700 md:left-1/2 ${circleClass}`}
+                  >
+                    {idx + 1}
+                  </div>
+
+                  <div
+                    className={`w-full pl-20 transition-all duration-700 ease-out md:w-[45%] md:pl-0 ${boxClass} ${idx % 2 === 0 ? 'md:pl-10' : 'md:pr-10 md:text-right'}`}
+                  >
+                    <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                      <span
+                        className={`mb-3 inline-block rounded-lg px-3 py-1 text-xs font-black tracking-wider uppercase ${product.bgLight} ${product.iconColor}`}
+                      >
+                        {step.phase}
+                      </span>
+                      <h4 className="mb-2 text-xl font-black text-slate-900">{step.title}</h4>
+                      <p className="font-medium text-slate-600">{step.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* 5. KHỐI CALL TO ACTION (CTA) */}
+      {/* 5. KHỐI CTA */}
       <section className="relative container mx-auto border-t border-slate-100 bg-white px-6 py-20 md:px-20">
         <div className="relative overflow-hidden rounded-[3rem] bg-slate-900 px-8 py-20 text-center shadow-2xl md:px-16 md:py-24">
           <div
             className={`absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l ${product.theme} pointer-events-none opacity-20 blur-[100px]`}
           />
-
           <h2 className="relative z-10 mx-auto mb-6 max-w-3xl text-3xl leading-tight font-black text-white md:text-5xl">
             Bắt đầu số hóa cùng {product.name}
           </h2>
@@ -676,7 +719,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             Tặng ngay gói tư vấn lộ trình chuyển đổi số và thiết lập hệ thống Demo 1:1 miễn phí cho
             doanh nghiệp của bạn.
           </p>
-
           <div className="relative z-10">
             <Link
               href={`/contact?interest=${id}`}
