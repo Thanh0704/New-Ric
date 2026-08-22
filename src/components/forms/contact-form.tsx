@@ -152,11 +152,13 @@ export function ContactForm() {
                 <SelectValue placeholder="Chọn dịch vụ..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="erp">Hệ thống quản trị (ERP)</SelectItem>
-                <SelectItem value="crm">Chăm sóc khách hàng (CRM)</SelectItem>
-                <SelectItem value="marketing">Marketing kĩ thuật số</SelectItem>
-                <SelectItem value="dev">Phát triển phần mềm</SelectItem>
-                <SelectItem value="ecommerce">Thương mại điện tử</SelectItem>
+                <SelectItem value="Hệ thống quản trị (ERP) ">Hệ thống quản trị (ERP)</SelectItem>
+                <SelectItem value="Chăm sóc khách hàng (CRM) ">
+                  Chăm sóc khách hàng (CRM)
+                </SelectItem>
+                <SelectItem value="Marketing kĩ thuật số  ">Marketing kĩ thuật số</SelectItem>
+                <SelectItem value="Phát triển phần mềm">Phát triển phần mềm</SelectItem>
+                <SelectItem value="Thương mại điện tử">Thương mại điện tử</SelectItem>
               </SelectContent>
             </Select>
           )}

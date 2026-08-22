@@ -71,8 +71,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    // 3. Nhúng cả 2 biến font vào thẻ html
-    <html lang="vi" className={`${inter.variable} ${montserrat.variable}`}>
+    // ĐÃ THÊM 'scroll-smooth' VÀO ĐÂY 👇
+    <html lang="vi" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
       <body className="flex min-h-dvh flex-col antialiased">
         <Header />
         <main className="flex-1">{children}</main>

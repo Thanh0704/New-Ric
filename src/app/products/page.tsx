@@ -1,26 +1,21 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import {
   ArrowRight,
   CheckCircle2,
   LayoutGrid,
   Cloud,
   ShieldCheck,
-  Zap,
   Database,
-  Smartphone,
-  Settings,
   Users,
-  BarChart3,
   ShoppingCart,
   Briefcase,
   ChevronRight,
   Globe,
-  Lock,
   Search,
   CreditCard,
-  Boxes,
   Truck,
   Code2,
   Server,
@@ -165,49 +160,45 @@ const products = [
   },
 ]
 
-export default function ProductsPage() {
+// TÁCH PHẦN NỘI DUNG CHÍNH RA MỘT COMPONENT RIÊNG ĐỂ DÙNG useSearchParams
+function ProductsContent() {
+  const searchParams = useSearchParams()
+  const categoryFromUrl = searchParams.get('category')
+
   const [activeCategory, setActiveCategory] = useState('all')
+
+  // Đọc URL khi trang vừa load xong và tự động cuộn trang
+  useEffect(() => {
+    if (categoryFromUrl) {
+      // Kiểm tra xem mã trên URL có khớp với danh mục nào không, nếu có thì tự động nhảy tab
+      const isValidCategory = productCategories.some(cat => cat.id === categoryFromUrl)
+      if (isValidCategory) {
+        setActiveCategory(categoryFromUrl)
+        
+        // Tự động cuộn mượt mà xuống khối "solutions"
+        setTimeout(() => {
+          const solutionSection = document.getElementById('solutions')
+          if (solutionSection) {
+            solutionSection.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            })
+          }
+        }, 300) // Đợi 300ms để Next.js render xong
+      }
+    }
+  }, [categoryFromUrl])
 
   const filteredProducts =
     activeCategory === 'all' ? products : products.filter((p) => p.category === activeCategory)
 
   const colorMap: Record<string, any> = {
-    blue: {
-      bg: 'bg-blue-50',
-      text: 'text-blue-600',
-      border: 'border-blue-100',
-      accent: 'bg-blue-600',
-    },
-    cyan: {
-      bg: 'bg-cyan-50',
-      text: 'text-cyan-600',
-      border: 'border-cyan-100',
-      accent: 'bg-cyan-600',
-    },
-    indigo: {
-      bg: 'bg-indigo-50',
-      text: 'text-indigo-600',
-      border: 'border-indigo-100',
-      accent: 'bg-indigo-600',
-    },
-    emerald: {
-      bg: 'bg-emerald-50',
-      text: 'text-emerald-600',
-      border: 'border-emerald-100',
-      accent: 'bg-emerald-600',
-    },
-    violet: {
-      bg: 'bg-violet-50',
-      text: 'text-violet-600',
-      border: 'border-violet-100',
-      accent: 'bg-violet-600',
-    },
-    slate: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
-      accent: 'bg-slate-700',
-    },
+    blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-100', accent: 'bg-blue-600' },
+    cyan: { bg: 'bg-cyan-50', text: 'text-cyan-600', border: 'border-cyan-100', accent: 'bg-cyan-600' },
+    indigo: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', accent: 'bg-indigo-600' },
+    emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-100', accent: 'bg-emerald-600' },
+    violet: { bg: 'bg-violet-50', text: 'text-violet-600', border: 'border-violet-100', accent: 'bg-violet-600' },
+    slate: { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-200', accent: 'bg-slate-700' },
   }
 
   return (
@@ -264,15 +255,6 @@ export default function ProductsPage() {
             Phá vỡ ranh giới dữ liệu, tự động hóa luồng công việc và kiến tạo lợi thế cạnh tranh
             tuyệt đối với bộ giải pháp công nghệ từ Ricvina.
           </p>
-
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
-              href="#solutions"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-10 py-5 font-bold text-white transition-all hover:-translate-y-1 hover:bg-blue-600 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)]"
-            >
-              Khám phá giải pháp <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -542,7 +524,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* 6. BOTTOM CTA (ĐÃ SỬA: KHÔNG TRÀN VIỀN - GIỮ NGUYÊN GAP BÊN TRONG) */}
+      {/* 6. BOTTOM CTA */}
       <section className="relative container mx-auto bg-white px-6 py-32 md:px-20">
         <div className="relative overflow-hidden rounded-[4rem] border border-slate-200 bg-slate-50 px-8 py-24 text-center shadow-2xl md:px-16 md:py-32">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] bg-[size:40px_40px]" />
@@ -560,32 +542,18 @@ export default function ProductsPage() {
           </p>
 
           <div className="relative z-10 flex justify-center">
-            {/* 
-               NÚT BẤM CHUẨN: 
-               - border-[2px]: Viền xám đậm ngoài cùng 
-               - p-1.5: Tạo khoảng trống (gap) màu trắng giữa viền và phần bên trong
-            */}
             <Link
               href="/contact"
               className="group relative inline-flex items-center rounded-full border-2 border-slate-900 bg-white p-1.5 transition-colors"
             >
-              {/* LỚP KHÓA VIỀN (inset-1.5): Lớp này trùng khít với phần khoảng trống (p-1.5) để màu đen lan tỏa KHÔNG đè lên viền trắng */}
               <div className="pointer-events-none absolute inset-1.5 overflow-hidden rounded-full">
-                {/* 
-                   QUẢ BÓNG LĂN: 
-                   - Bỏ thuộc tính scale
-                   - Dùng thuộc tính kéo giãn width (từ w-12 ra w-full)
-                   => Quả bóng sẽ lăn dọc bên trong nút, dừng lại đúng bằng viền an toàn.
-                */}
                 <div className="absolute top-0 left-0 h-full w-12 rounded-full bg-slate-900 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full" />
               </div>
 
-              {/* Vòng tròn Icon (Kích thước h-12 w-12 đúng bằng kích thước quả bóng lúc đầu) */}
               <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center text-white">
                 <ArrowRight className="h-6 w-6 -rotate-45 transition-transform duration-500 ease-out group-hover:translate-x-1 group-hover:rotate-0" />
               </div>
 
-              {/* Dòng chữ: Lúc đầu đen, hover thì chữ nổi thành màu trắng */}
               <span className="relative z-10 pr-6 pl-3 text-lg font-bold text-slate-900 transition-colors duration-500 group-hover:text-white">
                 Yêu cầu Demo 1:1
               </span>
@@ -594,5 +562,14 @@ export default function ProductsPage() {
         </div>
       </section>
     </main>
+  )
+}
+
+// COMPONENT CHÍNH EXPORT RA ĐƯỢC BỌC TRONG SUSPENSE (Chuẩn Next.js 13+)
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <ProductsContent />
+    </Suspense>
   )
 }
