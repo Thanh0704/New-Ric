@@ -107,16 +107,28 @@ export default async function CareerDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Nút Ứng tuyển cố định bên dưới cột trái */}
-            <div className="mt-8">
+            {/* Nút Ứng tuyển cố định bên dưới cột trái - ĐÃ ĐƯỢC ĐỘ THÀNH NÚT LĂN */}
+            <div className="relative z-10 mt-8 flex w-full">
+              {/* LƯU Ý: Đảm bảo đường dẫn /careers/apply đúng với cấu trúc thư mục của bạn */}
               <Link
-                href="/contact"
-                className="group flex w-full items-center justify-between rounded-[2rem] bg-blue-600 p-2 pr-6 text-white shadow-xl shadow-blue-600/20 transition-all hover:scale-[1.02] hover:bg-blue-700"
+                href={`/careers/apply?position=${career.title}`}
+                className="group relative flex w-full items-center rounded-full border-2 border-slate-900 bg-white p-1.5 transition-colors"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-blue-600 transition-transform duration-500 group-hover:rotate-45">
-                  <ArrowRight className="h-6 w-6" />
+                {/* LỚP KHÓA VIỀN */}
+                <div className="pointer-events-none absolute inset-1.5 overflow-hidden rounded-full">
+                  {/* QUẢ BÓNG LĂN */}
+                  <div className="absolute top-0 left-0 h-full w-12 rounded-full bg-slate-900 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full" />
                 </div>
-                <span className="text-lg font-black">Ứng tuyển ngay</span>
+
+                {/* Vòng tròn Icon */}
+                <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center text-white">
+                  <ArrowRight className="h-6 w-6 -rotate-45 transition-transform duration-500 ease-out group-hover:translate-x-1 group-hover:rotate-0" />
+                </div>
+
+                {/* Dòng chữ */}
+                <span className="relative z-10 flex-1 pr-12 text-center text-lg font-bold text-slate-900 transition-colors duration-500 group-hover:text-white">
+                  Ứng tuyển ngay
+                </span>
               </Link>
             </div>
           </div>

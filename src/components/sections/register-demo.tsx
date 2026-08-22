@@ -143,7 +143,7 @@ export function RegisterDemo() {
                     disabled={isSubmitting}
                     className="group mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#3b82f6] px-8 py-4 font-bold text-white transition-all hover:bg-[#2563eb] disabled:opacity-70"
                   >
-                    {isSubmitting ? 'Đang gửi...' : 'GỬI YÊU CẦU DEMO'}
+                    {isSubmitting ? 'Đang gửi...' : 'LIÊN HỆ TƯ VẤN'}
                     {!isSubmitting && (
                       <Send className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     )}

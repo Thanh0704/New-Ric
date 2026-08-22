@@ -1,12 +1,15 @@
 import { Hero } from '@/components/sections/hero'
 import { Solutions } from '@/components/sections/solutions'
 // import { Features } from '@/components/sections/features'
-import { Stats } from '@/components/sections/stats'
-import { Process } from '@/components/sections/process'
-import { Comparison } from '@/components/sections/comparison'
-import { CTA } from '@/components/sections/cta'
-import { Partners } from '@/components/sections/partners'
-import { Testimonials } from '@/components/sections/testimonials'
+import { BusinessProblems } from '@/components/sections/business-problems'
+// import { Stats } from '@/components/sections/stats'
+// import { Process } from '@/components/sections/process'
+import { SolutionJourneys } from '@/components/sections/solution-journeys'
+import { ProductSpotlight } from '@/components/sections/product-spotlight'
+import { IntegrationEcosystem } from '@/components/sections/integration-ecosystem'
+import { Insights } from '@/components/sections/insights'
+import { DeliveryModel } from '@/components/sections/delivery-model'
+import { WhyRic } from '@/components/sections/why-ric'
 import { RegisterDemo } from '@/components/sections/register-demo'
 import { StructuredData } from '@/components/shared/structured-data'
 import { SITE_CONFIG } from '@/lib/constants'
@@ -33,13 +36,13 @@ export default function HomePage() {
       <StructuredData data={orgSchema} />
       <Hero />
       <Solutions />
-
-      <Stats />
-      <Process />
-      <Comparison />
-      <CTA />
-      <Partners />
-      <Testimonials />
+      <BusinessProblems />
+      <SolutionJourneys />
+      <ProductSpotlight />
+      <IntegrationEcosystem />
+      <Insights />
+      <DeliveryModel />
+      <WhyRic />
       <RegisterDemo />
     </>
   )

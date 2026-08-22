@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
   ChevronRight,
@@ -15,7 +16,11 @@ import {
   Loader2,
 } from 'lucide-react'
 
-export default function ApplyPage() {
+// Tách Form ra một Component riêng để bọc Suspense (Chuẩn của Next.js khi dùng param từ URL)
+function ApplyFormContent() {
+  const searchParams = useSearchParams()
+  const positionFromUrl = searchParams.get('position') || ''
+
   const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -23,11 +28,18 @@ export default function ApplyPage() {
   // Khai báo state cho các input
   const [formData, setFormData] = useState({
     name: '',
-    position: '',
+    position: positionFromUrl,
     email: '',
     phone: '',
     message: '',
   })
+
+  // Cập nhật lại form nếu URL thay đổi
+  useEffect(() => {
+    if (positionFromUrl) {
+      setFormData((prev) => ({ ...prev, position: positionFromUrl }))
+    }
+  }, [positionFromUrl])
 
   // Xử lý khi chọn file
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,20 +167,20 @@ export default function ApplyPage() {
                   </label>
                   <div className="relative">
                     <Briefcase className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                    <select
+                    <input
+                      type="text"
                       name="position"
                       required
+                      readOnly={!!positionFromUrl} // Khóa ô không cho sửa nếu có URL truyền tới
                       value={formData.position}
                       onChange={handleChange}
-                      className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 py-3 pr-4 pl-12 font-medium text-slate-900 transition-colors focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-600/10 focus:outline-none"
-                    >
-                      <option value="">Chọn vị trí...</option>
-                      <option value="Frontend">Lập trình viên Frontend (ReactJS/NextJS)</option>
-                      <option value="Backend">Lập trình viên Backend (NodeJS/Java)</option>
-                      <option value="BA">Chuyên viên Phân tích nghiệp vụ (BA)</option>
-                      <option value="Sales">Chuyên viên Kinh doanh phần mềm (B2B Sales)</option>
-                      <option value="Hồ sơ mở">Hồ sơ mở (Vị trí khác)</option>
-                    </select>
+                      placeholder="Ví dụ: Senior Fullstack Developer"
+                      className={`w-full rounded-xl border border-slate-200 py-3 pr-4 pl-12 font-medium text-slate-900 transition-colors focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 focus:outline-none ${
+                        positionFromUrl
+                          ? 'cursor-not-allowed bg-slate-200 text-slate-600'
+                          : 'bg-slate-50 focus:bg-white'
+                      }`}
+                    />
                   </div>
                 </div>
 
@@ -283,5 +295,20 @@ export default function ApplyPage() {
         </div>
       </section>
     </main>
+  )
+}
+
+// Bọc toàn bộ trang bằng Suspense để Next.js không báo lỗi khi build
+export default function ApplyPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center font-medium text-slate-500">
+          Đang tải biểu mẫu...
+        </div>
+      }
+    >
+      <ApplyFormContent />
+    </Suspense>
   )
 }
