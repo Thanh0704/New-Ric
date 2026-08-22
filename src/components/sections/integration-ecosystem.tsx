@@ -40,8 +40,10 @@ const integrationCategories = [
 
 export function IntegrationEcosystem() {
   return (
+    // ĐÃ THÊM ID VÀ KHOẢNG TRỐNG SCROLL-MT-24 VÀO ĐÂY 👇
     <section
-      className="bg-slate-930 relative overflow-hidden py-24 lg:py-32"
+      id="ric-ecosystem"
+      className="relative scroll-mt-24 overflow-hidden py-24 lg:py-32"
       style={{ backgroundColor: '#0b1329' }}
     >
       {/* Background Decor */}

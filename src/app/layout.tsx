@@ -72,7 +72,7 @@ export default function RootLayout({
 }>) {
   return (
     // ĐÃ THÊM 'scroll-smooth' VÀO ĐÂY 👇
-    <html lang="vi" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
+    <html lang="vi" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="flex min-h-dvh flex-col antialiased">
         <Header />
         <main className="flex-1">{children}</main>

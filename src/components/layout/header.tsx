@@ -10,12 +10,8 @@ import { buttonVariants } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { DiscoveryModal } from '@/components/shared/discovery-modal'
 
-// --- CẤU TRÚC MENU MỚI THEO CHUẨN B2B SAAS ---
 const newNavData = [
-  {
-    label: 'Trang chủ',
-    href: '/',
-  },
+  { label: 'Trang chủ', href: '/' },
   {
     label: 'Sản phẩm',
     isMega: true,
@@ -70,10 +66,7 @@ const newNavData = [
       },
     ],
   },
-  {
-    label: 'Khách hàng',
-    href: '/customers',
-  },
+  { label: 'Khách hàng', href: '/customers' },
   {
     label: 'Tài nguyên',
     isMega: false,
@@ -81,8 +74,7 @@ const newNavData = [
       {
         category: '',
         items: [
-          // ĐÃ CẬP NHẬT ĐƯỜNG LINK ANCHOR (NEO) VỀ ĐÚNG KHỐI INSIGHTS Ở TRANG CHỦ 👇
-          { label: 'RIC Insights', href: '/#ric-insights' },
+          { label: 'RIC Insights', href: '/?scrollTo=insights' },
           { label: 'Case Studies', href: '#' },
           { label: 'Kiến thức & Hướng dẫn', href: '#' },
           { label: 'Tài liệu sản phẩm', href: '#' },
@@ -98,7 +90,7 @@ const newNavData = [
         category: '',
         items: [
           { label: 'Câu chuyện của chúng tôi', href: '#' },
-          { label: 'Hệ sinh thái RIC', href: '#' },
+          { label: 'Hệ sinh thái RIC', href: '/?scrollTo=ecosystem' },
           { label: 'Đối tác', href: '#' },
           { label: 'Tuyển dụng', href: '/careers' },
           { label: 'Liên hệ', href: '/contact' },
@@ -124,6 +116,24 @@ export function Header() {
     setOpenMobileMenus((prev) => ({ ...prev, [label]: !prev[label] }))
   }
 
+  // HÀM XỬ LÝ CLICK THÔNG MINH (CHẶN NHẢY LÊN ĐẦU TRANG NẾU ĐANG Ở TRANG CHỦ)
+  const handleSmartClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (pathname === '/') {
+      if (href === '/') {
+        e.preventDefault()
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else if (href.includes('?scrollTo=')) {
+        e.preventDefault() // Chặn hành vi chuyển trang mặc định
+        const param = href.split('?scrollTo=')[1]
+        const targetId =
+          param === 'insights' ? 'ric-insights' : param === 'ecosystem' ? 'ric-ecosystem' : ''
+        if (targetId) {
+          document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }
+    }
+  }
+
   return (
     <>
       <header
@@ -131,12 +141,16 @@ export function Header() {
           'fixed top-0 left-0 z-40 w-full transition-all duration-300',
           isScrolled
             ? 'border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95'
-            : 'border-b border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-900', // Luôn giữ nền trắng/tối để logo png hiển thị rõ
+            : 'border-b border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-900',
         )}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-10">
-          {/* 1. LOGO */}
-          <Link href="/" className="flex shrink-0 items-center gap-3">
+          {/* LOGO */}
+          <Link
+            href="/"
+            onClick={(e) => handleSmartClick(e, '/')}
+            className="flex shrink-0 items-center gap-3"
+          >
             <Image
               src="/images/logo.png"
               alt="RIC Việt Nam Logo"
@@ -146,7 +160,7 @@ export function Header() {
             />
           </Link>
 
-          {/* 2. DESKTOP NAVIGATION */}
+          {/* DESKTOP NAVIGATION */}
           <nav className="hidden items-center gap-x-8 lg:flex">
             {newNavData.map((nav) =>
               nav.children ? (
@@ -156,7 +170,6 @@ export function Header() {
                     <ChevronDown className="h-4 w-4 transition-transform group-hover:-rotate-180" />
                   </button>
 
-                  {/* Dropdown / Mega Menu */}
                   <div
                     className={cn(
                       'invisible absolute top-full mt-2 opacity-0 shadow-2xl transition-all group-hover:visible group-hover:mt-0 group-hover:opacity-100',
@@ -177,6 +190,7 @@ export function Header() {
                                     <li key={item.href}>
                                       <Link
                                         href={item.href}
+                                        onClick={(e) => handleSmartClick(e, item.href)}
                                         className="block text-sm font-bold text-slate-700 hover:text-blue-600 dark:text-slate-300"
                                       >
                                         {item.label}
@@ -210,6 +224,7 @@ export function Header() {
                                   <li key={item.label}>
                                     <Link
                                       href={item.href}
+                                      onClick={(e) => handleSmartClick(e, item.href)}
                                       className="block rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-blue-600 dark:text-slate-300 dark:hover:bg-slate-800"
                                     >
                                       {item.label}
@@ -228,6 +243,7 @@ export function Header() {
                 <Link
                   key={nav.label}
                   href={nav.href || '#'}
+                  onClick={(e) => handleSmartClick(e, nav.href)}
                   className="text-sm font-bold text-slate-700 transition-colors hover:text-blue-600 dark:text-slate-200"
                 >
                   {nav.label}
@@ -236,7 +252,7 @@ export function Header() {
             )}
           </nav>
 
-          {/* 3. RIGHT SIDE: SMART CTA + MOBILE MENU */}
+          {/* MOBILE NAVIGATION ... (Giữ nguyên) */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsModalOpen(true)}
@@ -260,7 +276,7 @@ export function Header() {
                           onClick={() => toggleMobileMenu(nav.label)}
                           className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800"
                         >
-                          {nav.label}
+                          {nav.label}{' '}
                           <ChevronDown
                             className={cn(
                               'h-4 w-4 transition-transform duration-200',
@@ -282,6 +298,7 @@ export function Header() {
                                     <Link
                                       key={item.label}
                                       href={item.href}
+                                      onClick={(e) => handleSmartClick(e, item.href)}
                                       className="text-sm font-medium text-slate-600 dark:text-slate-400"
                                     >
                                       {item.label}
@@ -297,6 +314,7 @@ export function Header() {
                       <Link
                         key={nav.label}
                         href={nav.href || '#'}
+                        onClick={(e) => handleSmartClick(e, nav.href)}
                         className="rounded-lg px-3 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800"
                       >
                         {nav.label}

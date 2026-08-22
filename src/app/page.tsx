@@ -1,3 +1,5 @@
+import { Suspense } from 'react' // THÊM IMPORT NÀY
+import { HomeScrollManager } from '@/components/shared/home-scroll-manager' // THÊM IMPORT NÀY
 import { Hero } from '@/components/sections/hero'
 import { Solutions } from '@/components/sections/solutions'
 // import { Features } from '@/components/sections/features'
@@ -34,6 +36,11 @@ export default function HomePage() {
   return (
     <>
       <StructuredData data={orgSchema} />
+      {/* ĐẶT TRẠM THU SÓNG VÀO ĐÂY 👇 */}
+      <Suspense fallback={null}>
+        <HomeScrollManager />
+      </Suspense>
+      {/* 👆 */}
       <Hero />
       <Solutions />
       <BusinessProblems />

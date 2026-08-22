@@ -5,21 +5,38 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation' // IMPORT THÊM CÁI NÀY
 
 const productLinks = [
-  { label: 'Hệ thống Quản trị', href: '/products' },
-  { label: 'Hệ thống Hỗ trợ Kinh doanh', href: '/products' },
-  { label: 'Hệ thống Truyền thông', href: '/products' },
-  { label: 'Hệ thống Chăm sóc khách hàng', href: '/products' },
-  { label: 'Giải pháp', href: '/products' },
+  { label: 'RIC ECOM', href: '/products/ecom' },
+  { label: 'RIC Affiliate', href: '/products/ric-affiliate' },
+  { label: 'ZHUB', href: '/products/zhub' },
+  { label: 'RIC Message', href: '/products/ric-message' },
+  { label: 'RIC ERP', href: '/products/ric-erp' },
+  { label: 'RICIO', href: '/products/ricio' },
+  { label: 'RIC Trust', href: '/products/ric-trust' },
+]
+
+const solutionLinks = [
+  { label: 'Bán hàng và Thương mại', href: '/products?category=sales' },
+  { label: 'Marketing & Tương tác', href: '/products?category=marketing' },
+  { label: 'Quản trị chuyên ngành', href: '/products?category=management' },
+  { label: 'Bảo vệ thương hiệu', href: '/products?category=security' },
+]
+
+const resourceLinks = [
+  { label: 'RIC Insights', href: '/?scrollTo=insights' },
+  { label: 'Case Studies', href: '#' },
+  { label: 'Kiến thức & Hướng dẫn', href: '#' },
+  { label: 'Tài liệu sản phẩm', href: '#' },
 ]
 
 const aboutLinks = [
-  { label: 'Câu chuyện thương hiệu', href: '/about' },
-  { label: 'Đội ngũ chuyên gia', href: '/about' },
-  { label: 'Đối tác chiến lược', href: '/about' },
-  { label: 'Cơ hội nghề nghiệp', href: '/careers' },
-  { label: 'Tin tức công nghệ', href: '/news' },
+  { label: 'Câu chuyện của chúng tôi', href: '#' },
+  { label: 'Hệ sinh thái RIC', href: '/?scrollTo=ecosystem' },
+  { label: 'Đối tác', href: '#' },
+  { label: 'Tuyển dụng', href: '/careers' },
+  { label: 'Liên hệ', href: '/contact' },
 ]
 
 const policyLinks = [
@@ -31,9 +48,11 @@ const policyLinks = [
 function AccordionColumn({
   title,
   links,
+  onSmartClick, // NHẬN HÀM XỬ LÝ CLICK TỪ FOOTER
 }: {
   title: string
   links: { label: string; href: string }[]
+  onSmartClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void
 }) {
   const [open, setOpen] = useState(false)
 
@@ -57,6 +76,7 @@ function AccordionColumn({
           <li key={link.label}>
             <Link
               href={link.href}
+              onClick={(e) => onSmartClick(e, link.href)} // SỬ DỤNG HÀM CLICK Ở ĐÂY
               className="font-medium text-slate-600 transition-colors hover:text-[#3b82f6]"
             >
               {link.label}
@@ -69,18 +89,31 @@ function AccordionColumn({
 }
 
 export function Footer() {
+  const pathname = usePathname() // LẤY PATHNAME HIỆN TẠI
+
+  // HÀM CLICK THÔNG MINH CHO FOOTER
+  const handleSmartClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (pathname === '/' && href.includes('?scrollTo=')) {
+      e.preventDefault()
+      const param = href.split('?scrollTo=')[1]
+      const targetId =
+        param === 'insights' ? 'ric-insights' : param === 'ecosystem' ? 'ric-ecosystem' : ''
+      if (targetId) {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }
+
   return (
     <footer
       className="relative bg-cover bg-fixed bg-center px-4 pt-32 pb-8 md:pt-40 md:pb-12"
       style={{ backgroundImage: "url('/images/hero/form-dk.jpg')" }}
     >
-      {/* Lớp phủ đã được đồng bộ màu và độ mờ giống hệt Form Đăng ký */}
       <div className="absolute inset-0 bg-[#0b1329]/80 backdrop-blur-[2px]"></div>
 
-      {/* KHỐI CARD FOOTER TRẮNG LƠ LỬNG */}
       <div className="relative z-10 mx-auto max-w-7xl rounded-[2rem] bg-white p-8 shadow-2xl md:p-12 lg:p-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
-          {/* Cột 1: Thông tin công ty */}
+          {/* Cột 1: Thông tin */}
           <div className="space-y-6 md:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3">
               <Image
@@ -109,12 +142,38 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Cột 2, 3, 4: Menu liên kết */}
-          <AccordionColumn title="Sản phẩm" links={productLinks} />
-          <AccordionColumn title="Về chúng tôi" links={aboutLinks} />
-          <AccordionColumn title="Chính sách" links={policyLinks} />
+          {/* Cột 2, 3, 4: Truyền hàm onSmartClick vào */}
+          <div className="flex flex-col gap-4 lg:gap-8">
+            <AccordionColumn
+              title="Sản phẩm"
+              links={productLinks}
+              onSmartClick={handleSmartClick}
+            />
+          </div>
 
-          {/* Cột 5: Form liên hệ nhanh */}
+          <div className="flex flex-col gap-4 lg:gap-8">
+            <AccordionColumn
+              title="Giải pháp"
+              links={solutionLinks}
+              onSmartClick={handleSmartClick}
+            />
+            <AccordionColumn
+              title="Tài nguyên"
+              links={resourceLinks}
+              onSmartClick={handleSmartClick}
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 lg:gap-8">
+            <AccordionColumn title="Về RIC" links={aboutLinks} onSmartClick={handleSmartClick} />
+            <AccordionColumn
+              title="Chính sách"
+              links={policyLinks}
+              onSmartClick={handleSmartClick}
+            />
+          </div>
+
+          {/* Cột 5: Liên hệ */}
           <div>
             <h5 className="mb-4 text-lg font-bold text-slate-900 lg:mb-6">Liên hệ</h5>
             <p className="mb-4 text-sm leading-relaxed text-slate-600 lg:mb-6">
@@ -136,7 +195,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bản quyền */}
         <div className="mt-12 border-t border-slate-100 pt-8 text-center text-sm font-medium text-slate-500 md:mt-16">
           <p>
             © {new Date().getFullYear()} RIC Việt Nam. All rights reserved. Designed for digital

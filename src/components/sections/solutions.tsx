@@ -24,7 +24,7 @@ const solutionsData = [
     desc: 'Giải pháp Bán hàng & thương mại điện tử toàn diện.',
     icon: ShoppingCart,
     image: '/images/solutions/ecom.jpg',
-    href: '/products',
+    href: '/products/ecom', // ĐÃ SỬA: Trỏ thẳng về trang chi tiết
     features: ['Quản lý đơn hàng đa kênh', 'Tích hợp vận chuyển', 'Báo cáo doanh thu Real-time'],
   },
   {
@@ -34,7 +34,7 @@ const solutionsData = [
     desc: 'Marketing Automation và Customer Engagement hiệu quả.',
     icon: MessageSquare,
     image: '/images/solutions/ric-message.jpg',
-    href: '/products',
+    href: '/products/ric-message', // ĐÃ SỬA
     features: [
       'Gửi tin nhắn hàng loạt (ZNS/SMS)',
       'Cá nhân hóa nội dung',
@@ -48,7 +48,7 @@ const solutionsData = [
     desc: 'Unified Chat & Conversation Hub cho doanh nghiệp.',
     icon: Inbox,
     image: '/images/solutions/zhub.jpg',
-    href: '/products',
+    href: '/products/zhub', // ĐÃ SỬA
     features: ['Hộp thoại hợp nhất', 'Phân bổ nhân viên CSKH', 'Tích hợp Chatbot AI'],
   },
   {
@@ -58,7 +58,7 @@ const solutionsData = [
     desc: 'Hệ thống Mạng lưới bán hàng & cộng tác viên.',
     icon: Network,
     image: '/images/solutions/ric-affiliate.jpg',
-    href: '/products',
+    href: '/products/ric-affiliate', // ĐÃ SỬA
     features: [
       'Quản lý hoa hồng tự động',
       'Hệ thống link giới thiệu',
@@ -72,7 +72,7 @@ const solutionsData = [
     desc: 'Giải pháp Chống hàng giả và chống bán lấn kênh.',
     icon: ShieldCheck,
     image: '/images/solutions/ric-trust.jpg',
-    href: '/products',
+    href: '/products/ric-trust', // ĐÃ SỬA
     features: ['Mã QR chống giả mã hóa', 'Theo dõi luồng hàng hóa', 'Cảnh báo vi phạm khu vực bán'],
   },
   {
@@ -82,7 +82,7 @@ const solutionsData = [
     desc: 'Hệ thống CRM và PMS chuyên sâu cho villa/hotel/resort.',
     icon: Hotel,
     image: '/images/solutions/ricio.jpg',
-    href: '/products',
+    href: '/products/ricio', // ĐÃ SỬA
     features: [
       'Quản lý sơ đồ phòng (PMS)',
       'Quản trị tệp khách hàng (CRM)',
@@ -96,7 +96,7 @@ const solutionsData = [
     desc: 'KDL Quản trị doanh nghiệp theo module linh hoạt.',
     icon: Database,
     image: '/images/solutions/ric-erp.jpg',
-    href: '/products',
+    href: '/products/ric-erp', // ĐÃ SỬA
     features: ['Kế toán - Tài chính', 'Quản trị chuỗi cung ứng', 'Quản trị nhân sự (HRM)'],
   },
 ]

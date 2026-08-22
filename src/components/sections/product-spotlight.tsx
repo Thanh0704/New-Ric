@@ -1,62 +1,62 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, TrendingUp, Users, Settings } from 'lucide-react'
+import { ArrowRight, CheckCircle2, ShoppingCart, Users, Database } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 
-// Dữ liệu 3 sản phẩm trọng tâm (Spotlight)
+// ĐÃ SỬA: Lấy đúng 3 sản phẩm có trong Database của sếp (ecom, ric-erp, zhub)
 const spotlights = [
   {
-    id: 'crm',
-    tag: 'Tăng trưởng doanh thu',
-    title: 'RIC CRM - Tự động hóa phễu bán hàng',
+    id: 'ecom',
+    tag: 'Bán hàng & Thương mại',
+    title: 'RIC ECOM - Nền tảng thương mại điện tử linh hoạt',
     description:
-      'Không bỏ lỡ bất kỳ data nào. Theo dõi toàn bộ hành trình khách hàng từ lúc tiếp cận đến khi chốt deal và chăm sóc sau bán.',
+      'Được thiết kế để phục vụ bán hàng và quản trị hoạt động thương mại số. Cung cấp bộ lõi (Commerce Core) mạnh mẽ để quản lý đồng bộ từ Website, Zalo Mini App đến Native App.',
     features: [
-      'Quản lý Lead & Cơ hội bán hàng (Pipeline)',
-      'Tích hợp Zalo ZCA & Tổng đài',
-      'Báo cáo doanh thu theo nhân viên/đội nhóm',
+      'Bộ lõi Commerce Core đồng bộ đa kênh',
+      'Tự động hóa luồng xử lý đơn hàng',
+      'Kiểm soát tồn kho Real-time',
     ],
-    metric: 'Tăng 35% tỷ lệ chốt Deal',
-    image: '/images/solutions/ecom.jpg', // THAY ẢNH MOCKUP GIAO DIỆN CRM VÀO ĐÂY
-    link: '/products/crm',
-    icon: TrendingUp,
-    reverse: false, // Ảnh bên trái, chữ bên phải
+    metric: 'Tăng 30% doanh số Online',
+    image: '/images/solutions/ecom.jpg',
+    link: '/products/ecom', // Link chuẩn vào [id]
+    icon: ShoppingCart,
+    reverse: false,
   },
   {
-    id: 'erp',
-    tag: 'Tối ưu vận hành',
-    title: 'RIC ERP - Quản trị nguồn lực toàn diện',
+    id: 'ric-erp',
+    tag: 'Quản trị chuyên ngành',
+    title: 'RIC ERP - Quản trị doanh nghiệp theo module',
     description:
       'Đập bỏ các "ốc đảo dữ liệu" giữa các phòng ban. Kết nối luồng thông tin từ Mua hàng, Kho bãi, Sản xuất đến Kế toán tài chính trên một nền tảng duy nhất.',
     features: [
-      'Kiểm soát hàng tồn kho đa vị trí thời gian thực',
-      'Quản lý dòng tiền, công nợ tự động',
-      'Hệ thống báo cáo quản trị (BI) cho C-Level',
+      'Cấu trúc Module lắp ghép linh hoạt',
+      'Thông tin luân chuyển xuyên suốt thời gian thực',
+      'Dashboard 360 cho Ban Lãnh đạo ra quyết định',
     ],
     metric: 'Giảm 40% chi phí vận hành ẩn',
-    image: '/images/solutions/ric-erp.jpg', // THAY ẢNH MOCKUP GIAO DIỆN ERP VÀO ĐÂY
-    link: '/products/erp',
-    icon: Settings,
-    reverse: true, // Chữ bên trái, ảnh bên phải
+    image: '/images/solutions/ric-erp.jpg',
+    link: '/products/ric-erp', // Link chuẩn vào [id]
+    icon: Database,
+    reverse: true,
   },
   {
-    id: 'hrm',
-    tag: 'Phát triển con người',
-    title: 'RIC HRM - Số hóa nghiệp vụ nhân sự',
+    id: 'zhub',
+    tag: 'Marketing & Tương tác',
+    title: 'ZHUB - Trung tâm hội thoại hợp nhất',
     description:
-      'Tạm biệt bảng chấm công Excel. Giải phóng bộ phận HR khỏi các tác vụ thủ công để tập trung vào việc thu hút và giữ chân nhân tài.',
+      'Unified Chat giúp gom tất cả các luồng giao tiếp với khách hàng từ Zalo, Facebook, Website về một nơi duy nhất. Chuyển đổi hội thoại thành cơ hội bán hàng hiệu quả.',
     features: [
-      'Chấm công GPS/FaceID qua Mobile App',
-      'Tính lương tự động (Payroll) chuẩn xác 100%',
-      'Đánh giá hiệu suất KPI/OKR minh bạch',
+      'Gom tin nhắn mọi kênh về một màn hình',
+      'Tự động chia chat (Routing) cho nhân sự',
+      'Chuyển đổi trực tiếp chat thành Lead',
     ],
-    metric: 'Tiết kiệm 80% thời gian làm lương',
-    image: '/images/solutions/ric-message.jpg', // THAY ẢNH MOCKUP GIAO DIỆN HRM VÀO ĐÂY
-    link: '/products/hrm',
+    metric: '100% không bỏ sót tin nhắn',
+    image: '/images/solutions/zhub.jpg',
+    link: '/products/zhub', // Link chuẩn vào [id]
     icon: Users,
-    reverse: false, // Ảnh bên trái, chữ bên phải
+    reverse: false,
   },
 ]
 
@@ -95,7 +95,6 @@ export function ProductSpotlight() {
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    {/* Badge hiển thị Metric (Chỉ số nổi bật) */}
                     <div className="absolute -right-6 -bottom-6 hidden rounded-2xl bg-slate-900 p-6 text-white shadow-xl md:block lg:right-8 lg:bottom-8 lg:rounded-[2rem]">
                       <div className="flex items-center gap-4">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600">

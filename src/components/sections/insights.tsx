@@ -13,7 +13,7 @@ const insights = [
     title: 'Vì sao có CRM nhưng nhân viên vẫn dùng Excel?',
     desc: 'Phân tích nguyên nhân đứt gãy trong quá trình triển khai và cách để nhân viên thực sự "yêu" hệ thống mới.',
     image: '/images/solutions/ric-message.jpg', // THAY ẢNH THẬT
-    link: '/blog/tai-sao-nhan-vien-dung-excel',
+    link: '/insights/tai-sao-nhan-vien-dung-excel',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const insights = [
     title: '3 giai đoạn trưởng thành trong chuyển đổi số của doanh nghiệp',
     desc: 'Doanh nghiệp của bạn đang ở mức độ nào? Định vị để có bước đi chính xác, tránh lãng phí nguồn lực.',
     image: '/images/solutions/ric-erp.jpg', // THAY ẢNH THẬT
-    link: '/blog/3-giai-doan-truong-thanh',
+    link: '/insights/3-giai-doan-truong-thanh',
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const insights = [
     title: 'Khi nào doanh nghiệp cần CRM? Có cần ERP không?',
     desc: '5 dấu hiệu cho thấy doanh nghiệp đang vận hành quá thủ công và cần sự can thiệp của phần mềm quản trị.',
     image: '/images/solutions/ricio.jpg', // THAY ẢNH THẬT
-    link: '/blog/khi-nao-can-crm-erp',
+    link: '/insights/khi-nao-can-crm-erp',
   },
 ]
 
