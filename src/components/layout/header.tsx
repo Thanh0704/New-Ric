@@ -75,9 +75,9 @@ const newNavData = [
         category: '',
         items: [
           { label: 'RIC Insights', href: '/?scrollTo=insights' },
-          { label: 'Case Studies', href: '#' },
-          { label: 'Kiến thức & Hướng dẫn', href: '#' },
-          { label: 'Tài liệu sản phẩm', href: '#' },
+          { label: 'Case Studies', href: '/customers' },
+          { label: 'Kiến thức & Hướng dẫn', href: '/knowledge' },
+          { label: 'Tài liệu sản phẩm', href: '/docs' },
         ],
       },
     ],
@@ -140,7 +140,7 @@ export function Header() {
         className={cn(
           'fixed top-0 left-0 z-40 w-full transition-all duration-300',
           isScrolled
-            ? 'border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95'
+            ? 'border-b border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900' // Đã thay đổi dòng này, xóa bg-white/95 và backdrop-blur
             : 'border-b border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-900',
         )}
       >

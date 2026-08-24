@@ -26,9 +26,9 @@ const solutionLinks = [
 
 const resourceLinks = [
   { label: 'RIC Insights', href: '/?scrollTo=insights' },
-  { label: 'Case Studies', href: '#' },
-  { label: 'Kiến thức & Hướng dẫn', href: '#' },
-  { label: 'Tài liệu sản phẩm', href: '#' },
+  { label: 'Case Studies', href: '/customers' },
+  { label: 'Kiến thức & Hướng dẫn', href: '/knowledge' },
+  { label: 'Tài liệu sản phẩm', href: '/docs' },
 ]
 
 const aboutLinks = [
