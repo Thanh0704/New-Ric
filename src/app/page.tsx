@@ -2,16 +2,12 @@ import { Suspense } from 'react' // THÊM IMPORT NÀY
 import { HomeScrollManager } from '@/components/shared/home-scroll-manager' // THÊM IMPORT NÀY
 import { Hero } from '@/components/sections/hero'
 import { Solutions } from '@/components/sections/solutions'
-// import { Features } from '@/components/sections/features'
 import { BusinessProblems } from '@/components/sections/business-problems'
-// import { Stats } from '@/components/sections/stats'
-// import { Process } from '@/components/sections/process'
-import { SolutionJourneys } from '@/components/sections/solution-journeys'
-import { ProductSpotlight } from '@/components/sections/product-spotlight'
-import { IntegrationEcosystem } from '@/components/sections/integration-ecosystem'
+// import { IndustrySolutions } from '@/components/sections/industry-solutions'
 import { Insights } from '@/components/sections/insights'
-import { DeliveryModel } from '@/components/sections/delivery-model'
 import { WhyRic } from '@/components/sections/why-ric'
+import { EcosystemFlow } from '@/components/sections/ecosystem-flow'
+
 import { RegisterDemo } from '@/components/sections/register-demo'
 import { StructuredData } from '@/components/shared/structured-data'
 import { SITE_CONFIG } from '@/lib/constants'
@@ -41,14 +37,12 @@ export default function HomePage() {
         <HomeScrollManager />
       </Suspense>
       {/* 👆 */}
+
       <Hero />
-      <Solutions />
       <BusinessProblems />
-      <SolutionJourneys />
-      <ProductSpotlight />
-      <IntegrationEcosystem />
+      <Solutions />
+      <EcosystemFlow />
       <Insights />
-      <DeliveryModel />
       <WhyRic />
       <RegisterDemo />
     </>

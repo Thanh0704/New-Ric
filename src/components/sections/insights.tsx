@@ -36,7 +36,7 @@ const insights = [
 export function Insights() {
   return (
     // ĐÃ THÊM ID VÀ KHOẢNG TRỐNG SCROLL-MT-24 Ở ĐÂY 👇
-    <section id="ric-insights" className="scroll-mt-24 bg-slate-50 py-24 lg:py-32">
+    <section id="ric-insights" className="scroll-mt-24 bg-white py-24 lg:py-32">
       <Container>
         {/* TIÊU ĐỀ CHUNG */}
         <div className="mx-auto mb-16 max-w-3xl text-center">
