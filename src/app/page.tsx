@@ -1,12 +1,15 @@
 import { Suspense } from 'react' // THÊM IMPORT NÀY
 import { HomeScrollManager } from '@/components/shared/home-scroll-manager' // THÊM IMPORT NÀY
 import { Hero } from '@/components/sections/hero'
-import { Solutions } from '@/components/sections/solutions'
+import { TrustedBy } from '@/components/sections/trusted-by'
+// import { Solutions } from '@/components/sections/solutions'
+import { ProductShowcase } from '@/components/sections/product-showcase'
 import { BusinessProblems } from '@/components/sections/business-problems'
-// import { IndustrySolutions } from '@/components/sections/industry-solutions'
-import { Insights } from '@/components/sections/insights'
+import { SolutionCategories } from '@/components/sections/solution-categories'
+import { FeaturedProjects } from '@/components/sections/featured-projects'
+import { DeploymentProcess } from '@/components/sections/deployment-process'
+import { LatestNews } from '@/components/sections/latest-news'
 import { WhyRic } from '@/components/sections/why-ric'
-import { EcosystemFlow } from '@/components/sections/ecosystem-flow'
 
 import { RegisterDemo } from '@/components/sections/register-demo'
 import { StructuredData } from '@/components/shared/structured-data'
@@ -39,10 +42,14 @@ export default function HomePage() {
       {/* 👆 */}
 
       <Hero />
+      <TrustedBy />
       <BusinessProblems />
-      <Solutions />
-      <EcosystemFlow />
-      <Insights />
+      <SolutionCategories />
+      {/* <Solutions /> */}
+      <ProductShowcase />
+      <FeaturedProjects />
+      <DeploymentProcess />
+      <LatestNews />
       <WhyRic />
       <RegisterDemo />
     </>

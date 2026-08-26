@@ -1,180 +1,74 @@
-'use client'
-
-import React, { useState } from 'react'
+import React from 'react'
+import { CheckCircle2 } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
-import {
-  Zap,
-  Shield,
-  Server,
-  Headphones,
-  Database,
-  Link as LinkIcon,
-  Cpu,
-  TrendingUp,
-  Search,
-  Settings,
-  Rocket,
-  HeartHandshake,
-} from 'lucide-react'
 
-// --- DATA CỦA 3 TABS ---
-const tabData = [
+const reasons = [
+  'Đội ngũ chuyên gia giàu kinh nghiệm',
+  'Giải pháp tối ưu - Công nghệ hiện đại',
+  'Cam kết chất lượng - Bảo mật cao',
+  'Đồng hành lâu dài cùng doanh nghiệp',
+]
+
+const stats = [
   {
-    id: 'core',
-    label: 'Công nghệ cốt lõi',
-    items: [
-      {
-        icon: Server,
-        title: 'Hạ tầng Cloud',
-        desc: 'Kiến trúc Microservices độc lập, đảm bảo hệ thống luôn ổn định ngay cả khi lượng truy cập tăng đột biến.',
-      },
-      {
-        icon: Zap,
-        title: 'Tốc độ tối ưu',
-        desc: 'Trải nghiệm mượt mà không độ trễ. Tối ưu hóa truy vấn dữ liệu giúp tiết kiệm thời gian vận hành.',
-      },
-      {
-        icon: Shield,
-        title: 'Bảo mật đa tầng',
-        desc: 'Mã hóa dữ liệu 256-bit, phân quyền chi tiết đến từng nhân viên, ngăn chặn rò rỉ thông tin.',
-      },
-      {
-        icon: Headphones,
-        title: 'Hỗ trợ 24/7',
-        desc: 'Đội ngũ kỹ thuật trực tiếp hỗ trợ, xử lý sự cố nhanh chóng, không qua các lớp tổng đài máy móc.',
-      },
-    ],
+    value: '5+',
+    label: 'Năm kinh nghiệm',
   },
   {
-    id: 'journey',
-    label: 'Lộ trình số hóa',
-    items: [
-      {
-        icon: Database,
-        title: '1. Số hóa dữ liệu',
-        desc: 'Chuyển đổi toàn bộ giấy tờ, file Excel rời rạc lên một hệ thống lưu trữ tập trung duy nhất.',
-      },
-      {
-        icon: LinkIcon,
-        title: '2. Kết nối quy trình',
-        desc: 'Phá vỡ rào cản giữa các phòng ban. Sales, Kho, Kế toán làm việc trên cùng một luồng thông tin.',
-      },
-      {
-        icon: Cpu,
-        title: '3. Tự động hóa',
-        desc: 'Hệ thống tự động chấm công, tính lương, lên đơn, trừ tồn kho, gửi tin nhắn chăm sóc khách hàng.',
-      },
-      {
-        icon: TrendingUp,
-        title: '4. Mở rộng (Scale)',
-        desc: 'Dựa trên báo cáo Real-time, ban lãnh đạo tự tin đưa ra quyết định mở rộng chi nhánh, scale up doanh thu.',
-      },
-    ],
+    value: '100+',
+    label: 'Dự án thành công',
   },
   {
-    id: 'deploy',
-    label: 'Quy trình triển khai',
-    items: [
-      {
-        icon: Search,
-        title: '1. Khảo sát (Discover)',
-        desc: 'Chuyên gia RIC trực tiếp phân tích luồng vận hành, tìm ra "điểm nghẽn" của doanh nghiệp.',
-      },
-      {
-        icon: Settings,
-        title: '2. Thiết lập (Configure)',
-        desc: 'May đo hệ thống, phân quyền và tùy biến các module sao cho khớp 100% với thực tế vận hành.',
-      },
-      {
-        icon: Rocket,
-        title: '3. Triển khai (Deploy)',
-        desc: 'Đào tạo nhân sự sử dụng, chuyển giao công nghệ và chính thức đưa hệ thống vào Go-live.',
-      },
-      {
-        icon: HeartHandshake,
-        title: '4. Đồng hành (Scale)',
-        desc: 'Liên tục tối ưu hệ thống, update tính năng mới và đồng hành cùng quá trình tăng trưởng của khách hàng.',
-      },
-    ],
+    value: '50+',
+    label: 'Khách hàng tin tưởng',
+  },
+  {
+    value: '99%',
+    label: 'Khách hàng hài lòng',
   },
 ]
 
 export function WhyRic() {
-  const [activeTab, setActiveTab] = useState(tabData[0].id)
-
-  // Lấy dữ liệu của tab đang active
-  const currentTabData = tabData.find((tab) => tab.id === activeTab)
-
   return (
-    <section className="relative overflow-hidden bg-slate-900 py-24 lg:py-32">
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/10 blur-[120px]"></div>
+    <section className="bg-white py-24 lg:py-32">
+      <Container>
+        <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:gap-24">
+          {/* CỘT TRÁI: TIÊU ĐỀ & CAM KẾT (CHECKLIST) */}
+          <div className="w-full lg:w-1/2">
+            <AnimateOnScroll>
+              <h2 className="mb-8 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                VÌ SAO CHỌN RICVINA?
+              </h2>
 
-      <Container className="relative z-10">
-        <div className="mx-auto mb-16 max-w-4xl text-center">
-          <AnimateOnScroll>
-            <span className="mb-4 inline-block rounded-full border border-slate-700 bg-slate-800 px-4 py-1.5 text-sm font-black tracking-widest text-slate-300 uppercase">
-              Why Choose RIC
-            </span>
-            <h2 className="mb-6 text-3xl font-black tracking-tight text-white md:text-5xl">
-              Lựa chọn <span className="text-blue-500">thực chiến</span> cho doanh nghiệp B2B
-            </h2>
-            <p className="text-lg font-medium text-slate-400">
-              Không chỉ cung cấp phần mềm, chúng tôi mang đến một lộ trình chuyển đổi số bài bản và
-              đồng hành cùng sự phát triển của bạn.
-            </p>
-          </AnimateOnScroll>
-        </div>
-
-        {/* --- THANH ĐIỀU HƯỚNG TABS --- */}
-        <div className="mb-12 flex justify-center">
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-slate-700/50 bg-slate-800/50 p-2 backdrop-blur-md">
-            {tabData.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`relative rounded-xl px-6 py-3 text-sm font-bold transition-all duration-300 md:text-base ${
-                  activeTab === tab.id
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50'
-                    : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+              <ul className="flex flex-col gap-5">
+                {reasons.map((reason, index) => (
+                  <li key={index} className="flex items-center gap-4">
+                    <CheckCircle2 className="h-6 w-6 shrink-0 text-blue-600" />
+                    <span className="text-lg font-medium text-slate-700">{reason}</span>
+                  </li>
+                ))}
+              </ul>
+            </AnimateOnScroll>
           </div>
-        </div>
 
-        {/* --- NỘI DUNG CỦA TABS (Hiển thị dạng Grid) --- */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {currentTabData?.items.map((item, index) => {
-            const Icon = item.icon
-            return (
-              <AnimateOnScroll key={index} delay={index * 100}>
-                <div className="group relative h-full rounded-3xl border border-slate-700 bg-slate-800 p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-900/20">
-                  {/* Icon Box */}
-                  <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-blue-500 ring-1 ring-slate-700 transition-colors group-hover:bg-blue-500 group-hover:text-white group-hover:ring-blue-400">
-                    <Icon className="h-7 w-7" />
+          {/* CỘT PHẢI: LƯỚI 4 CON SỐ THỐNG KÊ */}
+          <div className="w-full lg:w-1/2">
+            <div className="grid grid-cols-2 gap-6 md:gap-8">
+              {stats.map((stat, index) => (
+                <AnimateOnScroll key={index} delay={index * 100}>
+                  <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-lg shadow-slate-200/50 transition-transform duration-300 hover:-translate-y-2 hover:border-blue-100">
+                    <span className="mb-2 text-4xl font-black text-blue-600 md:text-5xl">
+                      {stat.value}
+                    </span>
+                    <span className="text-sm font-bold tracking-wide text-slate-500 uppercase">
+                      {stat.label}
+                    </span>
                   </div>
-
-                  {/* Text Content */}
-                  <h3 className="mb-4 text-xl font-bold text-white transition-colors group-hover:text-blue-400">
-                    {item.title}
-                  </h3>
-                  <p className="text-base leading-relaxed font-medium text-slate-400">
-                    {item.desc}
-                  </p>
-
-                  {/* Đường nối mờ ảo giữa các bước (Chỉ hiện ở màn hình to) */}
-                  {index !== currentTabData.items.length - 1 && (
-                    <div className="absolute top-14 -right-3 hidden h-px w-6 bg-slate-700 transition-colors group-hover:bg-blue-500 lg:block"></div>
-                  )}
-                </div>
-              </AnimateOnScroll>
-            )
-          })}
+                </AnimateOnScroll>
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
     </section>
