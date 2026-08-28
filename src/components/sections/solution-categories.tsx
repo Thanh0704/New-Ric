@@ -12,7 +12,7 @@ const categories = [
     icon: Briefcase,
     color: 'text-blue-600',
     bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-100',
+    borderColor: 'border-blue-200',
   },
   {
     id: 'ecommerce',
@@ -21,7 +21,7 @@ const categories = [
     icon: ShoppingBag,
     color: 'text-emerald-600',
     bgColor: 'bg-emerald-50',
-    borderColor: 'border-emerald-100',
+    borderColor: 'border-emerald-200',
   },
   {
     id: 'mobile',
@@ -30,7 +30,7 @@ const categories = [
     icon: Smartphone,
     color: 'text-orange-600',
     bgColor: 'bg-orange-50',
-    borderColor: 'border-orange-100',
+    borderColor: 'border-orange-200',
   },
   {
     id: 'custom',
@@ -39,15 +39,16 @@ const categories = [
     icon: Settings,
     color: 'text-purple-600',
     bgColor: 'bg-purple-50',
-    borderColor: 'border-purple-100',
+    borderColor: 'border-purple-200',
   },
 ]
 
 export function SolutionCategories() {
   return (
-    <section className="bg-white py-20 md:py-28">
-      <Container>
-        {/* HEADER */}
+    <section className="relative overflow-hidden bg-white py-20 md:py-28">
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-50 blur-[120px]"></div>
+
+      <Container className="relative z-10">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <AnimateOnScroll>
             <h2 className="mb-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
@@ -59,21 +60,18 @@ export function SolutionCategories() {
           </AnimateOnScroll>
         </div>
 
-        {/* LƯỚI 4 KHỐI GIẢI PHÁP */}
         <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((item, index) => {
             const Icon = item.icon
             return (
               <AnimateOnScroll key={item.id} delay={index * 100}>
-                <div className="group flex h-full flex-col items-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/5">
-                  {/* Icon */}
+                <div className="group flex h-full flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5">
                   <div
-                    className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl ${item.bgColor} ${item.color} transition-transform duration-300 group-hover:scale-110`}
+                    className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
                   >
                     <Icon className="h-10 w-10" />
                   </div>
 
-                  {/* Text */}
                   <h3 className="mb-3 text-xl font-bold text-slate-900">{item.title}</h3>
                   <p className="text-sm leading-relaxed font-medium text-slate-600">{item.desc}</p>
                 </div>
@@ -82,12 +80,11 @@ export function SolutionCategories() {
           })}
         </div>
 
-        {/* NÚT XEM TẤT CẢ */}
         <div className="text-center">
           <AnimateOnScroll delay={400}>
             <Link
-              href="/solutions"
-              className="inline-flex items-center gap-2 font-bold text-blue-600 transition-colors hover:text-blue-800"
+              href="/products"
+              className="inline-flex items-center gap-2 font-bold text-blue-600 transition-colors hover:text-blue-700"
             >
               Xem tất cả giải pháp <ArrowRight className="h-5 w-5" />
             </Link>

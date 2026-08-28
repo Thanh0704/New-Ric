@@ -8,7 +8,7 @@ import { BusinessProblems } from '@/components/sections/business-problems'
 import { SolutionCategories } from '@/components/sections/solution-categories'
 import { FeaturedProjects } from '@/components/sections/featured-projects'
 import { DeploymentProcess } from '@/components/sections/deployment-process'
-import { LatestNews } from '@/components/sections/latest-news'
+
 import { WhyRic } from '@/components/sections/why-ric'
 
 import { RegisterDemo } from '@/components/sections/register-demo'
@@ -49,7 +49,7 @@ export default function HomePage() {
       <ProductShowcase />
       <FeaturedProjects />
       <DeploymentProcess />
-      <LatestNews />
+
       <WhyRic />
       <RegisterDemo />
     </>

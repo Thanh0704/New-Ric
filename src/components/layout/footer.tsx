@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation' // IMPORT THÊM CÁI NÀY
+import { usePathname } from 'next/navigation'
 
 const productLinks = [
   { label: 'RIC ECOM', href: '/products/ecom' },
@@ -25,7 +25,6 @@ const solutionLinks = [
 ]
 
 const resourceLinks = [
-  { label: 'RIC Insights', href: '/?scrollTo=insights' },
   { label: 'Case Studies', href: '/customers' },
   { label: 'Kiến thức & Hướng dẫn', href: '/knowledge' },
   { label: 'Tài liệu sản phẩm', href: '/docs' },
@@ -48,7 +47,7 @@ const policyLinks = [
 function AccordionColumn({
   title,
   links,
-  onSmartClick, // NHẬN HÀM XỬ LÝ CLICK TỪ FOOTER
+  onSmartClick,
 }: {
   title: string
   links: { label: string; href: string }[]
@@ -57,16 +56,16 @@ function AccordionColumn({
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="border-b border-slate-200 pb-4 lg:border-none lg:pb-0">
+    <div className="border-b border-white/10 pb-4 lg:border-none lg:pb-0">
       <button
         className="flex w-full items-center justify-between py-2 lg:mb-6 lg:cursor-default lg:py-0"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
-        <h5 className="text-lg font-bold text-slate-900">{title}</h5>
+        <h5 className="text-lg font-bold text-white">{title}</h5>
         <ChevronDown
           className={cn(
-            'h-4 w-4 text-slate-400 transition-transform duration-200 lg:hidden',
+            'h-4 w-4 text-blue-200 transition-transform duration-200 lg:hidden',
             open && 'rotate-180',
           )}
         />
@@ -76,8 +75,8 @@ function AccordionColumn({
           <li key={link.label}>
             <Link
               href={link.href}
-              onClick={(e) => onSmartClick(e, link.href)} // SỬ DỤNG HÀM CLICK Ở ĐÂY
-              className="font-medium text-slate-600 transition-colors hover:text-[#3b82f6]"
+              onClick={(e) => onSmartClick(e, link.href)}
+              className="font-medium text-slate-200 transition-colors hover:text-white"
             >
               {link.label}
             </Link>
@@ -89,9 +88,8 @@ function AccordionColumn({
 }
 
 export function Footer() {
-  const pathname = usePathname() // LẤY PATHNAME HIỆN TẠI
+  const pathname = usePathname()
 
-  // HÀM CLICK THÔNG MINH CHO FOOTER
   const handleSmartClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (pathname === '/' && href.includes('?scrollTo=')) {
       e.preventDefault()
@@ -109,11 +107,11 @@ export function Footer() {
       className="relative bg-cover bg-fixed bg-center px-4 pt-32 pb-8 md:pt-40 md:pb-12"
       style={{ backgroundImage: "url('/images/hero/form-dk.jpg')" }}
     >
-      <div className="absolute inset-0 bg-[#0b1329]/80 backdrop-blur-[2px]"></div>
+      {/* LỚP PHỦ MỜ ẢO: Đồng bộ màu sắc với khối Register Demo phía trên */}
+      <div className="absolute inset-0 bg-blue-900/40 backdrop-blur-[2px]"></div>
 
-      <div className="relative z-10 mx-auto max-w-7xl rounded-[2rem] bg-white p-8 shadow-2xl md:p-12 lg:p-16">
+      <div className="relative z-10 mx-auto max-w-7xl rounded-[2rem] border border-blue-400/30 bg-blue-900/60 p-8 shadow-2xl backdrop-blur-xl md:p-12 lg:p-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
-          {/* Cột 1: Thông tin */}
           <div className="space-y-6 md:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3">
               <Image
@@ -123,26 +121,25 @@ export function Footer() {
                 height={64}
                 className="h-12 w-auto object-contain md:h-14"
               />
-              <span className="text-sm font-extrabold tracking-tight text-slate-900 uppercase">
+              <span className="text-sm font-extrabold tracking-tight text-white uppercase drop-shadow-sm">
                 Công ty Cổ phần Đầu tư và Phát triển RIC Việt Nam
               </span>
             </div>
-            <div className="space-y-3 text-sm leading-relaxed text-slate-600">
+            <div className="space-y-3 text-sm leading-relaxed text-slate-200">
               <p>
-                <span className="font-bold text-slate-900">MST:</span> 0110014823
+                <span className="font-bold text-white">MST:</span> 0110014823
               </p>
               <p>
-                <span className="font-bold text-slate-900">Trụ sở:</span> Số 05, ngõ 58, đường Chùa
-                Võ, Dương Nội, Hà Nội
+                <span className="font-bold text-white">Trụ sở:</span> Số 05, ngõ 58, đường Chùa Võ,
+                Dương Nội, Hà Nội
               </p>
               <p>
-                <span className="font-bold text-slate-900">VP giao dịch:</span> 38 Thâm Tâm, Phường
-                Xuân Phương, Quận Nam Từ Liêm, Hà Nội
+                <span className="font-bold text-white">VP giao dịch:</span> 38 Thâm Tâm, Phường Xuân
+                Phương, Quận Nam Từ Liêm, Hà Nội
               </p>
             </div>
           </div>
 
-          {/* Cột 2, 3, 4: Truyền hàm onSmartClick vào */}
           <div className="flex flex-col gap-4 lg:gap-8">
             <AccordionColumn
               title="Sản phẩm"
@@ -173,21 +170,20 @@ export function Footer() {
             />
           </div>
 
-          {/* Cột 5: Liên hệ */}
           <div>
-            <h5 className="mb-4 text-lg font-bold text-slate-900 lg:mb-6">Liên hệ</h5>
-            <p className="mb-4 text-sm leading-relaxed text-slate-600 lg:mb-6">
+            <h5 className="mb-4 text-lg font-bold text-white lg:mb-6">Liên hệ</h5>
+            <p className="mb-4 text-sm leading-relaxed text-slate-200 lg:mb-6">
               Đăng ký để nhận tư vấn chuyển đổi số miễn phí từ chuyên gia của chúng tôi.
             </p>
             <div className="flex flex-col gap-3">
               <input
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none focus:border-[#3b82f6] focus:bg-white focus:ring-1 focus:ring-[#3b82f6]"
+                className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-sm text-white placeholder-slate-300 transition-all outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white"
                 placeholder="Email của bạn"
                 type="email"
               />
               <Link
                 href="/contact"
-                className="mt-1 block w-full rounded-xl bg-[#3b82f6] px-4 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5 hover:bg-[#2563eb]"
+                className="mt-1 block w-full rounded-xl bg-white px-4 py-3.5 text-center text-sm font-bold text-blue-700 shadow-lg transition-all hover:-translate-y-0.5 hover:bg-slate-50"
               >
                 Gửi yêu cầu
               </Link>
@@ -195,7 +191,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-slate-100 pt-8 text-center text-sm font-medium text-slate-500 md:mt-16">
+        <div className="mt-12 border-t border-white/20 pt-8 text-center text-sm font-medium text-slate-200 md:mt-16">
           <p>
             © {new Date().getFullYear()} RIC Việt Nam. All rights reserved. Designed for digital
             excellence.

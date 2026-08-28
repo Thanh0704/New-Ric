@@ -40,11 +40,11 @@ const otherProjects = [
 
 export function FeaturedProjects() {
   return (
-    <section className="border-b border-slate-100 bg-white py-24 lg:py-32">
+    <section className="bg-white py-24 lg:py-32">
       <Container>
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <AnimateOnScroll>
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-1.5 text-sm font-black tracking-widest text-blue-600 uppercase shadow-sm">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-black tracking-widest text-blue-700 uppercase shadow-sm">
               <ShieldCheck className="h-4 w-4" /> Bảng vàng thành tích
             </span>
             <h2 className="mb-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
@@ -58,23 +58,21 @@ export function FeaturedProjects() {
         </div>
 
         <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* CỘT TRÁI: Dự án Đinh (Chiếm 7 cột) */}
           <div className="lg:col-span-7">
             <AnimateOnScroll>
               <Link
                 href={featuredProject.href}
-                className="group relative block h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-900/10"
+                className="group relative block h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-slate-200"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:h-[400px]">
                   <Image
                     src={featuredProject.image}
                     alt={featuredProject.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
 
-                  {/* Nội dung đè lên ảnh */}
                   <div className="absolute right-0 bottom-0 left-0 p-8">
                     <span className="mb-3 inline-block rounded-lg bg-blue-600 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
                       {featuredProject.category}
@@ -86,17 +84,16 @@ export function FeaturedProjects() {
                       {featuredProject.desc}
                     </p>
 
-                    {/* Metrics */}
                     <div className="flex gap-4">
                       {featuredProject.metrics.map((metric, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-md"
+                          className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/20 px-4 py-2 backdrop-blur-md"
                         >
                           <metric.icon className="h-6 w-6 text-emerald-400" />
                           <div>
                             <p className="text-xl font-black text-white">{metric.value}</p>
-                            <p className="text-[10px] font-bold text-slate-300 uppercase">
+                            <p className="text-[10px] font-bold text-slate-200 uppercase">
                               {metric.label}
                             </p>
                           </div>
@@ -109,27 +106,26 @@ export function FeaturedProjects() {
             </AnimateOnScroll>
           </div>
 
-          {/* CỘT PHẢI: Danh sách dự án khác (Chiếm 5 cột) */}
           <div className="flex flex-col gap-6 lg:col-span-5">
             {otherProjects.map((project, index) => (
               <AnimateOnScroll key={index} delay={index * 150}>
                 <Link
                   href={project.href}
-                  className="group flex h-32 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-3 transition-all hover:border-blue-300 hover:shadow-lg hover:shadow-slate-200/50"
+                  className="group flex h-32 items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-3 backdrop-blur-sm transition-all hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-slate-100"
                 >
-                  <div className="relative h-full w-1/3 shrink-0 overflow-hidden rounded-xl">
+                  <div className="relative h-full w-1/3 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
                     />
                   </div>
                   <div className="flex-1 py-2 pr-4">
                     <span className="mb-1 block text-[10px] font-bold tracking-wider text-blue-600 uppercase">
                       {project.category}
                     </span>
-                    <h4 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-blue-700">
+                    <h4 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-blue-600">
                       {project.title}
                     </h4>
                   </div>
@@ -137,11 +133,10 @@ export function FeaturedProjects() {
               </AnimateOnScroll>
             ))}
 
-            {/* Nút Xem thêm gộp vào cột phải */}
             <AnimateOnScroll delay={450}>
               <Link
                 href="/projects"
-                className="flex h-16 w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 font-bold text-slate-600 transition-all hover:border-blue-500 hover:bg-blue-50 hover:text-blue-700"
+                className="flex h-16 w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 font-bold text-slate-700 transition-all hover:border-blue-500 hover:bg-blue-50 hover:text-blue-700"
               >
                 Xem toàn bộ 100+ Dự án <ArrowRight className="h-5 w-5" />
               </Link>

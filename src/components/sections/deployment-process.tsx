@@ -40,7 +40,6 @@ export function DeploymentProcess() {
   return (
     <section className="bg-slate-50 py-24 lg:py-32">
       <Container>
-        {/* HEADER */}
         <div className="mx-auto mb-20 max-w-3xl text-center">
           <AnimateOnScroll>
             <h2 className="mb-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
@@ -52,10 +51,8 @@ export function DeploymentProcess() {
           </AnimateOnScroll>
         </div>
 
-        {/* TIMELINE */}
         <div className="relative mx-auto max-w-6xl">
-          {/* Đường line gạch nối chạy ngang (Chỉ hiện trên màn hình lớn) */}
-          <div className="absolute top-10 right-[10%] left-[10%] hidden h-0.5 border-t-2 border-dashed border-slate-300 lg:block"></div>
+          <div className="absolute top-10 right-[10%] left-[10%] hidden h-0.5 border-t-2 border-dashed border-slate-200 lg:block"></div>
 
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-4">
             {steps.map((step, index) => {
@@ -63,17 +60,14 @@ export function DeploymentProcess() {
               return (
                 <AnimateOnScroll key={step.id} delay={index * 150}>
                   <div className="relative z-10 flex flex-col items-center text-center">
-                    {/* Cục Icon có viền tròn */}
-                    <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border-[6px] border-slate-50 bg-white shadow-xl shadow-slate-200/50 transition-transform duration-300 hover:scale-110 hover:border-blue-50">
+                    <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border-[6px] border-white bg-white shadow-xl shadow-slate-200 transition-transform duration-300 hover:scale-110 hover:border-blue-200">
                       <Icon className="h-8 w-8 text-blue-600" />
                     </div>
 
-                    {/* Số thứ tự */}
-                    <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-sm font-black text-blue-700">
+                    <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg border border-blue-200 bg-blue-50 text-sm font-black text-blue-700">
                       {step.id}
                     </span>
 
-                    {/* Nội dung */}
                     <h3 className="mb-3 px-2 text-lg font-bold text-slate-900">{step.title}</h3>
                     <p className="px-4 text-sm font-medium text-slate-600">{step.desc}</p>
                   </div>

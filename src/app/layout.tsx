@@ -6,18 +6,21 @@ import { BackToTop } from '@/components/shared/back-to-top'
 import { SITE_CONFIG } from '@/lib/constants'
 import './globals.css'
 
-// 1. Cấu hình font Inter cho Body text
+// 1. Cấu hình font Inter (Sử dụng fallback để chống nghẽn mạng)
 const inter = Inter({
   subsets: ['latin', 'vietnamese'],
   variable: '--font-inter',
   display: 'swap',
+  // Thêm fallback để nếu tải font lỗi, web vẫn lên hình bình thường
+  fallback: ['system-ui', 'arial', 'sans-serif'],
 })
 
-// 2. Cấu hình font Montserrat cho Tiêu đề (Headings)
+// 2. Cấu hình font Montserrat
 const montserrat = Montserrat({
   subsets: ['latin', 'vietnamese'],
   variable: '--font-montserrat',
   display: 'swap',
+  fallback: ['system-ui', 'arial', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -71,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    // ĐÃ THÊM 'scroll-smooth' VÀO ĐÂY 👇
+    // Bỏ hẳn thuộc tính scroll-smooth vì nó đôi khi gây lỗi tính toán tọa độ cuộn chuột (Lenis hoặc React Scroll sẽ làm tốt hơn)
     <html lang="vi" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="flex min-h-dvh flex-col antialiased">
         <Header />
