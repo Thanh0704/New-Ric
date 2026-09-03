@@ -3,6 +3,7 @@ import { Inter, Montserrat } from 'next/font/google'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { BackToTop } from '@/components/shared/back-to-top'
+import { FloatingContact } from '@/components/shared/floating-contact' // 👈 THÊM DÒNG NÀY: Import bộ nút liên hệ
 import { SITE_CONFIG } from '@/lib/constants'
 import './globals.css'
 
@@ -80,6 +81,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <FloatingContact /> {/* 👈 THÊM VÀO ĐÂY: Hiển thị bộ nút Chat ở mọi trang */}
         <BackToTop />
       </body>
     </html>
