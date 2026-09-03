@@ -66,18 +66,19 @@ const newNavData = [
       },
     ],
   },
-  { label: 'Khách hàng', href: '/customers' },
+  // { label: 'Khách hàng', href: '/customers' },
   {
     label: 'Tài nguyên',
     isMega: false,
     children: [
       {
         category: '',
+        // ĐÃ SỬA LẠI TÀI NGUYÊN Ở ĐÂY
         items: [
-          { label: 'RIC Insights', href: '/?scrollTo=insights' },
-          { label: 'Case Studies', href: '/customers' },
-          { label: 'Kiến thức & Hướng dẫn', href: '/knowledge' },
-          { label: 'Tài liệu sản phẩm', href: '/docs' },
+          { label: 'Tin tức & Sự kiện', href: '/news' },
+          { label: 'Blog chuyển đổi số', href: '/blog' },
+          { label: 'Thư viện tài liệu', href: '/resources/library' },
+          { label: 'Trung tâm hỗ trợ', href: '/help-center' },
         ],
       },
     ],

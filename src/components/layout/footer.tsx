@@ -24,10 +24,12 @@ const solutionLinks = [
   { label: 'Bảo vệ thương hiệu', href: '/products?category=security' },
 ]
 
+// ĐÃ SỬA LẠI TÀI NGUYÊN Ở ĐÂY
 const resourceLinks = [
-  { label: 'Case Studies', href: '/customers' },
-  { label: 'Kiến thức & Hướng dẫn', href: '/knowledge' },
-  { label: 'Tài liệu sản phẩm', href: '/docs' },
+  { label: 'Tin tức & Sự kiện', href: '/news' },
+  { label: 'Blog chuyển đổi số', href: '/blog' },
+  { label: 'Thư viện tài liệu', href: '/resources/library' },
+  { label: 'Trung tâm hỗ trợ', href: '/help-center' },
 ]
 
 const aboutLinks = [
