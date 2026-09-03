@@ -134,6 +134,7 @@ export function ProductShowcase() {
           <Link
             href={product.link}
             key={product.id}
+            // Thêm "group" vào thẻ Link để bắt sự kiện hover cho toàn bộ khối
             className="group relative flex h-[500px] w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-2.5 shadow-2xl shadow-black/50 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/50 hover:bg-white/10 md:h-[560px] md:w-[380px]"
           >
             <div className="relative z-10 flex h-3/5 w-full flex-col rounded-[2rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent p-6 md:p-8">
@@ -145,8 +146,19 @@ export function ProductShowcase() {
                 {product.desc}
               </p>
 
-              <div className="absolute bottom-6 left-6 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-45 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-white">
-                <ArrowUpRight className="h-7 w-7" />
+              {/* ==============================================
+                  NÚT BẤM HIỆU ỨNG GIÃN NỞ (PILL REVEAL)
+                  ============================================== */}
+              <div className="absolute bottom-6 left-6 flex h-14 items-center overflow-hidden rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-300 ease-out group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                {/* Khối chứa icon (luôn cố định kích thước h-14 w-14 để ban đầu tạo thành hình tròn hoàn hảo) */}
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center">
+                  <ArrowUpRight className="h-6 w-6 text-white transition-colors duration-300 group-hover:scale-110 group-hover:text-slate-900" />
+                </div>
+
+                {/* Dòng chữ bị ẩn (max-w-0), sẽ trượt dài ra khi hover */}
+                <span className="max-w-0 overflow-hidden text-sm font-black whitespace-nowrap text-slate-900 transition-all duration-300 ease-out group-hover:max-w-[100px] group-hover:pr-5">
+                  Khám phá
+                </span>
               </div>
             </div>
 

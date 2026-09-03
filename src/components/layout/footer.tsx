@@ -103,20 +103,13 @@ export function Footer() {
   }
 
   return (
-    <footer
-      className="relative w-full bg-cover bg-fixed bg-center px-4 pt-16 pb-12 lg:px-10 lg:pt-24 lg:pb-16"
-      style={{ backgroundImage: "url('/images/hero/form-dk.jpg')" }}
-    >
-      {/* ĐÃ SỬA LỖI: Trả lại lớp phủ xanh dương (blue-900/40) y hệt như khối Đăng ký ở trên */}
-      <div className="absolute inset-0 bg-blue-900/40 backdrop-blur-[2px]"></div>
+    // THAY ĐỔI: Đổi bg-slate-950 thành bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 đồng bộ với Header
+    <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-12 pb-28 md:pb-40 lg:pt-16 lg:pb-48">
+      {/* Vẫn giữ tia sáng xanh lấp lánh hắt từ dưới lên */}
+      <div className="pointer-events-none absolute bottom-0 left-1/2 h-[800px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
 
-      {/* KHỐI FOOTER LƠ LỬNG (FLOATING CARD) - Giữ nguyên màu Gradient chuẩn */}
-      <div className="relative z-10 mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 p-8 shadow-2xl md:p-12 lg:p-16">
-        {/* Glow Effects */}
-        <div className="pointer-events-none absolute bottom-0 left-0 h-[400px] w-[400px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/20 blur-[100px]"></div>
-        <div className="pointer-events-none absolute top-0 right-0 h-[300px] w-[300px] translate-x-1/3 -translate-y-1/3 rounded-full bg-blue-500/20 blur-[100px]"></div>
-
-        <div className="relative z-10 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           <div className="space-y-6 md:col-span-2 lg:col-span-4 lg:pr-12">
             <Link href="/" className="inline-block">
               <Image
@@ -124,7 +117,7 @@ export function Footer() {
                 alt="RIC Việt Nam Logo"
                 width={160}
                 height={50}
-                className="h-12 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
             </Link>
             <p className="mt-4 text-sm font-bold tracking-wide text-white uppercase">
@@ -190,7 +183,7 @@ export function Footer() {
               />
               <Link
                 href="/contact"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-600 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-600 px-4 py-3 text-sm font-bold text-white shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all hover:bg-cyan-500"
               >
                 Gửi yêu cầu{' '}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -199,12 +192,22 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="relative z-10 mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs font-medium text-slate-500 md:flex-row">
+        <div className="relative z-20 mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs font-medium text-slate-400 md:flex-row">
           <p>© {new Date().getFullYear()} RIC Việt Nam. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Designed for <span className="font-bold text-cyan-400">digital excellence</span>.
           </p>
         </div>
+      </div>
+
+      {/* CHỮ RICVINA KHỔNG LỒ */}
+      <div className="pointer-events-none absolute bottom-0 left-1/2 z-0 flex w-full -translate-x-1/2 justify-center select-none">
+        <span
+          className="translate-y-[28%] bg-gradient-to-b from-white/20 to-transparent bg-clip-text text-[18vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] xl:text-[220px]"
+          style={{ fontFamily: "'Arial Rounded MT Bold', 'Quicksand', 'Nunito', sans-serif" }}
+        >
+          RICVINA
+        </span>
       </div>
     </footer>
   )
