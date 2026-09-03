@@ -103,21 +103,20 @@ export function Footer() {
   }
 
   return (
-    // THAY ĐỔI: Đổi bg-slate-950 thành bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 đồng bộ với Header
     <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-12 pb-28 md:pb-40 lg:pt-16 lg:pb-48">
-      {/* Vẫn giữ tia sáng xanh lấp lánh hắt từ dưới lên */}
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-[800px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
 
       <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           <div className="space-y-6 md:col-span-2 lg:col-span-4 lg:pr-12">
             <Link href="/" className="inline-block">
+              {/* Phóng to Logo Footer (h-20 trên Mobile, h-28 trên PC cực kỳ bề thế) */}
               <Image
                 src="/images/logo.png"
                 alt="RIC Việt Nam Logo"
-                width={160}
-                height={50}
-                className="h-14 w-auto object-contain"
+                width={360}
+                height={100}
+                className="h-20 w-auto object-contain md:h-28"
               />
             </Link>
             <p className="mt-4 text-sm font-bold tracking-wide text-white uppercase">
@@ -200,7 +199,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* CHỮ RICVINA KHỔNG LỒ */}
       <div className="pointer-events-none absolute bottom-0 left-1/2 z-0 flex w-full -translate-x-1/2 justify-center select-none">
         <span
           className="translate-y-[28%] bg-gradient-to-b from-white/20 to-transparent bg-clip-text text-[18vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] xl:text-[220px]"

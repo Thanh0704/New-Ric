@@ -137,30 +137,26 @@ export function Header() {
     <>
       <header
         className={cn(
-          // NỀN CỐ ĐỊNH: Luôn luôn giữ màu Xanh Đen (Gradient) y hệt khối WhyRic, không bao giờ trong suốt
           'fixed top-0 left-0 isolate z-40 w-full bg-slate-900 bg-gradient-to-r from-blue-900 to-slate-900 transition-all duration-300',
-          isScrolled
-            ? 'border-b border-white/10 py-3 shadow-xl'
-            : 'border-b border-transparent py-3',
+          isScrolled ? 'border-b border-white/10 shadow-xl' : 'border-b border-transparent',
         )}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-10">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:h-20 md:px-10">
           <Link
             href="/"
             onClick={(e) => handleSmartClick(e, '/')}
-            className="flex shrink-0 items-center gap-3"
+            className="flex shrink-0 items-center gap-3 py-2"
           >
             <Image
               src="/images/logo.png"
               alt="RIC Việt Nam Logo"
-              width={160}
-              height={50}
-              className="h-10 w-auto object-contain md:h-12"
+              width={260}
+              height={80}
+              className="h-12 w-auto origin-left scale-125 object-contain md:h-[60px] md:scale-[1.35] lg:scale-150"
               priority
             />
           </Link>
 
-          {/* DESKTOP NAVIGATION */}
           <nav className="hidden items-center gap-x-8 lg:flex">
             {newNavData.map((nav) =>
               nav.children ? (
@@ -252,7 +248,6 @@ export function Header() {
             )}
           </nav>
 
-          {/* RIGHT CTA & MOBILE MENU */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsModalOpen(true)}
