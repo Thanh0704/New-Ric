@@ -40,66 +40,71 @@ export function BusinessProblems() {
 
       <Container className="relative z-10">
         {/* =========================================================
-            ĐÃ SỬA: LỘT BỎ HOÀN TOÀN KHỐI NỀN ĐEN. 
-            Ghim tiêu đề ở top-[10vh] để nó nằm im ngay dưới thanh Menu
+            ĐÃ SỬA LOGIC: Bọc Tiêu đề và 4 cái thẻ vào chung 1 Wrapper.
+            Nhờ vậy, khi cuộn hết thẻ số 4, toàn bộ khối này sẽ bị kéo trượt lên trên, 
+            không còn nằm lỳ lại để đè vào đoạn text ở dưới nữa.
             ========================================================= */}
-        <div className="sticky top-[10vh] z-0 mb-12 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
-          <AnimateOnScroll>
-            <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
-              Doanh nghiệp của bạn đang gặp khó khăn?
-            </h2>
-            <p className="px-2 text-center text-sm font-medium text-slate-300 sm:text-base md:text-lg">
-              Những "nút thắt" đang âm thầm cản trở đà tăng trưởng và làm rò rỉ lợi nhuận của bạn
-              mỗi ngày.
-            </p>
-          </AnimateOnScroll>
-        </div>
+        <div className="relative w-full">
+          {/* 1. Phần Tiêu đề (Đứng im ở top 10vh) */}
+          <div className="sticky top-[10vh] z-0 mb-12 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
+            <AnimateOnScroll>
+              <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
+                Doanh nghiệp của bạn đang gặp khó khăn?
+              </h2>
+              <p className="px-2 text-center text-sm font-medium text-slate-300 sm:text-base md:text-lg">
+                Những "nút thắt" đang âm thầm cản trở đà tăng trưởng và làm rò rỉ lợi nhuận của bạn
+                mỗi ngày.
+              </p>
+            </AnimateOnScroll>
+          </div>
 
-        <div className="relative z-10 flex flex-col gap-[20vh] pb-[10vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
-          {problems.map((item, index) => {
-            const Icon = item.icon
+          {/* 2. Phần 4 Thẻ (Trượt lên và xếp chồng) */}
+          <div className="relative z-10 flex flex-col gap-[20vh] pb-[10vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
+            {problems.map((item, index) => {
+              const Icon = item.icon
 
-            // =========================================================
-            // ĐÃ SỬA: Hạ thấp điểm dừng của các thẻ (28vh -> 34vh)
-            // Nhờ vậy các thẻ sẽ trượt lên và xếp chồng ở dưới, không đè mất chữ
-            // =========================================================
-            const stickyTopClasses = ['top-[28vh]', 'top-[30vh]', 'top-[32vh]', 'top-[34vh]']
+              const stickyTopClasses = ['top-[28vh]', 'top-[30vh]', 'top-[32vh]', 'top-[34vh]']
 
-            return (
-              <div
-                key={item.id}
-                className={`sticky ${stickyTopClasses[index]} z-10 h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
-              >
-                <AnimateOnScroll delay={index * 100}>
-                  <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
-                    <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
+              return (
+                <div
+                  key={item.id}
+                  className={`sticky ${stickyTopClasses[index]} z-10 h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
+                >
+                  <AnimateOnScroll delay={index * 100}>
+                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
+                      <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
 
-                    <div className="relative z-10 flex h-full flex-col">
-                      <div className="mb-4 flex items-center justify-between md:mb-6">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-cyan-500/20 text-cyan-400 transition-transform duration-300 group-hover:scale-110 md:h-14 md:w-14 md:rounded-2xl">
-                          <Icon className="h-6 w-6 md:h-7 md:w-7" />
+                      <div className="relative z-10 flex h-full flex-col">
+                        <div className="mb-4 flex items-center justify-between md:mb-6">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-cyan-500/20 text-cyan-400 transition-transform duration-300 group-hover:scale-110 md:h-14 md:w-14 md:rounded-2xl">
+                            <Icon className="h-6 w-6 md:h-7 md:w-7" />
+                          </div>
+                          <span className="text-3xl font-black text-white/10 transition-colors group-hover:text-cyan-400/30 md:text-4xl">
+                            {item.id}
+                          </span>
                         </div>
-                        <span className="text-3xl font-black text-white/10 transition-colors group-hover:text-cyan-400/30 md:text-4xl">
-                          {item.id}
-                        </span>
+
+                        <h3 className="mb-2 text-lg font-bold text-white md:mb-3 md:text-xl">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm leading-relaxed font-medium text-slate-300">
+                          {item.desc}
+                        </p>
                       </div>
-
-                      <h3 className="mb-2 text-lg font-bold text-white md:mb-3 md:text-xl">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed font-medium text-slate-300">
-                        {item.desc}
-                      </p>
                     </div>
-                  </div>
-                </AnimateOnScroll>
-              </div>
-            )
-          })}
+                  </AnimateOnScroll>
+                </div>
+              )
+            })}
+          </div>
         </div>
+        {/* === KẾT THÚC WRAPPER === */}
 
-        <div className="mt-12 text-center md:mt-0">
-          <AnimateOnScroll delay={300}>
+        {/* 3. Phần chốt Sale ở dưới cùng (Cuộn lên bình thường theo dòng chảy) 
+            Đã tăng thêm mt-16 để có khoảng nghỉ mượt mà sau khi 4 thẻ biến mất
+        */}
+        <div className="relative z-20 mt-16 text-center md:mt-0">
+          <AnimateOnScroll delay={150}>
             <div className="inline-flex flex-col items-center justify-center">
               <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
                 RICVINA mang đến hệ sinh thái giúp bạn giải quyết triệt để những vấn đề trên.
