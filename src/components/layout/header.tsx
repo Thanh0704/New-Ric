@@ -257,7 +257,7 @@ export function Header() {
               className="flex items-center gap-1 rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-1.5 text-[11px] font-bold text-cyan-400 transition-all hover:bg-cyan-500 hover:text-white hover:shadow-lg hover:shadow-cyan-500/20 sm:gap-2 sm:px-6 sm:py-2.5 sm:text-sm"
             >
               {/* Trên điện thoại chỉ hiện "Tìm giải pháp", trên PC/Tablet hiện "Tìm giải pháp phù hợp" */}
-              <span className="whitespace-nowrap sm:hidden">Tìm giải pháp</span>
+              <span className="whitespace-nowrap sm:hidden">Tìm giải pháp phù hợp</span>
               <span className="hidden whitespace-nowrap sm:inline">Tìm giải pháp phù hợp</span>
               <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
