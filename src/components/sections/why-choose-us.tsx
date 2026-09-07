@@ -121,7 +121,8 @@ export function RicvinaStandard() {
         </div>
 
         <div className="relative mx-auto max-w-6xl">
-          <div className="absolute top-12 right-[10%] left-[10%] hidden h-[2px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent lg:block"></div>
+          {/* ĐÃ SỬA: Đổi top-12 thành top-[3.5rem] để đường kẻ nằm chính giữa khối icon hơn */}
+          <div className="absolute top-[3.5rem] right-[10%] left-[10%] hidden h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent lg:block"></div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {steps.map((step, index) => {
@@ -129,9 +130,13 @@ export function RicvinaStandard() {
               return (
                 <AnimateOnScroll key={step.id} delay={index * 150}>
                   <div className="group relative z-10 flex flex-col items-center text-center">
-                    <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-[1rem] border border-white/10 bg-slate-900 shadow-xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] md:mb-6 md:h-24 md:w-24 md:rounded-3xl">
-                      <Icon className="h-6 w-6 text-slate-400 transition-colors group-hover:text-cyan-400 md:h-10 md:w-10" />
-                      <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-lg border border-cyan-500/30 bg-slate-950 text-[9px] font-black text-cyan-400 shadow-md md:-top-3 md:-right-3 md:h-8 md:w-8 md:text-xs">
+                    {/* ĐÃ SỬA: Bổ sung class 'relative' ở đầu tiên. Tăng kích thước hộp lên h-28 w-28 để cân đối với tia laser */}
+                    <div className="relative mb-3 flex h-14 w-14 items-center justify-center rounded-[1rem] border border-white/10 bg-slate-900 shadow-xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] md:mb-6 md:h-28 md:w-28 md:rounded-3xl">
+                      {/* ĐÃ SỬA: Tăng kích thước Icon lên một chút */}
+                      <Icon className="h-6 w-6 text-slate-400 transition-colors duration-300 group-hover:text-cyan-400 md:h-12 md:w-12" />
+
+                      {/* Vị trí con số bây giờ đã được neo chặt vào hộp Icon */}
+                      <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-lg border border-cyan-500/30 bg-slate-950 text-[9px] font-black text-cyan-400 shadow-md md:-top-3 md:-right-3 md:h-8 md:w-8 md:text-sm">
                         {step.id}
                       </div>
                     </div>
