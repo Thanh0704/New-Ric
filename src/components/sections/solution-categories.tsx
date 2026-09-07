@@ -45,40 +45,41 @@ const categories = [
 
 export function SolutionCategories() {
   return (
-    // TỐI ƯU MOBILE: Giảm py-20 xuống py-12
-    <section className="relative overflow-hidden bg-white py-12 md:py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-white py-10 md:py-20 lg:py-28">
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-50 blur-[120px]"></div>
 
       <Container className="relative z-10">
-        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-16">
+        <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>
-            <h2 className="mb-3 text-2xl font-black tracking-tight text-slate-900 md:mb-4 md:text-4xl">
+            {/* TỐI ƯU: text-2xl */}
+            <h2 className="mb-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl md:mb-4 md:text-4xl">
               GIẢI PHÁP CỦA CHÚNG TÔI
             </h2>
-            <p className="text-base font-medium text-slate-600 md:text-lg">
+            <p className="px-2 text-sm font-medium text-slate-600 sm:text-base md:text-lg">
               Đa dạng giải pháp – Tối ưu theo nhu cầu doanh nghiệp
             </p>
           </AnimateOnScroll>
         </div>
 
-        {/* TỐI ƯU MOBILE: gap-4 thay vì gap-6 */}
-        <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mb-12 lg:grid-cols-4">
+        <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mb-12 lg:grid-cols-4">
           {categories.map((item, index) => {
             const Icon = item.icon
             return (
               <AnimateOnScroll key={item.id} delay={index * 100}>
-                {/* TỐI ƯU MOBILE: Giảm padding p-8 xuống p-6 md:p-8 */}
-                <div className="group flex h-full flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 md:p-8">
+                {/* TỐI ƯU: Giảm padding p-5 thay vì p-8 */}
+                <div className="group flex h-full flex-col items-center rounded-2xl border border-slate-100 bg-slate-50 p-5 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 md:rounded-3xl md:p-8">
                   <div
-                    className={`mb-4 flex h-16 w-16 items-center justify-center rounded-2xl md:mb-6 md:h-20 md:w-20 ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
+                    className={`mb-3 flex h-14 w-14 items-center justify-center rounded-xl md:mb-6 md:h-20 md:w-20 md:rounded-2xl ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
                   >
-                    <Icon className="h-8 w-8 md:h-10 md:w-10" />
+                    <Icon className="h-6 w-6 md:h-10 md:w-10" />
                   </div>
 
-                  <h3 className="mb-2 text-lg font-bold text-slate-900 md:mb-3 md:text-xl">
+                  <h3 className="mb-1 text-base font-bold text-slate-900 md:mb-3 md:text-xl">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed font-medium text-slate-600">{item.desc}</p>
+                  <p className="text-xs leading-relaxed font-medium text-slate-600 md:text-sm">
+                    {item.desc}
+                  </p>
                 </div>
               </AnimateOnScroll>
             )
@@ -89,9 +90,9 @@ export function SolutionCategories() {
           <AnimateOnScroll delay={400}>
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 font-bold text-blue-600 transition-colors hover:text-blue-700"
+              className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition-colors hover:text-blue-700 md:text-base"
             >
-              Xem tất cả giải pháp <ArrowRight className="h-5 w-5" />
+              Xem tất cả giải pháp <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
             </Link>
           </AnimateOnScroll>
         </div>
