@@ -40,12 +40,11 @@ export function BusinessProblems() {
 
       <Container className="relative z-10">
         {/* =========================================================
-            ĐÃ SỬA: NEO TIÊU ĐỀ (STICKY HEADER TẠI ĐỈNH) CHỈ CHO MOBILE
-            Thêm kính mờ (backdrop-blur) để chữ không bị đè nhau khi cuộn
+            ĐÃ SỬA: LỘT BỎ HOÀN TOÀN KHỐI NỀN ĐEN. 
+            Ghim tiêu đề ở top-[10vh] để nó nằm im ngay dưới thanh Menu
             ========================================================= */}
-        <div className="sticky top-0 z-40 -mx-4 mb-10 bg-slate-900/80 px-4 pt-4 pb-4 backdrop-blur-xl md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:bg-transparent md:px-0 md:pt-0 md:pb-0 md:text-center md:backdrop-blur-none">
+        <div className="sticky top-[10vh] z-0 mb-12 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
           <AnimateOnScroll>
-            {/* Chỉnh text-center trên mobile để tiêu đề căn giữa */}
             <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
               Doanh nghiệp của bạn đang gặp khó khăn?
             </h2>
@@ -56,15 +55,15 @@ export function BusinessProblems() {
           </AnimateOnScroll>
         </div>
 
-        <div className="flex flex-col gap-[20vh] pb-[10vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
+        <div className="relative z-10 flex flex-col gap-[20vh] pb-[10vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
           {problems.map((item, index) => {
             const Icon = item.icon
 
             // =========================================================
-            // ĐÃ SỬA: Đẩy các điểm neo tụt xuống dưới (22vh -> 28vh)
-            // để nhường không gian bên trên cho cái Tiêu đề đứng im
+            // ĐÃ SỬA: Hạ thấp điểm dừng của các thẻ (28vh -> 34vh)
+            // Nhờ vậy các thẻ sẽ trượt lên và xếp chồng ở dưới, không đè mất chữ
             // =========================================================
-            const stickyTopClasses = ['top-[22vh]', 'top-[24vh]', 'top-[26vh]', 'top-[28vh]']
+            const stickyTopClasses = ['top-[28vh]', 'top-[30vh]', 'top-[32vh]', 'top-[34vh]']
 
             return (
               <div
