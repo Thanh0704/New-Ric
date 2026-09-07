@@ -3,7 +3,6 @@ import { Clock, Database, ServerCrash, TrendingDown, ArrowDown } from 'lucide-re
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 
-// ... (Sếp giữ nguyên mảng problems ở đây nhé) ...
 const problems = [
   {
     id: '01',
@@ -34,13 +33,22 @@ const problems = [
 export function BusinessProblems() {
   return (
     <section className="relative overflow-hidden bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
+      {/* ẨN THANH CUỘN NGANG ĐỂ NHÌN SẠCH SẼ HƠN TRÊN MOBILE */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `,
+        }}
+      />
+
       <div className="pointer-events-none absolute top-0 right-0 h-[500px] w-[500px] translate-x-1/3 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]"></div>
       <div className="pointer-events-none absolute bottom-0 left-0 h-[600px] w-[600px] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
 
       <Container className="relative z-10">
         <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>
-            {/* TỐI ƯU: Đưa về text-2xl */}
             <h2 className="mb-2 text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
               Doanh nghiệp của bạn đang gặp khó khăn?
             </h2>
@@ -51,34 +59,43 @@ export function BusinessProblems() {
           </AnimateOnScroll>
         </div>
 
-        <div className="mb-10 grid grid-cols-1 gap-4 md:mb-16 md:grid-cols-2 md:gap-6 lg:grid-cols-4">
+        {/* TỐI ƯU GIAO DIỆN: 
+          - Mobile: flex, overflow-x-auto, snap-x (Vuốt ngang mượt mà)
+          - Tablet/PC: Trả về grid, md:grid-cols-2, lg:grid-cols-4 
+        */}
+        <div className="hide-scrollbar -mx-4 mb-10 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-6 md:mx-0 md:mb-16 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
           {problems.map((item, index) => {
             const Icon = item.icon
             return (
-              <AnimateOnScroll key={item.id} delay={index * 100}>
-                {/* TỐI ƯU: p-4 sm:p-5 thay vì p-8 */}
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-cyan-900/40 sm:p-5 md:rounded-3xl md:p-8">
-                  <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
+              // Bọc thêm 1 div để giới hạn chiều rộng trên Mobile (w-[85vw]), nhưng lên PC thì giãn tự do (md:w-auto)
+              <div
+                key={item.id}
+                className="w-[85vw] max-w-[320px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink md:snap-align-none"
+              >
+                <AnimateOnScroll delay={index * 100}>
+                  <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-cyan-900/40 md:rounded-3xl md:p-8">
+                    <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
 
-                  <div className="relative z-10">
-                    <div className="mb-4 flex items-center justify-between md:mb-6">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-cyan-500/20 text-cyan-400 transition-transform duration-300 group-hover:scale-110 md:h-14 md:w-14 md:rounded-2xl">
-                        <Icon className="h-5 w-5 md:h-7 md:w-7" />
+                    <div className="relative z-10">
+                      <div className="mb-4 flex items-center justify-between md:mb-6">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-cyan-500/20 text-cyan-400 transition-transform duration-300 group-hover:scale-110 md:h-14 md:w-14 md:rounded-2xl">
+                          <Icon className="h-6 w-6 md:h-7 md:w-7" />
+                        </div>
+                        <span className="text-3xl font-black text-white/10 transition-colors group-hover:text-cyan-400/30 md:text-4xl">
+                          {item.id}
+                        </span>
                       </div>
-                      <span className="text-2xl font-black text-white/10 transition-colors group-hover:text-cyan-400/30 md:text-4xl">
-                        {item.id}
-                      </span>
-                    </div>
 
-                    <h3 className="mb-2 text-base font-bold text-white md:mb-3 md:text-xl">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs leading-relaxed font-medium text-slate-300 md:text-sm">
-                      {item.desc}
-                    </p>
+                      <h3 className="mb-2 text-lg font-bold text-white md:mb-3 md:text-xl">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed font-medium text-slate-300">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </AnimateOnScroll>
+                </AnimateOnScroll>
+              </div>
             )
           })}
         </div>
