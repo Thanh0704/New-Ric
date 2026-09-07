@@ -32,20 +32,19 @@ const problems = [
 
 export function BusinessProblems() {
   return (
-    <section className="relative overflow-hidden bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
+    <section className="relative bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-0 right-0 h-[500px] w-[500px] translate-x-1/3 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]"></div>
         <div className="absolute bottom-0 left-0 h-[600px] w-[600px] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
       </div>
 
       <Container className="relative z-10">
-        {/* =========================================================
-            WRAPPER TỔNG: Chứa Tiêu đề + 4 Thẻ. 
-            Cắt hết khoảng trống thừa để cuộn mượt mà ngay sau thẻ 4.
-            ========================================================= */}
-        <div className="relative w-full">
-          {/* 1. TIÊU ĐỀ: Đứng im ở top-10vh, an toàn tuyệt đối không bị đè */}
-          <div className="sticky top-[10vh] z-10 mb-8 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
+        {/* WRAPPER TỔNG: Giữ khoảng trống cuộn pb-[15vh] cho Mobile, nhưng Laptop thì xóa (md:pb-0) */}
+        <div className="relative w-full pb-[15vh] md:pb-0">
+          {/* 1. TIÊU ĐỀ: 
+              - Mobile: Đứng im ở top-10vh
+              - Laptop (md:): Trả về relative, hủy sticky, canh giữa chuẩn chỉ */}
+          <div className="sticky top-[10vh] z-10 mb-[10vh] md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
             <AnimateOnScroll>
               <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
                 Doanh nghiệp của bạn đang gặp khó khăn?
@@ -57,30 +56,29 @@ export function BusinessProblems() {
             </AnimateOnScroll>
           </div>
 
-          {/* 2. KHỐI 4 THẺ: Trượt lên "nuốt" lấy nhau. Khoảng cách (gap) dài ra để có không gian vuốt */}
-          <div className="relative z-20 flex flex-col gap-[35vh] pb-0 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4">
+          {/* 2. CÁC THẺ: 
+              - Mobile: dạng block xếp dọc để cuộn sticky
+              - Laptop (md:): Trở về cấu trúc Grid lưới 2 cột / 4 cột */}
+          <div className="block md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4">
             {problems.map((item, index) => {
               const Icon = item.icon
 
-              // =========================================================
-              // LOGIC "TRÁO BÀI": Tọa độ dừng tăng lên 1 tí tẹo (1vh)
-              // z-index tăng dần (20,30,40,50) để Thẻ sau ĐÈ KÍN Thẻ trước
-              // =========================================================
-              const stickyClasses = [
-                'top-[26vh] z-20',
-                'top-[27vh] z-30',
-                'top-[28vh] z-40',
-                'top-[29vh] z-50',
-              ]
+              // CÁC BIẾN CHỈ DÀNH RIÊNG CHO MOBILE
+              const mobileStickyTops = ['top-[26vh]', 'top-[27vh]', 'top-[28vh]', 'top-[29vh]']
+              const mobileZIndexes = ['z-20', 'z-30', 'z-40', 'z-50']
+              const mobileMargins = index === 0 ? 'mt-0' : 'mt-[40vh]' // Tạo khoảng cách vuốt giữa các thẻ
 
               return (
                 <div
                   key={item.id}
-                  className={`sticky ${stickyClasses[index]} h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
+                  className={`sticky ${mobileStickyTops[index]} ${mobileZIndexes[index]} ${mobileMargins} w-full md:relative md:top-auto md:z-auto md:mt-0 md:h-full [&>*]:h-full`}
+                  /* LỜI GIẢI THÍCH LỖI LAPTOP: 
+                     Đoạn "md:relative md:top-auto md:z-auto md:mt-0" sẽ XÓA TOÀN BỘ hiệu ứng cuộn xếp lớp trên Laptop.
+                     Đoạn "md:h-full [&>*]:h-full" sẽ ÉP các khối dài bằng nhau tăm tắp, sửa cái lỗi ở ảnh sếp gửi.
+                  */
                 >
                   <AnimateOnScroll delay={index * 100}>
-                    {/* Shadow được làm đậm lên ở viền trên để tạo hiệu ứng tách lớp rõ rệt khi xếp chồng */}
-                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.9)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
+                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
                       <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
 
                       <div className="relative z-10 flex h-full flex-col">
@@ -107,13 +105,9 @@ export function BusinessProblems() {
             })}
           </div>
         </div>
-        {/* === KẾT THÚC WRAPPER === */}
 
-        {/* =========================================================
-            3. PHẦN CHỐT: Đi ngay sát phía sau Khối thẻ. 
-            Vừa vuốt qua Thẻ số 4 là nó sẽ ngoi lên cực mượt.
-            ========================================================= */}
-        <div className="relative z-10 mt-12 text-center md:mt-20">
+        {/* 3. PHẦN CHỐT: Đi ngay sau cái Wrapper trên */}
+        <div className="relative z-10 mt-16 text-center md:mt-24">
           <AnimateOnScroll delay={100}>
             <div className="inline-flex flex-col items-center justify-center">
               <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
