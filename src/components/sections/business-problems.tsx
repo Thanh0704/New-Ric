@@ -39,11 +39,13 @@ export function BusinessProblems() {
       </div>
 
       <Container className="relative z-10">
-        <div className="relative w-full">
-          {/* =========================================================
-              ĐÃ SỬA 1: Đẩy Tiêu đề lên top-[8vh]
-              ========================================================= */}
-          <div className="sticky top-[8vh] z-0 mb-12 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
+        {/* =========================================================
+            WRAPPER TỔNG: Bọc chặt cả Tiêu đề và 4 Thẻ. 
+            Không để padding dư thừa ở đáy nữa. Kéo tới Thẻ 4 là cả khối bị đẩy lên luôn!
+            ========================================================= */}
+        <div className="relative w-full pb-4 md:pb-0">
+          {/* 1. TIÊU ĐỀ: Neo ở top-8vh, z-10 để các thẻ (z-20) đè lên che bớt chữ nhỏ */}
+          <div className="sticky top-[8vh] z-10 mb-8 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
             <AnimateOnScroll>
               <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
                 Doanh nghiệp của bạn đang gặp khó khăn?
@@ -55,23 +57,24 @@ export function BusinessProblems() {
             </AnimateOnScroll>
           </div>
 
-          <div className="relative z-10 flex flex-col gap-[20vh] pb-[15vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
+          {/* 2. KHỐI 4 THẺ: Trượt lên xếp chồng */}
+          <div className="relative z-20 flex flex-col gap-[15vh] md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4">
             {problems.map((item, index) => {
               const Icon = item.icon
 
               // =========================================================
-              // ĐÃ SỬA 2: Đẩy thẻ trượt lên cao hơn (bắt đầu từ 18vh)
-              // để khi vuốt, nó sẽ NHAI TRỌN đoạn Subtitle, chỉ chừa lại Tiêu đề chính.
+              // LOGIC ĐIỂM NEO: Đặt sát bên dưới Tiêu đề chính.
+              // Khi cuộn, thẻ sẽ trượt lên che vừa khít đoạn Subtitle.
               // =========================================================
               const stickyTopClasses = ['top-[18vh]', 'top-[20vh]', 'top-[22vh]', 'top-[24vh]']
 
               return (
                 <div
                   key={item.id}
-                  className={`sticky ${stickyTopClasses[index]} z-10 h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
+                  className={`sticky ${stickyTopClasses[index]} h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
                 >
                   <AnimateOnScroll delay={index * 100}>
-                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
+                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
                       <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
 
                       <div className="relative z-10 flex h-full flex-col">
@@ -98,15 +101,14 @@ export function BusinessProblems() {
             })}
           </div>
         </div>
+        {/* === KẾT THÚC WRAPPER === */}
 
         {/* =========================================================
-            ĐÃ SỬA 3: BỨC MÀN "CURTAIN" CHỐT SALE
-            Thêm background (bg-slate-900) và Bóng mờ (shadow) lên trên để
-            nó dọn sạch mọi phần tử Sticky khi trượt lên, không bị đè chữ.
-            Hiệu ứng này sẽ được tắt (trong suốt) trên Laptop.
+            3. PHẦN CHỐT: Đã gỡ bỏ cái background lỗi. 
+            Nó sẽ từ từ trồi lên một cách tự nhiên ngay sau khi thẻ 04 bị kéo đi.
             ========================================================= */}
-        <div className="relative z-30 w-full bg-slate-900 pt-16 pb-8 text-center shadow-[0_-40px_50px_rgba(15,23,42,1)] md:mt-0 md:bg-transparent md:pt-0 md:pb-0 md:shadow-none">
-          <AnimateOnScroll delay={150}>
+        <div className="relative z-10 mt-20 text-center md:mt-24">
+          <AnimateOnScroll delay={100}>
             <div className="inline-flex flex-col items-center justify-center">
               <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
                 RICVINA mang đến hệ sinh thái giúp bạn giải quyết triệt để những vấn đề trên.
