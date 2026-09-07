@@ -46,9 +46,9 @@ export function BusinessProblems() {
       <div className="pointer-events-none absolute bottom-0 left-0 h-[600px] w-[600px] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
 
       <Container className="relative z-10">
-        <div className="mx-auto mb-8 md:mb-16 max-w-3xl text-center">
+        <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>
-            <h2 className="mb-2 md:mb-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white uppercase">
+            <h2 className="mb-2 text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
               Doanh nghiệp của bạn đang gặp khó khăn?
             </h2>
             <p className="px-2 text-sm font-medium text-slate-300 sm:text-base md:text-lg">
@@ -59,7 +59,7 @@ export function BusinessProblems() {
         </div>
 
         {/* TỐI ƯU GIAO DIỆN CHỐT HẠ: Đã bỏ lớp sương mờ, chỉ giữ lại hiệu ứng vuốt và thẻ lấp ló (w-[75vw]) */}
-        <div className="-mx-4 mb-10 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-6 hide-scrollbar md:mx-0 md:mb-16 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
+        <div className="hide-scrollbar -mx-4 mb-10 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-6 md:mx-0 md:mb-16 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
           {problems.map((item, index) => {
             const Icon = item.icon
             return (
@@ -76,4 +76,38 @@ export function BusinessProblems() {
                         <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-cyan-500/20 text-cyan-400 transition-transform duration-300 group-hover:scale-110 md:h-14 md:w-14 md:rounded-2xl">
                           <Icon className="h-6 w-6 md:h-7 md:w-7" />
                         </div>
-                        <span className="text-3xl font-black text-white/
+                        <span className="text-3xl font-black text-white/10 transition-colors group-hover:text-cyan-400/30 md:text-4xl">
+                          {item.id}
+                        </span>
+                      </div>
+
+                      <h3 className="mb-2 text-lg font-bold text-white md:mb-3 md:text-xl">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed font-medium text-slate-300">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </AnimateOnScroll>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="text-center">
+          <AnimateOnScroll delay={400}>
+            <div className="inline-flex flex-col items-center justify-center">
+              <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
+                RICVINA mang đến hệ sinh thái giúp bạn giải quyết triệt để những vấn đề trên.
+              </p>
+              <div className="flex h-8 w-8 animate-bounce items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-500/20 text-cyan-400 md:h-10 md:w-10">
+                <ArrowDown className="h-4 w-4 md:h-5 md:w-5" />
+              </div>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </Container>
+    </section>
+  )
+}
