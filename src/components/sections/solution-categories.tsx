@@ -46,6 +46,16 @@ const categories = [
 export function SolutionCategories() {
   return (
     <section className="relative overflow-hidden bg-white py-10 md:py-20 lg:py-28">
+      {/* ẨN THANH CUỘN NGANG ĐỂ NHÌN SẠCH SẼ HƠN TRÊN MOBILE */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `,
+        }}
+      />
+
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-50 blur-[120px]"></div>
 
       <Container className="relative z-10">
@@ -61,30 +71,38 @@ export function SolutionCategories() {
           </AnimateOnScroll>
         </div>
 
-        <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mb-12 lg:grid-cols-4">
-          {categories.map((item, index) => {
-            const Icon = item.icon
-            return (
-              <AnimateOnScroll key={item.id} delay={index * 100}>
-                {/* TỐI ƯU: Giảm padding p-5 thay vì p-8 */}
-                <div className="group flex h-full flex-col items-center rounded-2xl border border-slate-100 bg-slate-50 p-5 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 md:rounded-3xl md:p-8">
-                  <div
-                    className={`mb-3 flex h-14 w-14 items-center justify-center rounded-xl md:mb-6 md:h-20 md:w-20 md:rounded-2xl ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
-                  >
-                    <Icon className="h-6 w-6 md:h-10 md:w-10" />
-                  </div>
+        {/* TỐI ƯU UX: Bọc AnimateOnScroll ra ngoài toàn bộ khối để thẻ vuốt không bị tàng hình */}
+        <AnimateOnScroll delay={150}>
+          {/* CẤU TRÚC MOBILE: Vuốt ngang (flex, overflow-x-auto, snap-x) | CẤU TRÚC PC/TABLET: Giữ nguyên Grid (md:grid lg:grid-cols-4) */}
+          <div className="hide-scrollbar -mx-4 mb-8 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-6 md:mx-0 md:mb-12 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
+            {categories.map((item) => {
+              const Icon = item.icon
+              return (
+                // ĐIỀU CHỈNH KÍCH THƯỚC: Mobile ép w-[75vw] để lấp ló | PC trả về w-auto giãn đều
+                <div
+                  key={item.id}
+                  className="w-[75vw] max-w-[320px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink md:snap-align-none"
+                >
+                  {/* TỐI ƯU: Giảm padding p-5 thay vì p-8, thêm h-full để khối nào dài sẽ kéo đều các khối khác */}
+                  <div className="group flex h-full flex-col items-center rounded-2xl border border-slate-100 bg-slate-50 p-5 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 md:rounded-3xl md:p-8">
+                    <div
+                      className={`mb-3 flex h-14 w-14 items-center justify-center rounded-xl md:mb-6 md:h-20 md:w-20 md:rounded-2xl ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
+                    >
+                      <Icon className="h-6 w-6 md:h-10 md:w-10" />
+                    </div>
 
-                  <h3 className="mb-1 text-base font-bold text-slate-900 md:mb-3 md:text-xl">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs leading-relaxed font-medium text-slate-600 md:text-sm">
-                    {item.desc}
-                  </p>
+                    <h3 className="mb-1 text-base font-bold text-slate-900 md:mb-3 md:text-xl">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs leading-relaxed font-medium text-slate-600 md:text-sm">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
-              </AnimateOnScroll>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        </AnimateOnScroll>
 
         <div className="text-center">
           <AnimateOnScroll delay={400}>
