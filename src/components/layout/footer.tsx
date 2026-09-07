@@ -24,7 +24,6 @@ const solutionLinks = [
   { label: 'Bảo vệ thương hiệu', href: '/products?category=security' },
 ]
 
-// ĐÃ SỬA LẠI TÀI NGUYÊN Ở ĐÂY
 const resourceLinks = [
   { label: 'Tin tức & Sự kiện', href: '/news' },
   { label: 'Blog chuyển đổi số', href: '/blog' },
@@ -58,9 +57,11 @@ function AccordionColumn({
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="border-b border-white/10 pb-4 lg:border-none lg:pb-0">
+    // TỐI ƯU: Đưa phần viền xuống bọc toàn bộ khối, bỏ pb-4 cũ đi
+    <div className="border-b border-white/10 lg:border-none">
       <button
-        className="flex w-full items-center justify-between py-2 lg:mb-6 lg:cursor-default lg:py-0"
+        // TỐI ƯU: Tăng py-4 trên mobile để tạo vùng bấm rộng rãi, dễ chạm bằng ngón tay
+        className="flex w-full items-center justify-between py-4 lg:mb-6 lg:cursor-default lg:py-0"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
@@ -72,7 +73,8 @@ function AccordionColumn({
           )}
         />
       </button>
-      <ul className={cn('mt-4 space-y-3 text-sm lg:mt-0 lg:block', !open && 'hidden')}>
+      {/* TỐI ƯU: Thêm mb-4 khi mở ra để cách viền dưới một khoảng đẹp mắt */}
+      <ul className={cn('mb-4 space-y-3 text-sm lg:mt-0 lg:mb-0 lg:block', !open && 'hidden')}>
         {links.map((link) => (
           <li key={link.label}>
             <Link
@@ -105,26 +107,28 @@ export function Footer() {
   }
 
   return (
-    <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-12 pb-28 md:pb-40 lg:pt-16 lg:pb-48">
+    // TỐI ƯU: Giảm padding bottom pb-28 xuống pb-20 trên mobile
+    <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-10 pb-20 md:pb-40 lg:pt-16 lg:pb-48">
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-[800px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
 
       <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
-          <div className="space-y-6 md:col-span-2 lg:col-span-4 lg:pr-12">
+        {/* TỐI ƯU: Giảm gap-12 xuống gap-6 trên mobile để đỡ trống trải */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
+          <div className="space-y-4 md:col-span-2 md:space-y-6 lg:col-span-4 lg:pr-12">
             <Link href="/" className="inline-block">
-              {/* Phóng to Logo Footer (h-20 trên Mobile, h-28 trên PC cực kỳ bề thế) */}
+              {/* TỐI ƯU LOGO: Thu nhỏ xuống h-12 trên điện thoại, trả lại h-28 bề thế trên PC */}
               <Image
                 src="/images/logo.png"
                 alt="RIC Việt Nam Logo"
                 width={360}
                 height={100}
-                className="h-20 w-auto object-contain md:h-28"
+                className="h-12 w-auto object-contain sm:h-16 md:h-24 lg:h-28"
               />
             </Link>
-            <p className="mt-4 text-sm font-bold tracking-wide text-white uppercase">
+            <p className="mt-2 text-xs font-bold tracking-wide text-white uppercase md:text-sm">
               Công ty CP Đầu tư và Phát triển RIC Việt Nam
             </p>
-            <div className="space-y-4 text-sm leading-relaxed text-slate-400">
+            <div className="space-y-2 text-xs leading-relaxed text-slate-400 md:space-y-4 md:text-sm">
               <p>
                 <span className="font-bold text-slate-300">MST:</span> 0110014823
               </p>
@@ -139,7 +143,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="mt-4 lg:col-span-2 lg:mt-0">
             <AccordionColumn
               title="Sản phẩm"
               links={productLinks}
@@ -147,20 +151,30 @@ export function Footer() {
             />
           </div>
 
-          <div className="flex flex-col gap-4 lg:col-span-2 lg:gap-8">
+          <div className="flex flex-col lg:col-span-2 lg:gap-8">
             <AccordionColumn
               title="Giải pháp"
               links={solutionLinks}
               onSmartClick={handleSmartClick}
             />
-            <AccordionColumn
-              title="Tài nguyên"
-              links={resourceLinks}
-              onSmartClick={handleSmartClick}
-            />
+            <div className="hidden lg:block">
+              <AccordionColumn
+                title="Tài nguyên"
+                links={resourceLinks}
+                onSmartClick={handleSmartClick}
+              />
+            </div>
+            {/* Trên Mobile đưa Tài Nguyên thành 1 khối Accordion bình thường */}
+            <div className="block lg:hidden">
+              <AccordionColumn
+                title="Tài nguyên"
+                links={resourceLinks}
+                onSmartClick={handleSmartClick}
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col gap-4 lg:col-span-2 lg:gap-8">
+          <div className="flex flex-col lg:col-span-2 lg:gap-8">
             <AccordionColumn title="Về RIC" links={aboutLinks} onSmartClick={handleSmartClick} />
             <AccordionColumn
               title="Chính sách"
@@ -169,11 +183,11 @@ export function Footer() {
             />
           </div>
 
-          <div className="lg:col-span-2">
-            <h5 className="mb-4 text-sm font-bold tracking-widest text-white uppercase lg:mb-6">
+          <div className="mt-6 lg:col-span-2 lg:mt-0">
+            <h5 className="mb-3 text-sm font-bold tracking-widest text-white uppercase lg:mb-6">
               Liên hệ
             </h5>
-            <p className="mb-6 text-sm leading-relaxed text-slate-400">
+            <p className="mb-4 text-xs leading-relaxed text-slate-400 md:text-sm lg:mb-6">
               Đăng ký để nhận tư vấn chuyển đổi số miễn phí từ chuyên gia.
             </p>
             <div className="flex flex-col gap-3">
@@ -193,7 +207,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="relative z-20 mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs font-medium text-slate-400 md:flex-row">
+        {/* TỐI ƯU: Đẩy khoảng cách mt-8 thay vì mt-12 trên mobile */}
+        <div className="relative z-20 mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-[10px] font-medium text-slate-400 md:mt-12 md:flex-row md:text-xs">
           <p>© {new Date().getFullYear()} RIC Việt Nam. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Designed for <span className="font-bold text-cyan-400">digital excellence</span>.
@@ -203,7 +218,8 @@ export function Footer() {
 
       <div className="pointer-events-none absolute bottom-0 left-1/2 z-0 flex w-full -translate-x-1/2 justify-center select-none">
         <span
-          className="translate-y-[28%] bg-gradient-to-b from-white/20 to-transparent bg-clip-text text-[18vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] xl:text-[220px]"
+          // TỐI ƯU CHỮ NỀN: Thu nhỏ text-[15vw] trên mobile thay vì 18vw để tránh chèn ngang giao diện
+          className="translate-y-[28%] bg-gradient-to-b from-white/20 to-transparent bg-clip-text text-[15vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] sm:text-[18vw] xl:text-[220px]"
           style={{ fontFamily: "'Arial Rounded MT Bold', 'Quicksand', 'Nunito', sans-serif" }}
         >
           RICVINA
