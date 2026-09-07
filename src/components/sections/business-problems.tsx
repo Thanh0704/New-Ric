@@ -39,12 +39,17 @@ export function BusinessProblems() {
       </div>
 
       <Container className="relative z-10">
-        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-16">
+        {/* =========================================================
+            ĐÃ SỬA: NEO TIÊU ĐỀ (STICKY HEADER TẠI ĐỈNH) CHỈ CHO MOBILE
+            Thêm kính mờ (backdrop-blur) để chữ không bị đè nhau khi cuộn
+            ========================================================= */}
+        <div className="sticky top-0 z-40 -mx-4 mb-10 bg-slate-900/80 px-4 pt-4 pb-4 backdrop-blur-xl md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:bg-transparent md:px-0 md:pt-0 md:pb-0 md:text-center md:backdrop-blur-none">
           <AnimateOnScroll>
-            <h2 className="mb-2 text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
+            {/* Chỉnh text-center trên mobile để tiêu đề căn giữa */}
+            <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
               Doanh nghiệp của bạn đang gặp khó khăn?
             </h2>
-            <p className="px-2 text-sm font-medium text-slate-300 sm:text-base md:text-lg">
+            <p className="px-2 text-center text-sm font-medium text-slate-300 sm:text-base md:text-lg">
               Những "nút thắt" đang âm thầm cản trở đà tăng trưởng và làm rò rỉ lợi nhuận của bạn
               mỗi ngày.
             </p>
@@ -55,12 +60,15 @@ export function BusinessProblems() {
           {problems.map((item, index) => {
             const Icon = item.icon
 
-            const stickyTopClasses = ['top-[12vh]', 'top-[14vh]', 'top-[16vh]', 'top-[18vh]']
+            // =========================================================
+            // ĐÃ SỬA: Đẩy các điểm neo tụt xuống dưới (22vh -> 28vh)
+            // để nhường không gian bên trên cho cái Tiêu đề đứng im
+            // =========================================================
+            const stickyTopClasses = ['top-[22vh]', 'top-[24vh]', 'top-[26vh]', 'top-[28vh]']
 
             return (
               <div
                 key={item.id}
-                // ĐÃ SỬA LỖI ĐỘ CAO: Bổ sung h-full và [&>*]:h-full để ép các khối bằng nhau trên Desktop
                 className={`sticky ${stickyTopClasses[index]} z-10 h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
               >
                 <AnimateOnScroll delay={index * 100}>
