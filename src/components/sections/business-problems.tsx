@@ -32,21 +32,18 @@ const problems = [
 
 export function BusinessProblems() {
   return (
-    <section className="relative bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-0 right-0 h-[500px] w-[500px] translate-x-1/3 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]"></div>
         <div className="absolute bottom-0 left-0 h-[600px] w-[600px] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
       </div>
 
       <Container className="relative z-10">
-        {/* =========================================================
-            ĐÃ SỬA LOGIC: Bọc Tiêu đề và 4 cái thẻ vào chung 1 Wrapper.
-            Nhờ vậy, khi cuộn hết thẻ số 4, toàn bộ khối này sẽ bị kéo trượt lên trên, 
-            không còn nằm lỳ lại để đè vào đoạn text ở dưới nữa.
-            ========================================================= */}
         <div className="relative w-full">
-          {/* 1. Phần Tiêu đề (Đứng im ở top 10vh) */}
-          <div className="sticky top-[10vh] z-0 mb-12 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
+          {/* =========================================================
+              ĐÃ SỬA 1: Đẩy Tiêu đề lên top-[8vh]
+              ========================================================= */}
+          <div className="sticky top-[8vh] z-0 mb-12 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
             <AnimateOnScroll>
               <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
                 Doanh nghiệp của bạn đang gặp khó khăn?
@@ -58,12 +55,15 @@ export function BusinessProblems() {
             </AnimateOnScroll>
           </div>
 
-          {/* 2. Phần 4 Thẻ (Trượt lên và xếp chồng) */}
-          <div className="relative z-10 flex flex-col gap-[20vh] pb-[10vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
+          <div className="relative z-10 flex flex-col gap-[20vh] pb-[15vh] md:grid md:grid-cols-2 md:gap-6 md:pb-0 lg:grid-cols-4">
             {problems.map((item, index) => {
               const Icon = item.icon
 
-              const stickyTopClasses = ['top-[28vh]', 'top-[30vh]', 'top-[32vh]', 'top-[34vh]']
+              // =========================================================
+              // ĐÃ SỬA 2: Đẩy thẻ trượt lên cao hơn (bắt đầu từ 18vh)
+              // để khi vuốt, nó sẽ NHAI TRỌN đoạn Subtitle, chỉ chừa lại Tiêu đề chính.
+              // =========================================================
+              const stickyTopClasses = ['top-[18vh]', 'top-[20vh]', 'top-[22vh]', 'top-[24vh]']
 
               return (
                 <div
@@ -98,12 +98,14 @@ export function BusinessProblems() {
             })}
           </div>
         </div>
-        {/* === KẾT THÚC WRAPPER === */}
 
-        {/* 3. Phần chốt Sale ở dưới cùng (Cuộn lên bình thường theo dòng chảy) 
-            Đã tăng thêm mt-16 để có khoảng nghỉ mượt mà sau khi 4 thẻ biến mất
-        */}
-        <div className="relative z-20 mt-16 text-center md:mt-0">
+        {/* =========================================================
+            ĐÃ SỬA 3: BỨC MÀN "CURTAIN" CHỐT SALE
+            Thêm background (bg-slate-900) và Bóng mờ (shadow) lên trên để
+            nó dọn sạch mọi phần tử Sticky khi trượt lên, không bị đè chữ.
+            Hiệu ứng này sẽ được tắt (trong suốt) trên Laptop.
+            ========================================================= */}
+        <div className="relative z-30 w-full bg-slate-900 pt-16 pb-8 text-center shadow-[0_-40px_50px_rgba(15,23,42,1)] md:mt-0 md:bg-transparent md:pt-0 md:pb-0 md:shadow-none">
           <AnimateOnScroll delay={150}>
             <div className="inline-flex flex-col items-center justify-center">
               <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
