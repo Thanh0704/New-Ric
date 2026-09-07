@@ -3,11 +3,11 @@
 import React, { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, BellRing, ChevronRight, ChevronLeft, Lock } from 'lucide-react'
+// ĐÃ SỬA IMPORT: Thay ArrowUpRight thành ArrowRight (Mũi tên thẳng)
+import { ArrowRight, BellRing, ChevronRight, ChevronLeft, Lock } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 
-// ... (Sếp giữ nguyên mảng mainProducts và comingSoonProducts như cũ để code gọn nhé) ...
 const mainProducts = [
   {
     id: 'ecom',
@@ -80,7 +80,10 @@ export function ProductShowcase() {
     <section className="relative overflow-hidden bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
       <style
         dangerouslySetInnerHTML={{
-          __html: `.hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }`,
+          __html: `
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `,
         }}
       />
 
@@ -131,7 +134,6 @@ export function ProductShowcase() {
           <Link
             href={product.link}
             key={product.id}
-            // ĐÃ SỬA LỖI CÚ PHÁP: w-[85vw] max-w-[320px] giúp thẻ rộng rãi hơn trên đt
             className="group relative flex h-[400px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-black/50 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/50 hover:bg-white/10 sm:w-[320px] md:h-[560px] md:w-[380px] md:rounded-[2.5rem] md:p-2.5"
           >
             <div className="relative z-10 flex h-[55%] w-full flex-col rounded-[1.25rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent p-4 md:rounded-[2rem] md:p-8">
@@ -145,13 +147,14 @@ export function ProductShowcase() {
                 {product.desc}
               </p>
 
-              <div className="absolute bottom-4 left-4 flex h-10 w-10 items-center overflow-hidden rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-300 ease-out group-hover:w-auto group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] sm:h-12 sm:w-12 md:bottom-6 md:left-6 md:h-14 md:w-14">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12 md:h-14 md:w-14">
-                  <ArrowUpRight className="h-4 w-4 text-white transition-colors duration-300 group-hover:scale-110 group-hover:text-slate-900 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+              {/* ====================================================
+                  THIẾT KẾ MỚI CHO NÚT BẤM: RÕ RÀNG HƠN, ĐẸP HƠN
+                  ==================================================== */}
+              <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-bold text-white backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] sm:px-5 sm:py-2.5 sm:text-xs md:text-sm">
+                  Khám phá{' '}
+                  <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
                 </div>
-                <span className="max-w-0 overflow-hidden text-xs font-black whitespace-nowrap text-slate-900 transition-all duration-300 ease-out group-hover:max-w-[100px] group-hover:pr-3 sm:group-hover:pr-4 md:text-sm md:group-hover:pr-5">
-                  Khám phá
-                </span>
               </div>
             </div>
 
