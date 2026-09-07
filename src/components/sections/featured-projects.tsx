@@ -40,31 +40,35 @@ const otherProjects = [
 
 export function FeaturedProjects() {
   return (
-    <section className="bg-white py-24 lg:py-32">
+    // TỐI ƯU MOBILE: Giảm py-24 xuống py-16
+    <section className="bg-white py-16 md:py-24 lg:py-32">
       <Container>
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-black tracking-widest text-blue-700 uppercase shadow-sm">
+            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-black tracking-widest text-blue-700 uppercase shadow-sm md:mb-4 md:px-4 md:py-1.5 md:text-sm">
               <ShieldCheck className="h-4 w-4" /> Bảng vàng thành tích
             </span>
-            <h2 className="mb-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+            {/* TỐI ƯU MOBILE: text-2xl */}
+            <h2 className="mb-3 text-2xl font-black tracking-tight text-slate-900 md:mb-4 md:text-4xl">
               CHỨNG MINH BẰNG KẾT QUẢ
             </h2>
-            <p className="text-lg font-medium text-slate-600">
+            <p className="text-base font-medium text-slate-600 md:text-lg">
               Không chỉ là phần mềm, chúng tôi mang đến sự tăng trưởng có thể đo lường được cho hàng
               trăm doanh nghiệp.
             </p>
           </AnimateOnScroll>
         </div>
 
-        <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
+        {/* TỐI ƯU MOBILE: gap-6 */}
+        <div className="mb-10 grid grid-cols-1 gap-6 md:mb-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
             <AnimateOnScroll>
               <Link
                 href={featuredProject.href}
-                className="group relative block h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-slate-200"
+                className="group relative block h-full overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-slate-200 md:rounded-[2rem]"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:h-[400px]">
+                {/* TỐI ƯU MOBILE: Aspect ratio giữ form ảnh không bị bóp méo */}
+                <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/3] lg:aspect-auto lg:h-[400px]">
                   <Image
                     src={featuredProject.image}
                     alt={featuredProject.title}
@@ -73,27 +77,31 @@ export function FeaturedProjects() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
 
-                  <div className="absolute right-0 bottom-0 left-0 p-8">
-                    <span className="mb-3 inline-block rounded-lg bg-blue-600 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
+                  {/* TỐI ƯU MOBILE: p-5 thay vì p-8 */}
+                  <div className="absolute right-0 bottom-0 left-0 p-5 md:p-8">
+                    <span className="mb-2 inline-block rounded-lg bg-blue-600 px-2.5 py-1 text-[10px] font-bold tracking-wider text-white uppercase md:mb-3 md:text-xs">
                       {featuredProject.category}
                     </span>
-                    <h3 className="mb-3 text-2xl font-black text-white md:text-3xl">
+                    <h3 className="mb-2 text-xl font-black text-white md:mb-3 md:text-2xl lg:text-3xl">
                       {featuredProject.title}
                     </h3>
-                    <p className="mb-6 line-clamp-2 text-sm font-medium text-slate-300 md:text-base">
+                    <p className="mb-4 line-clamp-2 text-xs font-medium text-slate-300 sm:text-sm md:mb-6 md:line-clamp-3 md:text-base">
                       {featuredProject.desc}
                     </p>
 
-                    <div className="flex gap-4">
+                    {/* TỐI ƯU MOBILE: flex-wrap để các thẻ metrics rớt dòng nếu màn hẹp */}
+                    <div className="flex flex-wrap gap-2 md:gap-4">
                       {featuredProject.metrics.map((metric, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/20 px-4 py-2 backdrop-blur-md"
+                          className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/20 px-3 py-1.5 backdrop-blur-md md:gap-3 md:px-4 md:py-2"
                         >
-                          <metric.icon className="h-6 w-6 text-emerald-400" />
+                          <metric.icon className="h-5 w-5 text-emerald-400 md:h-6 md:w-6" />
                           <div>
-                            <p className="text-xl font-black text-white">{metric.value}</p>
-                            <p className="text-[10px] font-bold text-slate-200 uppercase">
+                            <p className="text-base font-black text-white md:text-xl">
+                              {metric.value}
+                            </p>
+                            <p className="text-[9px] font-bold text-slate-200 uppercase md:text-[10px]">
                               {metric.label}
                             </p>
                           </div>
@@ -106,14 +114,15 @@ export function FeaturedProjects() {
             </AnimateOnScroll>
           </div>
 
-          <div className="flex flex-col gap-6 lg:col-span-5">
+          <div className="flex flex-col gap-4 md:gap-6 lg:col-span-5">
             {otherProjects.map((project, index) => (
               <AnimateOnScroll key={index} delay={index * 150}>
+                {/* TỐI ƯU MOBILE: Dùng h-auto thay vì h-32 để linh hoạt chiều cao */}
                 <Link
                   href={project.href}
-                  className="group flex h-32 items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-3 backdrop-blur-sm transition-all hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-slate-100"
+                  className="group flex h-auto min-h-[100px] items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-2 backdrop-blur-sm transition-all hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-slate-100 md:min-h-[128px] md:gap-4 md:rounded-2xl md:p-3"
                 >
-                  <div className="relative h-full w-1/3 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 md:h-24 md:w-1/3 md:rounded-xl">
                     <Image
                       src={project.image}
                       alt={project.title}
@@ -121,11 +130,11 @@ export function FeaturedProjects() {
                       className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
                     />
                   </div>
-                  <div className="flex-1 py-2 pr-4">
-                    <span className="mb-1 block text-[10px] font-bold tracking-wider text-blue-600 uppercase">
+                  <div className="flex-1 py-1 pr-2 md:py-2 md:pr-4">
+                    <span className="mb-1 block text-[9px] font-bold tracking-wider text-blue-600 uppercase md:text-[10px]">
                       {project.category}
                     </span>
-                    <h4 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-blue-600">
+                    <h4 className="line-clamp-2 text-sm font-bold text-slate-900 transition-colors group-hover:text-blue-600 md:text-base">
                       {project.title}
                     </h4>
                   </div>
@@ -136,9 +145,9 @@ export function FeaturedProjects() {
             <AnimateOnScroll delay={450}>
               <Link
                 href="/projects"
-                className="flex h-16 w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 font-bold text-slate-700 transition-all hover:border-blue-500 hover:bg-blue-50 hover:text-blue-700"
+                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 text-sm font-bold text-slate-700 transition-all hover:border-blue-500 hover:bg-blue-50 hover:text-blue-700 md:h-16 md:rounded-2xl md:text-base"
               >
-                Xem toàn bộ 100+ Dự án <ArrowRight className="h-5 w-5" />
+                Xem toàn bộ 100+ Dự án <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
               </Link>
             </AnimateOnScroll>
           </div>

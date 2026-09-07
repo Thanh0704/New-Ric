@@ -45,34 +45,39 @@ const categories = [
 
 export function SolutionCategories() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 md:py-28">
+    // TỐI ƯU MOBILE: Giảm py-20 xuống py-12
+    <section className="relative overflow-hidden bg-white py-12 md:py-20 lg:py-28">
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-50 blur-[120px]"></div>
 
       <Container className="relative z-10">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>
-            <h2 className="mb-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+            <h2 className="mb-3 text-2xl font-black tracking-tight text-slate-900 md:mb-4 md:text-4xl">
               GIẢI PHÁP CỦA CHÚNG TÔI
             </h2>
-            <p className="text-lg font-medium text-slate-600">
+            <p className="text-base font-medium text-slate-600 md:text-lg">
               Đa dạng giải pháp – Tối ưu theo nhu cầu doanh nghiệp
             </p>
           </AnimateOnScroll>
         </div>
 
-        <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* TỐI ƯU MOBILE: gap-4 thay vì gap-6 */}
+        <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mb-12 lg:grid-cols-4">
           {categories.map((item, index) => {
             const Icon = item.icon
             return (
               <AnimateOnScroll key={item.id} delay={index * 100}>
-                <div className="group flex h-full flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5">
+                {/* TỐI ƯU MOBILE: Giảm padding p-8 xuống p-6 md:p-8 */}
+                <div className="group flex h-full flex-col items-center rounded-3xl border border-slate-100 bg-slate-50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 md:p-8">
                   <div
-                    className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
+                    className={`mb-4 flex h-16 w-16 items-center justify-center rounded-2xl md:mb-6 md:h-20 md:w-20 ${item.bgColor} ${item.color} border border-slate-100 transition-transform duration-300 group-hover:scale-110`}
                   >
-                    <Icon className="h-10 w-10" />
+                    <Icon className="h-8 w-8 md:h-10 md:w-10" />
                   </div>
 
-                  <h3 className="mb-3 text-xl font-bold text-slate-900">{item.title}</h3>
+                  <h3 className="mb-2 text-lg font-bold text-slate-900 md:mb-3 md:text-xl">
+                    {item.title}
+                  </h3>
                   <p className="text-sm leading-relaxed font-medium text-slate-600">{item.desc}</p>
                 </div>
               </AnimateOnScroll>

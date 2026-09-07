@@ -1,16 +1,11 @@
 import { Suspense } from 'react' // THÊM IMPORT NÀY
 import { HomeScrollManager } from '@/components/shared/home-scroll-manager' // THÊM IMPORT NÀY
 import { Hero } from '@/components/sections/hero'
-// import { TrustedBy } from '@/components/sections/trusted-by'
-// import { Solutions } from '@/components/sections/solutions'
 import { ProductShowcase } from '@/components/sections/product-showcase'
 import { BusinessProblems } from '@/components/sections/business-problems'
 import { SolutionCategories } from '@/components/sections/solution-categories'
 import { FeaturedProjects } from '@/components/sections/featured-projects'
-// import { DeploymentProcess } from '@/components/sections/deployment-process'
 import { RicvinaStandard } from '@/components/sections/why-choose-us'
-// import { WhyRic } from '@/components/sections/why-ric'
-
 import { RegisterDemo } from '@/components/sections/register-demo'
 import { StructuredData } from '@/components/shared/structured-data'
 import { SITE_CONFIG } from '@/lib/constants'
@@ -42,15 +37,11 @@ export default function HomePage() {
       {/* 👆 */}
 
       <Hero />
-      {/* <TrustedBy /> */}
       <BusinessProblems />
       <SolutionCategories />
-      {/* <Solutions /> */}
       <ProductShowcase />
       <FeaturedProjects />
-      {/* <DeploymentProcess /> */}
       <RicvinaStandard />
-      {/* <WhyRic /> */}
       <RegisterDemo />
     </>
   )
