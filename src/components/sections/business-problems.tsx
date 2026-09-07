@@ -39,12 +39,9 @@ export function BusinessProblems() {
       </div>
 
       <Container className="relative z-10">
-        {/* WRAPPER TỔNG: Giữ khoảng trống cuộn pb-[15vh] cho Mobile, nhưng Laptop thì xóa (md:pb-0) */}
         <div className="relative w-full pb-[15vh] md:pb-0">
-          {/* 1. TIÊU ĐỀ: 
-              - Mobile: Đứng im ở top-10vh
-              - Laptop (md:): Trả về relative, hủy sticky, canh giữa chuẩn chỉ */}
-          <div className="sticky top-[10vh] z-10 mb-[10vh] md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
+          {/* 1. TIÊU ĐỀ: Vẫn đứng im ở top-[10vh] */}
+          <div className="sticky top-[10vh] z-10 mb-[5vh] md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
             <AnimateOnScroll>
               <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
                 Doanh nghiệp của bạn đang gặp khó khăn?
@@ -56,26 +53,23 @@ export function BusinessProblems() {
             </AnimateOnScroll>
           </div>
 
-          {/* 2. CÁC THẺ: 
-              - Mobile: dạng block xếp dọc để cuộn sticky
-              - Laptop (md:): Trở về cấu trúc Grid lưới 2 cột / 4 cột */}
           <div className="block md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4">
             {problems.map((item, index) => {
               const Icon = item.icon
 
-              // CÁC BIẾN CHỈ DÀNH RIÊNG CHO MOBILE
-              const mobileStickyTops = ['top-[26vh]', 'top-[27vh]', 'top-[28vh]', 'top-[29vh]']
+              // =========================================================
+              // ĐÃ SỬA: Đẩy tọa độ neo tụt xuống (Từ 28vh -> 38vh).
+              // Khoảng trống tạo ra sẽ giúp các thẻ cách xa phần chữ Subtitle ở trên,
+              // tạo không gian "thở" cực kỳ xịn sò.
+              // =========================================================
+              const mobileStickyTops = ['top-[38vh]', 'top-[40vh]', 'top-[42vh]', 'top-[44vh]']
               const mobileZIndexes = ['z-20', 'z-30', 'z-40', 'z-50']
-              const mobileMargins = index === 0 ? 'mt-0' : 'mt-[40vh]' // Tạo khoảng cách vuốt giữa các thẻ
+              const mobileMargins = index === 0 ? 'mt-0' : 'mt-[40vh]'
 
               return (
                 <div
                   key={item.id}
                   className={`sticky ${mobileStickyTops[index]} ${mobileZIndexes[index]} ${mobileMargins} w-full md:relative md:top-auto md:z-auto md:mt-0 md:h-full [&>*]:h-full`}
-                  /* LỜI GIẢI THÍCH LỖI LAPTOP: 
-                     Đoạn "md:relative md:top-auto md:z-auto md:mt-0" sẽ XÓA TOÀN BỘ hiệu ứng cuộn xếp lớp trên Laptop.
-                     Đoạn "md:h-full [&>*]:h-full" sẽ ÉP các khối dài bằng nhau tăm tắp, sửa cái lỗi ở ảnh sếp gửi.
-                  */
                 >
                   <AnimateOnScroll delay={index * 100}>
                     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
@@ -106,7 +100,7 @@ export function BusinessProblems() {
           </div>
         </div>
 
-        {/* 3. PHẦN CHỐT: Đi ngay sau cái Wrapper trên */}
+        {/* 3. PHẦN CHỐT */}
         <div className="relative z-10 mt-16 text-center md:mt-24">
           <AnimateOnScroll delay={100}>
             <div className="inline-flex flex-col items-center justify-center">
