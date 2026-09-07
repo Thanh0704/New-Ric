@@ -3,7 +3,6 @@
 import React, { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-// ĐÃ SỬA IMPORT: Thay ArrowUpRight thành ArrowRight (Mũi tên thẳng)
 import { ArrowRight, BellRing, ChevronRight, ChevronLeft, Lock } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
@@ -147,9 +146,6 @@ export function ProductShowcase() {
                 {product.desc}
               </p>
 
-              {/* ====================================================
-                  THIẾT KẾ MỚI CHO NÚT BẤM: RÕ RÀNG HƠN, ĐẸP HƠN
-                  ==================================================== */}
               <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-bold text-white backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] sm:px-5 sm:py-2.5 sm:text-xs md:text-sm">
                   Khám phá{' '}
@@ -168,10 +164,59 @@ export function ProductShowcase() {
             </div>
           </Link>
         ))}
+
+        {/* =========================================================================
+            THÊM MỚI: 2 Sản phẩm sắp ra mắt dồn vào thanh trượt (CHỈ ÁP DỤNG MOBILE) 
+            Được giấu trên Desktop bằng class "md:hidden"
+            ========================================================================= */}
+        {comingSoonProducts.map((product) => (
+          <div
+            key={`mobile-soon-${product.id}`}
+            className="group relative flex h-[400px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-black/50 backdrop-blur-md transition-all duration-300 sm:w-[320px] md:hidden"
+          >
+            <div className="relative z-10 flex h-[55%] w-full flex-col rounded-[1.25rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent p-4">
+              <span className="mb-2 inline-table w-max rounded-full border border-slate-500/50 bg-slate-500/20 px-3 py-1 text-[10px] font-black tracking-wider text-slate-300 uppercase backdrop-blur-md">
+                Sắp ra mắt
+              </span>
+              <h3 className="mb-1 text-xl font-black text-white sm:mb-2 sm:text-2xl">
+                {product.title}
+              </h3>
+              <p className="line-clamp-3 text-xs leading-relaxed font-medium text-slate-300">
+                {product.tagline}
+              </p>
+
+              <div className="absolute bottom-4 left-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500 hover:text-white sm:px-5 sm:py-2.5 sm:text-xs"
+                >
+                  <BellRing className="h-3 w-3" /> Đăng ký nhận tin
+                </Link>
+              </div>
+            </div>
+
+            <div className="absolute right-0 bottom-0 z-0 h-[50%] w-[90%] overflow-hidden rounded-tl-[1.25rem] rounded-br-[1.5rem] border-[3px] border-white/10 bg-slate-900 shadow-xl">
+              <Image
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-cover object-top opacity-30 grayscale transition-opacity duration-500 group-hover:opacity-50"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Lock className="h-6 w-6 text-white/50" />
+              </div>
+            </div>
+          </div>
+        ))}
+
         <div className="w-[2vw] shrink-0 md:w-[5vw]"></div>
       </div>
 
-      <Container className="relative z-10">
+      {/* =========================================================================
+          ĐÃ SỬA: Thêm class "hidden md:block" vào Container này 
+          để nó ẩn hoàn toàn trên Mobile và chỉ hiện trên Laptop/PC
+          ========================================================================= */}
+      <Container className="relative z-10 hidden md:block">
         <AnimateOnScroll delay={300}>
           <div className="mt-2 rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl md:mt-8 md:rounded-[2.5rem] md:p-6 lg:p-10">
             <div className="mb-4 flex items-center gap-3 md:mb-6 md:gap-4">
