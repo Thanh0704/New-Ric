@@ -4,7 +4,7 @@ import { Hero } from '@/components/sections/hero'
 import { ProductShowcase } from '@/components/sections/product-showcase'
 import { BusinessProblems } from '@/components/sections/business-problems'
 import { SolutionCategories } from '@/components/sections/solution-categories'
-import { FeaturedProjects } from '@/components/sections/featured-projects'
+// import { FeaturedProjects } from '@/components/sections/featured-projects'
 import { RicvinaStandard } from '@/components/sections/why-choose-us'
 import { RegisterDemo } from '@/components/sections/register-demo'
 import { StructuredData } from '@/components/shared/structured-data'
@@ -40,7 +40,7 @@ export default function HomePage() {
       <BusinessProblems />
       <SolutionCategories />
       <ProductShowcase />
-      <FeaturedProjects />
+      {/* <FeaturedProjects /> */}
       <RicvinaStandard />
       <RegisterDemo />
     </>

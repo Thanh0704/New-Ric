@@ -76,7 +76,8 @@ export function ProductShowcase() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
+    // ĐÃ SỬA: Thay background tối thành bg-gradient-to-r từ blue-900 dạt sang slate-950 đồng bộ toàn trang
+    <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-950 to-slate-950 py-12 md:py-24 lg:py-32">
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -86,15 +87,16 @@ export function ProductShowcase() {
         }}
       />
 
-      <div className="pointer-events-none absolute top-0 left-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]"></div>
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/30 blur-[150px]"></div>
+      {/* Tinh chỉnh nhẹ ánh sáng blur để hợp với nền xanh */}
+      <div className="pointer-events-none absolute top-0 left-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-[120px]"></div>
+      <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/20 blur-[150px]"></div>
 
       <Container className="relative z-10 mb-6 lg:mb-12">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <AnimateOnScroll>
             <h2 className="mb-2 text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-5xl">
               HỆ SINH THÁI <br />
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
                 SẢN PHẨM
               </span>
             </h2>
@@ -165,10 +167,6 @@ export function ProductShowcase() {
           </Link>
         ))}
 
-        {/* =========================================================================
-            THÊM MỚI: 2 Sản phẩm sắp ra mắt dồn vào thanh trượt (CHỈ ÁP DỤNG MOBILE) 
-            Được giấu trên Desktop bằng class "md:hidden"
-            ========================================================================= */}
         {comingSoonProducts.map((product) => (
           <div
             key={`mobile-soon-${product.id}`}
@@ -212,10 +210,6 @@ export function ProductShowcase() {
         <div className="w-[2vw] shrink-0 md:w-[5vw]"></div>
       </div>
 
-      {/* =========================================================================
-          ĐÃ SỬA: Thêm class "hidden md:block" vào Container này 
-          để nó ẩn hoàn toàn trên Mobile và chỉ hiện trên Laptop/PC
-          ========================================================================= */}
       <Container className="relative z-10 hidden md:block">
         <AnimateOnScroll delay={300}>
           <div className="mt-2 rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl md:mt-8 md:rounded-[2.5rem] md:p-6 lg:p-10">
