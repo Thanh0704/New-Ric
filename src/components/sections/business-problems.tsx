@@ -40,12 +40,12 @@ export function BusinessProblems() {
 
       <Container className="relative z-10">
         {/* =========================================================
-            WRAPPER TỔNG: Bọc chặt cả Tiêu đề và 4 Thẻ. 
-            Không để padding dư thừa ở đáy nữa. Kéo tới Thẻ 4 là cả khối bị đẩy lên luôn!
+            WRAPPER TỔNG: Chứa Tiêu đề + 4 Thẻ. 
+            Cắt hết khoảng trống thừa để cuộn mượt mà ngay sau thẻ 4.
             ========================================================= */}
-        <div className="relative w-full pb-4 md:pb-0">
-          {/* 1. TIÊU ĐỀ: Neo ở top-8vh, z-10 để các thẻ (z-20) đè lên che bớt chữ nhỏ */}
-          <div className="sticky top-[8vh] z-10 mb-8 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
+        <div className="relative w-full">
+          {/* 1. TIÊU ĐỀ: Đứng im ở top-10vh, an toàn tuyệt đối không bị đè */}
+          <div className="sticky top-[10vh] z-10 mb-8 md:relative md:top-auto md:z-auto md:mx-auto md:mb-16 md:max-w-3xl md:text-center">
             <AnimateOnScroll>
               <h2 className="mb-2 text-center text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
                 Doanh nghiệp của bạn đang gặp khó khăn?
@@ -57,24 +57,30 @@ export function BusinessProblems() {
             </AnimateOnScroll>
           </div>
 
-          {/* 2. KHỐI 4 THẺ: Trượt lên xếp chồng */}
-          <div className="relative z-20 flex flex-col gap-[15vh] md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4">
+          {/* 2. KHỐI 4 THẺ: Trượt lên "nuốt" lấy nhau. Khoảng cách (gap) dài ra để có không gian vuốt */}
+          <div className="relative z-20 flex flex-col gap-[35vh] pb-0 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4">
             {problems.map((item, index) => {
               const Icon = item.icon
 
               // =========================================================
-              // LOGIC ĐIỂM NEO: Đặt sát bên dưới Tiêu đề chính.
-              // Khi cuộn, thẻ sẽ trượt lên che vừa khít đoạn Subtitle.
+              // LOGIC "TRÁO BÀI": Tọa độ dừng tăng lên 1 tí tẹo (1vh)
+              // z-index tăng dần (20,30,40,50) để Thẻ sau ĐÈ KÍN Thẻ trước
               // =========================================================
-              const stickyTopClasses = ['top-[18vh]', 'top-[20vh]', 'top-[22vh]', 'top-[24vh]']
+              const stickyClasses = [
+                'top-[26vh] z-20',
+                'top-[27vh] z-30',
+                'top-[28vh] z-40',
+                'top-[29vh] z-50',
+              ]
 
               return (
                 <div
                   key={item.id}
-                  className={`sticky ${stickyTopClasses[index]} h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
+                  className={`sticky ${stickyClasses[index]} h-full w-full md:relative md:top-auto md:z-auto [&>*]:h-full`}
                 >
                   <AnimateOnScroll delay={index * 100}>
-                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
+                    {/* Shadow được làm đậm lên ở viền trên để tạo hiệu ứng tách lớp rõ rệt khi xếp chồng */}
+                    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.9)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
                       <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
 
                       <div className="relative z-10 flex h-full flex-col">
@@ -104,10 +110,10 @@ export function BusinessProblems() {
         {/* === KẾT THÚC WRAPPER === */}
 
         {/* =========================================================
-            3. PHẦN CHỐT: Đã gỡ bỏ cái background lỗi. 
-            Nó sẽ từ từ trồi lên một cách tự nhiên ngay sau khi thẻ 04 bị kéo đi.
+            3. PHẦN CHỐT: Đi ngay sát phía sau Khối thẻ. 
+            Vừa vuốt qua Thẻ số 4 là nó sẽ ngoi lên cực mượt.
             ========================================================= */}
-        <div className="relative z-10 mt-20 text-center md:mt-24">
+        <div className="relative z-10 mt-12 text-center md:mt-20">
           <AnimateOnScroll delay={100}>
             <div className="inline-flex flex-col items-center justify-center">
               <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
