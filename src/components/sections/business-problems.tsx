@@ -58,16 +58,17 @@ export function BusinessProblems() {
           </AnimateOnScroll>
         </div>
 
-        {/* TỐI ƯU GIAO DIỆN CHỐT HẠ: Đã bỏ lớp sương mờ, chỉ giữ lại hiệu ứng vuốt và thẻ lấp ló (w-[75vw]) */}
-        <div className="hide-scrollbar -mx-4 mb-10 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-6 md:mx-0 md:mb-16 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
-          {problems.map((item, index) => {
-            const Icon = item.icon
-            return (
-              <div
-                key={item.id}
-                className="w-[75vw] max-w-[320px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink md:snap-align-none"
-              >
-                <AnimateOnScroll delay={index * 100}>
+        {/* ĐÃ SỬA: Bọc AnimateOnScroll ra ngoài toàn bộ khung slider, và thêm class scroll-pl-4 */}
+        <AnimateOnScroll delay={150}>
+          <div className="hide-scrollbar -mx-4 mb-10 flex snap-x snap-mandatory scroll-pl-4 items-stretch gap-4 overflow-x-auto px-4 pb-6 md:mx-0 md:mb-16 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
+            {problems.map((item) => {
+              const Icon = item.icon
+              return (
+                <div
+                  key={item.id}
+                  className="w-[75vw] max-w-[320px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink md:snap-align-none"
+                >
+                  {/* ĐÃ SỬA: Loại bỏ AnimateOnScroll ở từng thẻ con */}
                   <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-cyan-900/40 md:rounded-3xl md:p-8">
                     <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10 transition-colors duration-300 group-hover:bg-cyan-400 md:w-1.5"></div>
 
@@ -89,14 +90,14 @@ export function BusinessProblems() {
                       </p>
                     </div>
                   </div>
-                </AnimateOnScroll>
-              </div>
-            )
-          })}
-        </div>
+                </div>
+              )
+            })}
+          </div>
+        </AnimateOnScroll>
 
         <div className="text-center">
-          <AnimateOnScroll delay={400}>
+          <AnimateOnScroll delay={300}>
             <div className="inline-flex flex-col items-center justify-center">
               <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
                 RICVINA mang đến hệ sinh thái giúp bạn giải quyết triệt để những vấn đề trên.
