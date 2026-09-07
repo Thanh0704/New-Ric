@@ -1,5 +1,6 @@
 import React from 'react'
-import { Clock, Database, ServerCrash, TrendingDown, ArrowDown } from 'lucide-react'
+// TỐI ƯU: Bổ sung icon ChevronsRight làm chỉ dẫn vuốt
+import { Clock, Database, ServerCrash, TrendingDown, ArrowDown, ChevronsRight } from 'lucide-react'
 import { Container } from '@/components/shared/container'
 import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 
@@ -33,7 +34,6 @@ const problems = [
 export function BusinessProblems() {
   return (
     <section className="relative overflow-hidden bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
-      {/* ẨN THANH CUỘN NGANG ĐỂ NHÌN SẠCH SẼ HƠN TRÊN MOBILE */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -47,7 +47,7 @@ export function BusinessProblems() {
       <div className="pointer-events-none absolute bottom-0 left-0 h-[600px] w-[600px] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
 
       <Container className="relative z-10">
-        <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16">
+        <div className="mx-auto mb-6 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>
             <h2 className="mb-2 text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-4xl">
               Doanh nghiệp của bạn đang gặp khó khăn?
@@ -59,18 +59,22 @@ export function BusinessProblems() {
           </AnimateOnScroll>
         </div>
 
-        {/* TỐI ƯU GIAO DIỆN: 
-          - Mobile: flex, overflow-x-auto, snap-x (Vuốt ngang mượt mà)
-          - Tablet/PC: Trả về grid, md:grid-cols-2, lg:grid-cols-4 
-        */}
+        {/* CHỈ DẪN VUỐT NGANG (Chỉ hiện trên điện thoại) */}
+        <AnimateOnScroll>
+          <div className="mb-3 flex items-center justify-end gap-1.5 px-2 text-[10px] font-black tracking-widest text-cyan-400 uppercase md:hidden">
+            Vuốt để xem <ChevronsRight className="h-3.5 w-3.5 animate-pulse" />
+          </div>
+        </AnimateOnScroll>
+
+        {/* TỐI ƯU GIAO DIỆN: Đổi snap-center thành snap-start để căn lề trái chuẩn hơn, tạo khoảng trống cho thẻ tiếp theo lấp ló */}
         <div className="hide-scrollbar -mx-4 mb-10 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-6 md:mx-0 md:mb-16 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
           {problems.map((item, index) => {
             const Icon = item.icon
             return (
-              // Bọc thêm 1 div để giới hạn chiều rộng trên Mobile (w-[85vw]), nhưng lên PC thì giãn tự do (md:w-auto)
+              // TỐI ƯU: Đổi từ w-[85vw] xuống w-[78vw] để thẻ kế tiếp thò ra nhiều hơn
               <div
                 key={item.id}
-                className="w-[85vw] max-w-[320px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink md:snap-align-none"
+                className="w-[78vw] max-w-[320px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink md:snap-align-none"
               >
                 <AnimateOnScroll delay={index * 100}>
                   <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-cyan-900/40 md:rounded-3xl md:p-8">
