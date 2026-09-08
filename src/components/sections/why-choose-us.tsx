@@ -53,16 +53,7 @@ const steps = [
 export function RicvinaStandard() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-950 to-slate-950 pt-20 pb-32 md:pt-32 md:pb-48">
-      {/* THÊM STYLE CHO THANH CUỘN NGANG */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `,
-        }}
-      />
-
+      {/* Vệt sáng ngăn cách */}
       <div className="absolute top-0 left-0 z-20 w-full">
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-80 shadow-[0_0_15px_rgba(34,211,238,1)]"></div>
         <div className="mx-auto h-[120px] w-[80%] max-w-4xl bg-gradient-to-b from-cyan-400/20 to-transparent blur-2xl"></div>
@@ -137,42 +128,50 @@ export function RicvinaStandard() {
           </AnimateOnScroll>
         </div>
 
-        <div className="relative mx-auto max-w-6xl">
+        <div className="relative mx-auto max-w-6xl px-2 md:px-0">
+          {/* =========================================================
+              TRỤC TIMELINE NGANG (CHỈ HIỆN TRÊN LAPTOP)
+              ========================================================= */}
           <div className="absolute top-[3.5rem] right-[10%] left-[10%] hidden h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent lg:block"></div>
 
-          {/* ĐÃ SỬA: Đưa AnimateOnScroll ra ngoài để không bị lỗi tàng hình khi vuốt */}
-          <AnimateOnScroll delay={150}>
-            {/* ĐÃ SỬA: Chuyển cấu trúc grid dọc thành flex vuốt ngang trên Mobile */}
-            <div className="hide-scrollbar -mx-4 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-8 md:mx-0 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-5 lg:gap-6">
-              {steps.map((step) => {
-                const Icon = step.icon
-                return (
-                  // Ép độ rộng w-[75vw] trên mobile để thẻ lấp ló, trên PC trở về w-auto
-                  <div
-                    key={step.id}
-                    className="w-[75vw] max-w-[280px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink md:snap-align-none"
-                  >
-                    {/* Thêm nền card mờ trên mobile để cảm giác vuốt có viền rõ ràng, trên PC thì làm trong suốt */}
-                    <div className="group relative z-10 flex h-full flex-col items-center rounded-2xl border border-white/5 bg-white/5 p-5 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/30 hover:bg-white/10 md:border-transparent md:bg-transparent md:p-0 md:backdrop-blur-none md:hover:-translate-y-0 md:hover:border-transparent md:hover:bg-transparent">
-                      <div className="relative mb-3 flex h-14 w-14 items-center justify-center rounded-[1rem] border border-white/10 bg-slate-900/50 shadow-xl transition-all duration-300 group-hover:-translate-y-2 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/20 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] md:mb-6 md:h-28 md:w-28 md:rounded-3xl">
-                        <Icon className="h-6 w-6 text-slate-300 transition-colors duration-300 group-hover:text-cyan-400 md:h-12 md:w-12" />
-                        <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-lg border border-cyan-500/30 bg-slate-900 text-[9px] font-black text-cyan-400 shadow-md md:-top-3 md:-right-3 md:h-8 md:w-8 md:text-sm">
-                          {step.id}
-                        </div>
-                      </div>
+          {/* =========================================================
+              THÊM MỚI: TRỤC TIMELINE DỌC (CHỈ HIỆN TRÊN MOBILE)
+              Một tia sáng chạy xuyên tâm tất cả các Icon từ trên xuống dưới
+              ========================================================= */}
+          <div className="absolute top-[1.75rem] bottom-[1.75rem] left-[2.25rem] z-0 w-[2px] bg-gradient-to-b from-cyan-400/80 via-cyan-400/20 to-transparent md:hidden"></div>
 
-                      <h3 className="mb-1.5 px-2 text-sm font-bold text-white transition-colors group-hover:text-cyan-300 sm:text-base md:mb-3 md:text-lg">
+          <div className="relative z-10 flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-5">
+            {steps.map((step, index) => {
+              const Icon = step.icon
+              return (
+                <AnimateOnScroll key={step.id} delay={index * 150}>
+                  {/* CẤU TRÚC:
+                      - Mobile: flex-row (Icon trái, chữ phải) để tạo cảm giác các mốc thời gian
+                      - Laptop: flex-col (Chữ dưới Icon) như cũ 
+                  */}
+                  <div className="group relative flex flex-row items-start gap-4 md:flex-col md:items-center md:gap-0 md:text-center">
+                    {/* ICON - TRẠM DỪNG (NODE) CỦA TIMELINE */}
+                    <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-[1rem] border border-cyan-500/30 bg-slate-900 shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all duration-300 md:mb-6 md:h-28 md:w-28 md:rounded-3xl md:bg-slate-900/50 md:group-hover:-translate-y-2 md:group-hover:border-cyan-500/50 md:group-hover:bg-cyan-500/20 md:group-hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                      <Icon className="h-6 w-6 text-cyan-400 transition-colors duration-300 md:h-12 md:w-12 md:text-slate-300 md:group-hover:text-cyan-400" />
+                      <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-lg border border-cyan-500/30 bg-slate-900 text-[9px] font-black text-cyan-400 shadow-md md:-top-3 md:-right-3 md:h-8 md:w-8 md:text-sm">
+                        {step.id}
+                      </div>
+                    </div>
+
+                    {/* NỘI DUNG - BỌC TRONG BOX RIÊNG CHO MOBILE */}
+                    <div className="flex-1 rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm transition-all hover:border-cyan-500/30 md:rounded-none md:border-transparent md:bg-transparent md:p-0 md:backdrop-blur-none md:hover:border-transparent md:hover:bg-transparent">
+                      <h3 className="mb-1.5 text-sm font-bold text-white transition-colors group-hover:text-cyan-300 sm:text-base md:mb-3 md:text-lg">
                         {step.title}
                       </h3>
-                      <p className="px-1 text-[11px] leading-relaxed font-medium text-slate-400 md:px-2 md:text-sm">
+                      <p className="text-[11px] leading-relaxed font-medium text-slate-400 md:px-2 md:text-sm">
                         {step.desc}
                       </p>
                     </div>
                   </div>
-                )
-              })}
-            </div>
-          </AnimateOnScroll>
+                </AnimateOnScroll>
+              )
+            })}
+          </div>
         </div>
       </Container>
     </section>
