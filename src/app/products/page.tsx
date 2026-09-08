@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect, Suspense } from 'react'
+// ĐÃ SỬA: Import thêm useRef để xử lý thanh cuộn Dots trên Mobile
+import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import {
@@ -164,6 +165,10 @@ function ProductsContent() {
   const categoryFromUrl = searchParams.get('category')
   const [activeCategory, setActiveCategory] = useState('all')
 
+  // ĐÃ SỬA: Ref và State để tính toán vị trí vuốt ngang trên Mobile
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
   useEffect(() => {
     if (categoryFromUrl) {
       const isValidCategory = productCategories.some((cat) => cat.id === categoryFromUrl)
@@ -178,8 +183,33 @@ function ProductsContent() {
     }
   }, [categoryFromUrl])
 
+  // ĐÃ SỬA: Khi đổi danh mục, tự động lướt thẻ về vị trí đầu tiên
+  useEffect(() => {
+    setActiveIndex(0)
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+    }
+  }, [activeCategory])
+
   const filteredProducts =
     activeCategory === 'all' ? products : products.filter((p) => p.category === activeCategory)
+
+  // ĐÃ SỬA: Hàm tính toán thẻ đang được hiển thị ở giữa màn hình khi vuốt
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget
+    const scrollLeft = container.scrollLeft
+    const itemElement = container.children[0] as HTMLElement
+    if (!itemElement) return
+
+    // Tính toán độ rộng của 1 item + khoảng cách gap (16px)
+    const itemWidth = itemElement.offsetWidth
+    const gap = 16
+    const newIndex = Math.round(scrollLeft / (itemWidth + gap))
+
+    if (newIndex !== activeIndex && newIndex >= 0 && newIndex < filteredProducts.length) {
+      setActiveIndex(newIndex)
+    }
+  }
 
   return (
     <main className="min-h-screen selection:bg-cyan-500/30">
@@ -278,17 +308,12 @@ function ProductsContent() {
               </p>
             </div>
 
-            {/* =========================================================
-                ĐÃ SỬA MOBILE: Dùng Grid 2 cột (grid-cols-2) để chốt luôn 2 nút 1 hàng.
-                ĐÃ SỬA LAPTOP: md:flex để nó trở lại dạng nằm ngang trải dài.
-                ========================================================= */}
             <div className="grid grid-cols-2 gap-2 px-2 md:flex md:flex-wrap md:gap-3 md:px-0">
               {productCategories.map((cat, index) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   className={`flex min-h-[40px] w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${activeCategory === cat.id ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-cyan-600'} ${index === 0 ? 'col-span-2 md:col-span-1' : ''} `}
-                  /* LƯU Ý: Lệnh col-span-2 ở trên ép nút "Tất cả Giải pháp" dài hết hàng 1 trên Mobile, các nút còn lại tự động xuống hàng đôi rất đẹp. */
                 >
                   {cat.label}
                 </button>
@@ -296,89 +321,118 @@ function ProductsContent() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-900/10 md:rounded-3xl"
-              >
-                {/* ẢNH & BADGES */}
-                <div className="relative h-36 w-full overflow-hidden bg-slate-100 md:h-56">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${product.comingSoon ? 'opacity-50 grayscale' : ''}`}
-                  />
-                  <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/90 px-2.5 py-1 text-[9px] font-bold tracking-widest text-slate-900 uppercase shadow-sm backdrop-blur-md md:top-5 md:left-5 md:gap-2 md:px-3 md:py-1.5 md:text-[10px]">
-                    <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-500" />
-                    {productCategories.find((c) => c.id === product.category)?.label}
-                  </div>
-                  {product.comingSoon && (
-                    <div className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-1 text-[9px] font-bold tracking-widest text-amber-600 uppercase shadow-sm md:top-5 md:right-5 md:gap-1.5 md:px-3 md:py-1.5 md:text-[10px]">
-                      <Clock className="animate-spin-slow h-2.5 w-2.5 md:h-3 md:w-3" /> Sắp ra mắt
+          {/* =========================================================
+              ĐÃ SỬA: Cấu trúc Vuốt ngang (Swipeable Cards) cho Mobile.
+              Dùng overflow-x-auto, snap-x trên mobile. 
+              Và khôi phục grid, grid-cols-2/3 trên Desktop (md:).
+              ========================================================= */}
+          <div className="-mx-4 md:mx-0">
+            <div
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
+              className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:grid md:snap-none md:grid-cols-2 md:gap-8 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3"
+            >
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  // Trên mobile độ rộng thẻ là 85vw để chừa lại 1 ít thẻ bên cạnh cho khách biết có thể vuốt
+                  className="group flex w-[85vw] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-900/10 md:w-auto md:shrink md:rounded-3xl"
+                >
+                  {/* ẢNH & BADGES */}
+                  <div className="relative h-36 w-full shrink-0 overflow-hidden bg-slate-100 md:h-56">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${product.comingSoon ? 'opacity-50 grayscale' : ''}`}
+                    />
+                    <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/90 px-2.5 py-1 text-[9px] font-bold tracking-widest text-slate-900 uppercase shadow-sm backdrop-blur-md md:top-5 md:left-5 md:gap-2 md:px-3 md:py-1.5 md:text-[10px]">
+                      <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-500" />
+                      {productCategories.find((c) => c.id === product.category)?.label}
                     </div>
-                  )}
-                </div>
-
-                {/* TEXT & PADDING */}
-                <div className="flex flex-1 flex-col p-5 pt-4 md:p-8 md:pt-6">
-                  <div className="mb-3 flex items-center gap-3 md:mb-5 md:gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 transition-colors group-hover:bg-cyan-100 md:h-12 md:w-12 md:rounded-2xl">
-                      <product.icon className="h-5 w-5 md:h-6 md:w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg leading-tight font-black text-slate-900 md:text-xl">
-                        {product.name}
-                      </h3>
-                      <p className="mt-0.5 text-[10px] font-bold tracking-wider text-cyan-600 uppercase md:text-xs">
-                        {product.tagline}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Ẩn bớt text description trên Mobile */}
-                  <p className="mb-4 line-clamp-2 text-[13px] leading-relaxed font-medium text-slate-600 md:mb-8 md:line-clamp-none md:text-sm">
-                    {product.desc}
-                  </p>
-
-                  <ul className="mt-auto mb-5 space-y-2 md:mb-8 md:space-y-3">
-                    {product.features.map((feat, i) => (
-                      <li
-                        key={i}
-                        // Ẩn 2 tính năng dưới cùng trên Mobile
-                        className={`flex items-start gap-2 rounded-lg border border-slate-100 bg-slate-50 p-2 md:gap-3 md:rounded-xl md:p-2.5 ${i >= 2 ? 'hidden md:flex' : ''}`}
-                      >
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-cyan-500 md:h-4 md:w-4" />
-                        <span className="text-[12px] font-semibold text-slate-700 md:text-sm">
-                          {feat}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="border-t border-slate-100 pt-4 md:pt-6">
-                    {product.comingSoon ? (
-                      <Link
-                        href={`/contact?interest=${product.id}`}
-                        className="group/btn flex w-full items-center justify-between rounded-xl bg-amber-50 px-3 py-2.5 text-[13px] font-bold text-amber-600 transition-colors hover:bg-amber-500 hover:text-white md:px-4 md:py-3 md:text-sm"
-                      >
-                        <span>Đăng ký nhận tin</span>
-                        <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                      </Link>
-                    ) : (
-                      <Link
-                        href={`/products/${product.id}`}
-                        className="group/btn flex w-full items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 text-[13px] font-bold text-slate-900 transition-all hover:bg-cyan-600 hover:text-white hover:shadow-lg hover:shadow-cyan-600/30 md:px-4 md:py-3 md:text-sm"
-                      >
-                        <span>Khám phá chi tiết</span>
-                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1 md:h-4 md:w-4" />
-                      </Link>
+                    {product.comingSoon && (
+                      <div className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-1 text-[9px] font-bold tracking-widest text-amber-600 uppercase shadow-sm md:top-5 md:right-5 md:gap-1.5 md:px-3 md:py-1.5 md:text-[10px]">
+                        <Clock className="animate-spin-slow h-2.5 w-2.5 md:h-3 md:w-3" /> Sắp ra mắt
+                      </div>
                     )}
                   </div>
+
+                  {/* TEXT & PADDING */}
+                  <div className="flex flex-1 flex-col p-5 pt-4 md:p-8 md:pt-6">
+                    <div className="mb-3 flex items-center gap-3 md:mb-5 md:gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 transition-colors group-hover:bg-cyan-100 md:h-12 md:w-12 md:rounded-2xl">
+                        <product.icon className="h-5 w-5 md:h-6 md:w-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg leading-tight font-black text-slate-900 md:text-xl">
+                          {product.name}
+                        </h3>
+                        <p className="mt-0.5 text-[10px] font-bold tracking-wider text-cyan-600 uppercase md:text-xs">
+                          {product.tagline}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Ẩn bớt text description trên Mobile */}
+                    <p className="mb-4 line-clamp-2 text-[13px] leading-relaxed font-medium text-slate-600 md:mb-8 md:line-clamp-none md:text-sm">
+                      {product.desc}
+                    </p>
+
+                    <ul className="mt-auto mb-5 space-y-2 md:mb-8 md:space-y-3">
+                      {product.features.map((feat, i) => (
+                        <li
+                          key={i}
+                          // Ẩn 2 tính năng dưới cùng trên Mobile
+                          className={`flex items-start gap-2 rounded-lg border border-slate-100 bg-slate-50 p-2 md:gap-3 md:rounded-xl md:p-2.5 ${i >= 2 ? 'hidden md:flex' : ''}`}
+                        >
+                          <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-cyan-500 md:h-4 md:w-4" />
+                          <span className="text-[12px] font-semibold text-slate-700 md:text-sm">
+                            {feat}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="border-t border-slate-100 pt-4 md:pt-6">
+                      {product.comingSoon ? (
+                        <Link
+                          href={`/contact?interest=${product.id}`}
+                          className="group/btn flex w-full items-center justify-between rounded-xl bg-amber-50 px-3 py-2.5 text-[13px] font-bold text-amber-600 transition-colors hover:bg-amber-500 hover:text-white md:px-4 md:py-3 md:text-sm"
+                        >
+                          <span>Đăng ký nhận tin</span>
+                          <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/products/${product.id}`}
+                          className="group/btn flex w-full items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 text-[13px] font-bold text-slate-900 transition-all hover:bg-cyan-600 hover:text-white hover:shadow-lg hover:shadow-cyan-600/30 md:px-4 md:py-3 md:text-sm"
+                        >
+                          <span>Khám phá chi tiết</span>
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1 md:h-4 md:w-4" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          {/* =========================================================
+              ĐÃ THÊM: Thanh Navigation Dots (Chỉ hiện trên Mobile).
+              Tự động chạy theo đúng thẻ đang được vuốt.
+              ========================================================= */}
+          {filteredProducts.length > 1 && (
+            <div className="mt-4 flex justify-center gap-1.5 md:hidden">
+              {filteredProducts.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    activeIndex === index ? 'w-6 bg-cyan-600' : 'w-1.5 bg-slate-300'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
 
           {filteredProducts.length === 0 && (
             <div className="py-24 text-center">
