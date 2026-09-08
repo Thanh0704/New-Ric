@@ -262,7 +262,7 @@ export function Header() {
               className="hidden items-center gap-2 rounded-full border border-slate-600 px-4 py-2.5 text-sm font-bold text-slate-200 transition-all hover:border-slate-400 hover:bg-white/5 hover:text-white lg:flex"
             >
               <LogIn className="h-4 w-4" />
-              <span>Đăng nhập cho đối tác</span>
+              <span>Đăng nhập đối tác</span>
             </Link>
 
             <Sheet>
@@ -317,6 +317,22 @@ export function Header() {
                                 </div>
                               </div>
                             ))}
+
+                            {/* =========================================================
+                                ĐÃ BỔ SUNG: Nút "Xem toàn bộ sản phẩm" cho Mobile
+                                Chỉ render khi thẻ này là Mega Menu (nav.isMega)
+                                ========================================================= */}
+                            {nav.isMega && (
+                              <div className="mt-2 border-t border-white/5 pt-4">
+                                <Link
+                                  href="/products"
+                                  onClick={(e) => handleSmartClick(e, '/products')}
+                                  className="inline-flex items-center gap-1 text-sm font-bold text-cyan-400 transition-colors hover:text-cyan-300"
+                                >
+                                  → Xem toàn bộ sản phẩm
+                                </Link>
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -332,17 +348,13 @@ export function Header() {
                     ),
                   )}
 
-                  {/* =========================================================
-                      ĐÃ SỬA: Đổi w-full thành mx-4, tăng pt-6 và thêm pb-4 
-                      để bóp nút lại, tạo không gian thở (breathing room) sang 2 bên
-                      ========================================================= */}
                   <div className="mt-4 border-t border-white/10 pt-6 pb-4">
                     <Link
                       href="/partner-login"
                       className="mx-4 flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm font-bold text-white transition-all hover:border-slate-500 hover:bg-slate-700"
                     >
                       <LogIn className="h-4 w-4" />
-                      Đăng nhập cho đối tác
+                      Đăng nhập dành cho đối tác
                     </Link>
                   </div>
                 </nav>
