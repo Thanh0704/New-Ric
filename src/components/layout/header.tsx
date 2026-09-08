@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-// ĐÃ SỬA: Import thêm icon LogIn cho nút Đăng nhập
 import { Menu, ChevronDown, ArrowRight, LogIn } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
@@ -249,7 +248,6 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-1.5 sm:gap-4">
-            {/* Nút Tìm giải pháp phù hợp */}
             <button
               onClick={() => setIsModalOpen(true)}
               className="flex items-center gap-1 rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-1.5 text-[11px] font-bold text-cyan-400 transition-all hover:bg-cyan-500 hover:text-white hover:shadow-lg hover:shadow-cyan-500/20 sm:gap-2 sm:px-6 sm:py-2.5 sm:text-sm"
@@ -259,11 +257,6 @@ export function Header() {
               <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
 
-            {/* =========================================================
-                ĐÃ THÊM: NÚT ĐĂNG NHẬP TRÊN LAPTOP
-                Dùng `hidden lg:flex` để chỉ hiển thị ở màn hình to.
-                Nằm ngay bên phải nút Tìm giải pháp.
-                ========================================================= */}
             <Link
               href="/partner-login"
               className="hidden items-center gap-2 rounded-full border border-slate-600 px-4 py-2.5 text-sm font-bold text-slate-200 transition-all hover:border-slate-400 hover:bg-white/5 hover:text-white lg:flex"
@@ -340,16 +333,16 @@ export function Header() {
                   )}
 
                   {/* =========================================================
-                      ĐÃ THÊM: NÚT ĐĂNG NHẬP TRÊN MOBILE
-                      Nằm chót cùng trong menu 3 gạch, có đường kẻ ngang phân chia.
+                      ĐÃ SỬA: Đổi w-full thành mx-4, tăng pt-6 và thêm pb-4 
+                      để bóp nút lại, tạo không gian thở (breathing room) sang 2 bên
                       ========================================================= */}
-                  <div className="mt-4 border-t border-white/10 pt-4">
+                  <div className="mt-4 border-t border-white/10 pt-6 pb-4">
                     <Link
                       href="/partner-login"
-                      className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800/50 px-6 py-3 text-sm font-bold text-white transition-all hover:border-slate-500 hover:bg-slate-700"
+                      className="mx-4 flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm font-bold text-white transition-all hover:border-slate-500 hover:bg-slate-700"
                     >
                       <LogIn className="h-4 w-4" />
-                      Đăng nhập dành cho đối tác
+                      Đăng nhập cho đối tác
                     </Link>
                   </div>
                 </nav>
