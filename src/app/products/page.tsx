@@ -279,20 +279,16 @@ function ProductsContent() {
             </div>
 
             {/* =========================================================
-                ĐÃ SỬA: Xóa bỏ vuốt ngang (overflow, snap-x). 
-                Dùng flex-wrap cho tất cả thiết bị để các nút dàn đều thành nhiều dòng.
+                ĐÃ SỬA MOBILE: Dùng Grid 2 cột (grid-cols-2) để chốt luôn 2 nút 1 hàng.
+                ĐÃ SỬA LAPTOP: md:flex để nó trở lại dạng nằm ngang trải dài.
                 ========================================================= */}
-            <div className="flex flex-wrap gap-2 px-2 md:gap-3 md:px-0">
-              {productCategories.map((cat) => (
+            <div className="grid grid-cols-2 gap-2 px-2 md:flex md:flex-wrap md:gap-3 md:px-0">
+              {productCategories.map((cat, index) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  // Bỏ class shrink-0 đi để text tự nhiên, nút không bị bóp méo
-                  className={`rounded-full px-4 py-2 text-[13px] font-bold transition-all duration-300 md:px-5 md:py-2.5 md:text-sm ${
-                    activeCategory === cat.id
-                      ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30'
-                      : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-cyan-600'
-                  }`}
+                  className={`flex min-h-[40px] w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${activeCategory === cat.id ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-cyan-600'} ${index === 0 ? 'col-span-2 md:col-span-1' : ''} `}
+                  /* LƯU Ý: Lệnh col-span-2 ở trên ép nút "Tất cả Giải pháp" dài hết hàng 1 trên Mobile, các nút còn lại tự động xuống hàng đôi rất đẹp. */
                 >
                   {cat.label}
                 </button>
