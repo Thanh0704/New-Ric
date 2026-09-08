@@ -182,7 +182,6 @@ function ProductsContent() {
     activeCategory === 'all' ? products : products.filter((p) => p.category === activeCategory)
 
   return (
-    // THAY ĐỔI LỚN: Bỏ nền đen toàn trang. Thay vào đó, mỗi section sẽ tự định nghĩa màu sáng/tối riêng.
     <main className="min-h-screen selection:bg-cyan-500/30">
       <style
         dangerouslySetInnerHTML={{
@@ -196,17 +195,12 @@ function ProductsContent() {
         }}
       />
 
-      {/* ==========================================
-          PHẦN 1: HERO & MARQUEE - (DARK MODE)
-          Mục đích: Gây ấn tượng mạnh ban đầu
-      ========================================== */}
+      {/* PHẦN 1: HERO & MARQUEE */}
       <div className="relative overflow-hidden bg-[#060913] text-slate-200">
-        {/* ÁNH SÁNG ẢO */}
         <div className="pointer-events-none absolute top-[-20%] left-[-10%] h-[800px] w-[800px] rounded-full bg-blue-900/20 blur-[150px]" />
         <div className="pointer-events-none absolute right-[-10%] bottom-[-10%] h-[600px] w-[600px] rounded-full bg-cyan-900/15 blur-[120px]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] bg-[size:64px_64px]" />
 
-        {/* BREADCRUMB */}
         <div className="relative z-20 border-b border-white/5 pt-8 pb-4">
           <div className="container mx-auto px-6 text-xs font-medium tracking-wide text-slate-500 uppercase md:px-20">
             <div className="flex items-center gap-2">
@@ -219,7 +213,6 @@ function ProductsContent() {
           </div>
         </div>
 
-        {/* HERO */}
         <section className="relative z-10 pt-20 pb-24 lg:pt-32 lg:pb-32">
           <div className="container mx-auto max-w-5xl px-6 text-center md:px-20">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-xs font-bold tracking-widest text-cyan-400 uppercase shadow-[0_0_20px_rgba(6,182,212,0.15)]">
@@ -238,7 +231,6 @@ function ProductsContent() {
           </div>
         </section>
 
-        {/* MARQUEE ĐỐI TÁC */}
         <section className="relative z-10 border-t border-white/5 bg-white/[0.02] py-8 backdrop-blur-md">
           <div className="container mx-auto mb-6 px-6 text-center md:px-20">
             <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
@@ -273,29 +265,30 @@ function ProductsContent() {
         </section>
       </div>
 
-      {/* ==========================================
-          PHẦN 2: MAIN PRODUCTS - (LIGHT MODE TRẮNG SÁNG)
-          Mục đích: Dễ đọc, sạch sẽ, làm mắt thoải mái
-      ========================================== */}
-      <section id="solutions" className="relative z-10 bg-slate-50 py-24 lg:py-32">
-        <div className="container mx-auto px-6 md:px-20">
-          <div className="mb-16 md:flex md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <h2 className="mb-4 text-3xl font-black tracking-tight text-slate-900 md:text-5xl">
+      {/* PHẦN 2: MAIN PRODUCTS */}
+      <section id="solutions" className="relative z-10 bg-slate-50 py-20 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4 md:px-20">
+          {/* =========================================================
+              ĐÃ SỬA: Cấu trúc xếp dọc (flex-col) vĩnh viễn. 
+              Tiêu đề ở trên, khối nút Lọc ở dưới kéo dài tự do.
+              ========================================================= */}
+          <div className="mb-10 flex flex-col md:mb-16">
+            <div className="mb-6 max-w-3xl px-2 md:px-0">
+              <h2 className="mb-3 text-3xl font-black tracking-tight text-slate-900 md:mb-4 md:text-5xl">
                 Khám phá Giải pháp
               </h2>
-              <p className="text-lg font-medium text-slate-600">
+              <p className="text-[15px] font-medium text-slate-600 md:text-lg">
                 Lựa chọn module phù hợp để giải quyết triệt để bài toán vận hành của bạn.
               </p>
             </div>
 
-            {/* Bộ lọc sản phẩm (Tabs - Light Mode) */}
-            <div className="no-scrollbar -mx-6 mt-8 flex gap-2 overflow-x-auto px-6 pb-2 md:mx-0 md:mt-0 md:px-0">
+            {/* Thanh lọc dàn hàng ngang bên dưới */}
+            <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 md:mx-0 md:snap-none md:flex-wrap md:overflow-visible md:px-0">
               {productCategories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                  className={`shrink-0 snap-start rounded-full px-4 py-2 text-[13px] font-bold transition-all duration-300 md:px-5 md:py-2.5 md:text-sm ${
                     activeCategory === cat.id
                       ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30'
                       : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-cyan-600'
@@ -307,78 +300,82 @@ function ProductsContent() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                // Thẻ Kính (White Glass)
-                className="group flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-900/10"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-900/10 md:rounded-3xl"
               >
-                {/* Khu vực ảnh */}
-                <div className="relative h-56 w-full overflow-hidden bg-slate-100">
+                {/* ẢNH & BADGES */}
+                <div className="relative h-36 w-full overflow-hidden bg-slate-100 md:h-56">
                   <img
                     src={product.image}
                     alt={product.name}
                     className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${product.comingSoon ? 'opacity-50 grayscale' : ''}`}
                   />
-                  {/* Badge Light Mode */}
-                  <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/90 px-3 py-1.5 text-[10px] font-bold tracking-widest text-slate-900 uppercase shadow-sm backdrop-blur-md">
+                  <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/90 px-2.5 py-1 text-[9px] font-bold tracking-widest text-slate-900 uppercase shadow-sm backdrop-blur-md md:top-5 md:left-5 md:gap-2 md:px-3 md:py-1.5 md:text-[10px]">
                     <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-500" />
                     {productCategories.find((c) => c.id === product.category)?.label}
                   </div>
                   {product.comingSoon && (
-                    <div className="absolute top-5 right-5 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-[10px] font-bold tracking-widest text-amber-600 uppercase shadow-sm">
-                      <Clock className="animate-spin-slow h-3 w-3" /> Sắp ra mắt
+                    <div className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-1 text-[9px] font-bold tracking-widest text-amber-600 uppercase shadow-sm md:top-5 md:right-5 md:gap-1.5 md:px-3 md:py-1.5 md:text-[10px]">
+                      <Clock className="animate-spin-slow h-2.5 w-2.5 md:h-3 md:w-3" /> Sắp ra mắt
                     </div>
                   )}
                 </div>
 
-                {/* Nội dung Card (Chữ Đen) */}
-                <div className="flex flex-1 flex-col p-8 pt-6">
-                  <div className="mb-5 flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 transition-colors group-hover:bg-cyan-100">
-                      <product.icon className="h-6 w-6" />
+                {/* TEXT & PADDING */}
+                <div className="flex flex-1 flex-col p-5 pt-4 md:p-8 md:pt-6">
+                  <div className="mb-3 flex items-center gap-3 md:mb-5 md:gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 transition-colors group-hover:bg-cyan-100 md:h-12 md:w-12 md:rounded-2xl">
+                      <product.icon className="h-5 w-5 md:h-6 md:w-6" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-black text-slate-900">{product.name}</h3>
-                      <p className="text-xs font-bold tracking-wider text-cyan-600 uppercase">
+                      <h3 className="text-lg leading-tight font-black text-slate-900 md:text-xl">
+                        {product.name}
+                      </h3>
+                      <p className="mt-0.5 text-[10px] font-bold tracking-wider text-cyan-600 uppercase md:text-xs">
                         {product.tagline}
                       </p>
                     </div>
                   </div>
 
-                  <p className="mb-8 text-sm leading-relaxed font-medium text-slate-600">
+                  {/* Ẩn bớt text description trên Mobile */}
+                  <p className="mb-4 line-clamp-2 text-[13px] leading-relaxed font-medium text-slate-600 md:mb-8 md:line-clamp-none md:text-sm">
                     {product.desc}
                   </p>
 
-                  <ul className="mt-auto mb-8 space-y-3">
+                  <ul className="mt-auto mb-5 space-y-2 md:mb-8 md:space-y-3">
                     {product.features.map((feat, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-2.5"
+                        // Ẩn 2 tính năng dưới cùng trên Mobile
+                        className={`flex items-start gap-2 rounded-lg border border-slate-100 bg-slate-50 p-2 md:gap-3 md:rounded-xl md:p-2.5 ${i >= 2 ? 'hidden md:flex' : ''}`}
                       >
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan-500" />
-                        <span className="text-sm font-semibold text-slate-700">{feat}</span>
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-cyan-500 md:h-4 md:w-4" />
+                        <span className="text-[12px] font-semibold text-slate-700 md:text-sm">
+                          {feat}
+                        </span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="border-t border-slate-100 pt-6">
+                  <div className="border-t border-slate-100 pt-4 md:pt-6">
                     {product.comingSoon ? (
                       <Link
                         href={`/contact?interest=${product.id}`}
-                        className="group/btn flex w-full items-center justify-between rounded-xl bg-amber-50 px-4 py-3 text-sm font-bold text-amber-600 transition-colors hover:bg-amber-500 hover:text-white"
+                        className="group/btn flex w-full items-center justify-between rounded-xl bg-amber-50 px-3 py-2.5 text-[13px] font-bold text-amber-600 transition-colors hover:bg-amber-500 hover:text-white md:px-4 md:py-3 md:text-sm"
                       >
                         <span>Đăng ký nhận tin</span>
-                        <Clock className="h-4 w-4" />
+                        <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" />
                       </Link>
                     ) : (
                       <Link
                         href={`/products/${product.id}`}
-                        className="group/btn flex w-full items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-900 transition-all hover:bg-cyan-600 hover:text-white hover:shadow-lg hover:shadow-cyan-600/30"
+                        className="group/btn flex w-full items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 text-[13px] font-bold text-slate-900 transition-all hover:bg-cyan-600 hover:text-white hover:shadow-lg hover:shadow-cyan-600/30 md:px-4 md:py-3 md:text-sm"
                       >
                         <span>Khám phá chi tiết</span>
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1 md:h-4 md:w-4" />
                       </Link>
                     )}
                   </div>
@@ -398,10 +395,7 @@ function ProductsContent() {
         </div>
       </section>
 
-      {/* ==========================================
-          PHẦN 3: MÔ PHỎNG CODE IDE - (DARK MODE)
-          Mục đích: Quay lại màu tối để Code nổi bật, tạo sự chuyên nghiệp
-      ========================================== */}
+      {/* PHẦN 3 & 4 */}
       <section className="relative z-10 bg-[#080C17] py-24 text-slate-200 lg:py-32">
         <div className="container mx-auto px-6 md:px-20">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
@@ -432,7 +426,6 @@ function ProductsContent() {
               </div>
             </div>
 
-            {/* Cửa sổ Code */}
             <div className="relative rounded-2xl border border-slate-800 bg-[#0D1117] shadow-2xl shadow-cyan-900/20">
               <div className="flex items-center gap-2 rounded-t-2xl border-b border-slate-800 bg-[#161B22] px-4 py-3">
                 <div className="h-3 w-3 rounded-full bg-[#FF5F56]" />
@@ -498,10 +491,6 @@ function ProductsContent() {
         </div>
       </section>
 
-      {/* ==========================================
-          PHẦN 4: BOTTOM CTA - (LIGHT MODE TRẮNG)
-          Mục đích: Chốt hạ trang sạch sẽ, tươi sáng
-      ========================================== */}
       <section className="relative z-10 bg-slate-50 py-24 lg:py-32">
         <div className="container mx-auto px-6 md:px-20">
           <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white px-8 py-20 text-center shadow-xl md:px-16 md:py-24">
