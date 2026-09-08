@@ -268,10 +268,6 @@ function ProductsContent() {
       {/* PHẦN 2: MAIN PRODUCTS */}
       <section id="solutions" className="relative z-10 bg-slate-50 py-20 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-20">
-          {/* =========================================================
-              ĐÃ SỬA: Cấu trúc xếp dọc (flex-col) vĩnh viễn. 
-              Tiêu đề ở trên, khối nút Lọc ở dưới kéo dài tự do.
-              ========================================================= */}
           <div className="mb-10 flex flex-col md:mb-16">
             <div className="mb-6 max-w-3xl px-2 md:px-0">
               <h2 className="mb-3 text-3xl font-black tracking-tight text-slate-900 md:mb-4 md:text-5xl">
@@ -282,15 +278,19 @@ function ProductsContent() {
               </p>
             </div>
 
-            {/* Thanh lọc dàn hàng ngang bên dưới */}
-            <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 md:mx-0 md:snap-none md:flex-wrap md:overflow-visible md:px-0">
+            {/* =========================================================
+                ĐÃ SỬA: Xóa bỏ vuốt ngang (overflow, snap-x). 
+                Dùng flex-wrap cho tất cả thiết bị để các nút dàn đều thành nhiều dòng.
+                ========================================================= */}
+            <div className="flex flex-wrap gap-2 px-2 md:gap-3 md:px-0">
               {productCategories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`shrink-0 snap-start rounded-full px-4 py-2 text-[13px] font-bold transition-all duration-300 md:px-5 md:py-2.5 md:text-sm ${
+                  // Bỏ class shrink-0 đi để text tự nhiên, nút không bị bóp méo
+                  className={`rounded-full px-4 py-2 text-[13px] font-bold transition-all duration-300 md:px-5 md:py-2.5 md:text-sm ${
                     activeCategory === cat.id
-                      ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30'
+                      ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30'
                       : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-cyan-600'
                   }`}
                 >
