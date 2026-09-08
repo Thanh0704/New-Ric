@@ -57,11 +57,10 @@ function AccordionColumn({
   const [open, setOpen] = useState(false)
 
   return (
-    // TỐI ƯU: Đưa phần viền xuống bọc toàn bộ khối, bỏ pb-4 cũ đi
     <div className="border-b border-white/10 lg:border-none">
       <button
-        // TỐI ƯU: Tăng py-4 trên mobile để tạo vùng bấm rộng rãi, dễ chạm bằng ngón tay
-        className="flex w-full items-center justify-between py-4 lg:mb-6 lg:cursor-default lg:py-0"
+        // ĐÃ SỬA: Thêm text-left để chữ kẹp sát lề trái, Tăng py-5 trên mobile để nới rộng khoảng cách các thẻ, chống "dính"
+        className="flex w-full items-center justify-between py-5 text-left md:py-4 lg:mb-6 lg:cursor-default lg:py-0"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
@@ -73,8 +72,8 @@ function AccordionColumn({
           )}
         />
       </button>
-      {/* TỐI ƯU: Thêm mb-4 khi mở ra để cách viền dưới một khoảng đẹp mắt */}
-      <ul className={cn('mb-4 space-y-3 text-sm lg:mt-0 lg:mb-0 lg:block', !open && 'hidden')}>
+      {/* ĐÃ SỬA: Tăng mb-5 khi mở ra để tương xứng với py-5 ở trên */}
+      <ul className={cn('mb-5 space-y-3 text-sm lg:mt-0 lg:mb-0 lg:block', !open && 'hidden')}>
         {links.map((link) => (
           <li key={link.label}>
             <Link
@@ -107,16 +106,19 @@ export function Footer() {
   }
 
   return (
-    // TỐI ƯU: Giảm padding bottom pb-28 xuống pb-20 trên mobile
     <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-10 pb-20 md:pb-40 lg:pt-16 lg:pb-48">
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-[800px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
 
       <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
-        {/* TỐI ƯU: Giảm gap-12 xuống gap-6 trên mobile để đỡ trống trải */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
-          <div className="space-y-4 md:col-span-2 md:space-y-6 lg:col-span-4 lg:pr-12">
+        {/* =========================================================
+            ĐÃ SỬA LOGIC: Đổi gap-6 thành gap-0 trên mobile.
+            Việc này gom toàn bộ khối Accordion lại thành 1 list thống nhất, 
+            loại bỏ hoàn toàn sự lộn xộn. Trả lại gap-6 cho Tablet và Laptop (md:gap-6).
+            ========================================================= */}
+        <div className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-6 lg:grid-cols-12 lg:gap-12">
+          {/* TỐI ƯU: Bổ sung pb-8 trên Mobile để tạo vùng đệm thở ngăn cách phần Địa chỉ với các Accordion */}
+          <div className="space-y-4 pb-8 md:col-span-2 md:space-y-6 md:pb-0 lg:col-span-4 lg:pr-12">
             <Link href="/" className="inline-block">
-              {/* TỐI ƯU LOGO: Thu nhỏ xuống h-12 trên điện thoại, trả lại h-28 bề thế trên PC */}
               <Image
                 src="/images/logo.png"
                 alt="RIC Việt Nam Logo"
@@ -143,7 +145,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="mt-4 lg:col-span-2 lg:mt-0">
+          <div className="lg:col-span-2">
             <AccordionColumn
               title="Sản phẩm"
               links={productLinks}
@@ -164,7 +166,6 @@ export function Footer() {
                 onSmartClick={handleSmartClick}
               />
             </div>
-            {/* Trên Mobile đưa Tài Nguyên thành 1 khối Accordion bình thường */}
             <div className="block lg:hidden">
               <AccordionColumn
                 title="Tài nguyên"
@@ -183,7 +184,8 @@ export function Footer() {
             />
           </div>
 
-          <div className="mt-6 lg:col-span-2 lg:mt-0">
+          {/* TỐI ƯU: Đổi mt-6 thành pt-8 trên mobile để tách biệt rõ phần Liên hệ khỏi Accordion */}
+          <div className="pt-8 md:pt-0 lg:col-span-2 lg:mt-0">
             <h5 className="mb-3 text-sm font-bold tracking-widest text-white uppercase lg:mb-6">
               Liên hệ
             </h5>
@@ -207,7 +209,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* TỐI ƯU: Đẩy khoảng cách mt-8 thay vì mt-12 trên mobile */}
         <div className="relative z-20 mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-[10px] font-medium text-slate-400 md:mt-12 md:flex-row md:text-xs">
           <p>© {new Date().getFullYear()} RIC Việt Nam. All rights reserved.</p>
           <p className="flex items-center gap-1">
@@ -218,7 +219,6 @@ export function Footer() {
 
       <div className="pointer-events-none absolute bottom-0 left-1/2 z-0 flex w-full -translate-x-1/2 justify-center select-none">
         <span
-          // TỐI ƯU CHỮ NỀN: Thu nhỏ text-[15vw] trên mobile thay vì 18vw để tránh chèn ngang giao diện
           className="translate-y-[28%] bg-gradient-to-b from-white/20 to-transparent bg-clip-text text-[15vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] sm:text-[18vw] xl:text-[220px]"
           style={{ fontFamily: "'Arial Rounded MT Bold', 'Quicksand', 'Nunito', sans-serif" }}
         >
