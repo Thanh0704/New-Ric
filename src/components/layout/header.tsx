@@ -247,16 +247,11 @@ export function Header() {
             )}
           </nav>
 
-          {/* =========================================================
-              ĐÃ SỬA CHỖ NÀY: Thu hẹp gap trên mobile, hiện nút button
-              ========================================================= */}
           <div className="flex items-center gap-1.5 sm:gap-4">
             <button
               onClick={() => setIsModalOpen(true)}
-              // TỐI ƯU MOBILE: Thay 'hidden sm:flex' thành 'flex'. Thu nhỏ chữ và padding trên mobile, trả lại kích thước cũ trên sm
               className="flex items-center gap-1 rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-1.5 text-[11px] font-bold text-cyan-400 transition-all hover:bg-cyan-500 hover:text-white hover:shadow-lg hover:shadow-cyan-500/20 sm:gap-2 sm:px-6 sm:py-2.5 sm:text-sm"
             >
-              {/* Trên điện thoại chỉ hiện "Tìm giải pháp", trên PC/Tablet hiện "Tìm giải pháp phù hợp" */}
               <span className="whitespace-nowrap sm:hidden">Tìm giải pháp phù hợp</span>
               <span className="hidden whitespace-nowrap sm:inline">Tìm giải pháp phù hợp</span>
               <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -328,13 +323,7 @@ export function Header() {
                       </Link>
                     ),
                   )}
-                  <hr className="my-4 border-white/10" />
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="w-full rounded-xl bg-cyan-600 px-6 py-3 text-center text-sm font-bold text-white shadow-md hover:bg-cyan-500"
-                  >
-                    Tìm giải pháp phù hợp
-                  </button>
+                  {/* ĐÃ XÓA: Dòng kẻ ngang và Nút bấm "Tìm giải pháp phù hợp" thừa thãi ở vị trí này */}
                 </nav>
               </SheetContent>
             </Sheet>
