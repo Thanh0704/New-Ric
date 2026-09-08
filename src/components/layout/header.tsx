@@ -103,6 +103,9 @@ export function Header() {
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // ĐÃ BỔ SUNG: Kiểm soát trạng thái đóng mở của bảng menu Mobile
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openMobileMenus, setOpenMobileMenus] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
@@ -111,11 +114,25 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // ĐÃ BỔ SUNG: Khi người dùng đóng menu mobile lại, tự động thu dọn sạch sẽ các mục đang sổ ra (đợi 300ms để hiệu ứng mượt)
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      const timer = setTimeout(() => {
+        setOpenMobileMenus({})
+      }, 300)
+      return () => clearTimeout(timer)
+    }
+  }, [isMobileMenuOpen])
+
   const toggleMobileMenu = (label: string) => {
     setOpenMobileMenus((prev) => ({ ...prev, [label]: !prev[label] }))
   }
 
   const handleSmartClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // ĐÃ BỔ SUNG: Hễ click vào link là ra lệnh Đóng bảng Mobile Menu và Reset thu gọn lại các danh mục.
+    setIsMobileMenuOpen(false)
+    setOpenMobileMenus({})
+
     if (pathname === '/') {
       if (href === '/') {
         e.preventDefault()
@@ -265,7 +282,8 @@ export function Header() {
               <span>Đăng nhập đối tác</span>
             </Link>
 
-            <Sheet>
+            {/* ĐÃ BỔ SUNG: Truyền open và onOpenChange vào Sheet để kiểm soát đóng mở bằng state */}
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger
                 className={cn(
                   buttonVariants({ variant: 'ghost', size: 'icon' }),
@@ -318,10 +336,6 @@ export function Header() {
                               </div>
                             ))}
 
-                            {/* =========================================================
-                                ĐÃ BỔ SUNG: Nút "Xem toàn bộ sản phẩm" cho Mobile
-                                Chỉ render khi thẻ này là Mega Menu (nav.isMega)
-                                ========================================================= */}
                             {nav.isMega && (
                               <div className="mt-2 border-t border-white/5 pt-4">
                                 <Link
@@ -351,6 +365,7 @@ export function Header() {
                   <div className="mt-4 border-t border-white/10 pt-6 pb-4">
                     <Link
                       href="/partner-login"
+                      onClick={(e) => handleSmartClick(e, '/partner-login')}
                       className="mx-4 flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm font-bold text-white transition-all hover:border-slate-500 hover:bg-slate-700"
                     >
                       <LogIn className="h-4 w-4" />
