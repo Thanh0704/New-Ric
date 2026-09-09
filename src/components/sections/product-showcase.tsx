@@ -14,7 +14,8 @@ const mainProducts = [
     tagline: 'Nền tảng TMĐT',
     desc: 'Hệ thống bán hàng đa kênh đồng bộ, bứt phá doanh thu với trải nghiệm mượt mà.',
     image: '/images/solutions/ecom.jpg',
-    link: '/products/ric-ecom',
+    link: '/products/ecom', // Chú ý link chuẩn là /products/ecom
+    color: 'blue',
   },
   {
     id: 'ricio',
@@ -23,6 +24,7 @@ const mainProducts = [
     desc: 'Tự động hóa hoàn toàn quy trình Booking và quản lý cho chuỗi Khách sạn, Resort.',
     image: '/images/solutions/ricio.jpg',
     link: '/products/ricio',
+    color: 'indigo',
   },
   {
     id: 'trust',
@@ -31,6 +33,7 @@ const mainProducts = [
     desc: 'Bảo vệ thương hiệu bằng công nghệ mã hóa QR Code nhiều lớp, kiểm soát hàng hóa.',
     image: '/images/solutions/ric-trust.jpg',
     link: '/products/ric-trust',
+    color: 'violet',
   },
   {
     id: 'message',
@@ -39,6 +42,7 @@ const mainProducts = [
     desc: 'Nuôi dưỡng khách hàng tự động qua kịch bản Zalo ZNS và SMS Brandname.',
     image: '/images/solutions/ric-message.jpg',
     link: '/products/ric-message',
+    color: 'cyan',
   },
   {
     id: 'affiliate',
@@ -47,6 +51,7 @@ const mainProducts = [
     desc: 'Xây dựng mạng lưới cộng tác viên, tự động đối soát hoa hồng minh bạch.',
     image: '/images/solutions/ric-affiliate.jpg',
     link: '/products/ric-affiliate',
+    color: 'emerald',
   },
 ]
 
@@ -76,7 +81,6 @@ export function ProductShowcase() {
   }
 
   return (
-    // ĐÃ SỬA: Thay background tối thành bg-gradient-to-r từ blue-900 dạt sang slate-950 đồng bộ toàn trang
     <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-950 to-slate-950 py-12 md:py-24 lg:py-32">
       <style
         dangerouslySetInnerHTML={{
@@ -87,7 +91,6 @@ export function ProductShowcase() {
         }}
       />
 
-      {/* Tinh chỉnh nhẹ ánh sáng blur để hợp với nền xanh */}
       <div className="pointer-events-none absolute top-0 left-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-[120px]"></div>
       <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/20 blur-[150px]"></div>
 
@@ -127,7 +130,7 @@ export function ProductShowcase() {
 
       <div
         ref={scrollContainerRef}
-        className="hide-scrollbar relative z-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-8 sm:px-6 md:gap-6 md:px-12 md:pb-12 lg:gap-10"
+        className="hide-scrollbar relative z-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-12 sm:px-6 md:gap-6 md:px-12 lg:gap-10"
       >
         <div className="w-[2vw] shrink-0 md:w-[5vw]"></div>
 
@@ -135,34 +138,41 @@ export function ProductShowcase() {
           <Link
             href={product.link}
             key={product.id}
-            className="group relative flex h-[400px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-black/50 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/50 hover:bg-white/10 sm:w-[320px] md:h-[560px] md:w-[380px] md:rounded-[2.5rem] md:p-2.5"
+            className="group relative flex h-[460px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-[320px] md:h-[540px] md:w-[380px] md:rounded-[2.5rem] md:p-3"
           >
-            <div className="relative z-10 flex h-[55%] w-full flex-col rounded-[1.25rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent p-4 md:rounded-[2rem] md:p-8">
-              <span className="mb-2 inline-table w-max rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-[10px] font-black tracking-wider text-cyan-300 uppercase backdrop-blur-md md:mb-3 md:text-xs">
-                {product.tagline}
-              </span>
-              <h3 className="mb-1 text-xl font-black text-white sm:mb-2 sm:text-2xl md:mb-4 md:text-4xl">
-                {product.title}
-              </h3>
-              <p className="line-clamp-3 text-xs leading-relaxed font-medium text-slate-300 md:text-sm">
-                {product.desc}
-              </p>
+            <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner md:rounded-[2rem]">
+              <div className="flex flex-1 flex-col px-5 pt-5 md:px-8 md:pt-8">
+                <span className="mb-4 inline-flex w-max items-center rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-[9px] font-black tracking-widest text-cyan-300 uppercase shadow-sm md:mb-5 md:px-4 md:py-1.5 md:text-[10px]">
+                  {product.tagline}
+                </span>
 
-              <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-bold text-white backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] sm:px-5 sm:py-2.5 sm:text-xs md:text-sm">
-                  Khám phá{' '}
-                  <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
+                <h3 className="mb-2 text-2xl font-black tracking-tight text-white md:mb-4 md:text-4xl">
+                  {product.title}
+                </h3>
+
+                <p className="text-[13px] leading-relaxed font-medium text-white/80 md:text-[15px]">
+                  {product.desc}
+                </p>
+
+                <div className="mt-auto pb-4 md:pb-6">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold text-white transition-colors group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] md:px-6 md:text-sm">
+                    Khám phá{' '}
+                    <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1 md:h-4 md:w-4" />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="absolute right-0 bottom-0 z-0 h-[50%] w-[90%] overflow-hidden rounded-tl-[1.25rem] rounded-br-[1.5rem] border-[3px] border-white/10 bg-slate-900 shadow-xl md:rounded-tl-[2rem] md:rounded-br-[2.25rem] md:border-4">
-              <Image
-                src={product.image}
-                alt={product.title}
-                fill
-                className="object-cover object-top opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-              />
+              <div className="relative pl-5 md:pl-8">
+                <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl md:rounded-tl-[2rem] md:rounded-br-[2rem]">
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    className="object-cover object-left-top"
+                  />
+                  <div className="absolute inset-0 bg-slate-950/20 transition-colors duration-500 group-hover:bg-transparent" />
+                </div>
+              </div>
             </div>
           </Link>
         ))}
@@ -170,38 +180,48 @@ export function ProductShowcase() {
         {comingSoonProducts.map((product) => (
           <div
             key={`mobile-soon-${product.id}`}
-            className="group relative flex h-[400px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-black/50 backdrop-blur-md transition-all duration-300 sm:w-[320px] md:hidden"
+            className="group relative flex h-[460px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-[320px] md:hidden"
           >
-            <div className="relative z-10 flex h-[55%] w-full flex-col rounded-[1.25rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent p-4">
-              <span className="mb-2 inline-table w-max rounded-full border border-slate-500/50 bg-slate-500/20 px-3 py-1 text-[10px] font-black tracking-wider text-slate-300 uppercase backdrop-blur-md">
-                Sắp ra mắt
-              </span>
-              <h3 className="mb-1 text-xl font-black text-white sm:mb-2 sm:text-2xl">
-                {product.title}
-              </h3>
-              <p className="line-clamp-3 text-xs leading-relaxed font-medium text-slate-300">
-                {product.tagline}
-              </p>
+            <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner">
+              <div className="flex flex-1 flex-col px-5 pt-5">
+                <span className="mb-4 inline-flex w-max items-center rounded-full border border-slate-500/50 bg-slate-500/20 px-3 py-1 text-[9px] font-black tracking-widest text-slate-300 uppercase shadow-sm">
+                  {product.tagline}
+                </span>
 
-              <div className="absolute bottom-4 left-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500 hover:text-white sm:px-5 sm:py-2.5 sm:text-xs"
-                >
-                  <BellRing className="h-3 w-3" /> Đăng ký nhận tin
-                </Link>
+                <h3 className="mb-2 text-2xl font-black tracking-tight text-white">
+                  {product.title}
+                </h3>
+
+                <p className="text-[13px] leading-relaxed font-medium text-white/80">
+                  Sản phẩm đang trong quá trình phát triển và hoàn thiện.
+                </p>
+
+                <div className="mt-auto pb-4">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-900 transition-shadow hover:bg-amber-400 hover:shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+                  >
+                    <BellRing className="h-3 w-3" /> Đăng ký nhận tin
+                  </Link>
+                </div>
               </div>
-            </div>
 
-            <div className="absolute right-0 bottom-0 z-0 h-[50%] w-[90%] overflow-hidden rounded-tl-[1.25rem] rounded-br-[1.5rem] border-[3px] border-white/10 bg-slate-900 shadow-xl">
-              <Image
-                src={product.image}
-                alt={product.title}
-                fill
-                className="object-cover object-top opacity-30 grayscale transition-opacity duration-500 group-hover:opacity-50"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Lock className="h-6 w-6 text-white/50" />
+              {/* ĐÃ SỬA MOBILE: Ảnh hiện rõ, bỏ kính mờ và đen trắng */}
+              <div className="relative pl-5">
+                <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl">
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    className="object-cover object-left-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-slate-950/30 transition-colors duration-500 group-hover:bg-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1.5 text-[10px] font-bold tracking-widest text-slate-900 uppercase shadow-sm">
+                      <Lock className="h-3 w-3" /> Sắp ra mắt
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -226,15 +246,16 @@ export function ProductShowcase() {
                   key={product.id}
                   className="group flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 transition-all hover:border-cyan-500/30 hover:bg-white/10 sm:flex-row sm:gap-6 sm:p-4"
                 >
+                  {/* ĐÃ SỬA LAPTOP: Bỏ hiệu ứng đen trắng để ảnh hiện rõ nét */}
                   <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-lg border border-white/10 bg-slate-900 sm:h-28 sm:w-32">
                     <Image
                       src={product.image}
                       alt={product.title}
                       fill
-                      className="object-cover opacity-40 grayscale transition-all group-hover:opacity-70 group-hover:grayscale-0"
+                      className="object-cover opacity-60 transition-all group-hover:opacity-100"
                     />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Lock className="h-5 w-5 text-white/50" />
+                      <Lock className="h-5 w-5 text-white/70" />
                     </div>
                   </div>
                   <div className="flex w-full flex-1 flex-col justify-between py-1 text-center sm:text-left">

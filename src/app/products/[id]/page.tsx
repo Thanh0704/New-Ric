@@ -542,6 +542,67 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   Tìm hiểu chi tiết <ArrowRight className="h-5 w-5" />
                 </a>
               </div>
+
+              {/* =========================================================
+                  ĐÃ THÊM: Phần hiển thị Logo App riêng cho RICIO
+                  ========================================================= */}
+              {/* =========================================================
+                  ĐÃ THÊM: Phần hiển thị Logo App riêng cho RICIO (CÓ KÈM TEXT)
+                  ========================================================= */}
+              {id === 'ricio' && (
+                <div className="mt-8 border-t border-white/10 pt-8 md:mt-10">
+                  <p className="mb-4 text-sm font-medium tracking-wide text-slate-400">
+                    Tải ứng dụng quản lý di động:
+                  </p>
+                  <div className="flex flex-wrap items-center gap-4">
+                    {/* Nút Ricio */}
+                    <Link
+                      href="#" // Điền link tải App Ricio
+                      target="_blank"
+                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-1.5 pr-5 transition-all hover:border-cyan-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+                    >
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-white">
+                        <Image
+                          src="/images/apps/Logo Ricio tách nền.png"
+                          alt="Logo Ricio App"
+                          width={32}
+                          height={32}
+                          className="object-contain transition-transform group-hover:scale-110"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-medium tracking-widest text-slate-400 uppercase">
+                          Dành cho Quản lý
+                        </span>
+                        <span className="text-sm font-bold text-white">Ricio App</span>
+                      </div>
+                    </Link>
+
+                    {/* Nút Check Home */}
+                    <Link
+                      href="#" // Điền link tải App Check Home
+                      target="_blank"
+                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-1.5 pr-5 transition-all hover:border-cyan-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+                    >
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-white">
+                        <Image
+                          src="/images/apps/logo Check Home tách nền.png"
+                          alt="Logo Check Home App"
+                          width={32}
+                          height={32}
+                          className="object-contain transition-transform group-hover:scale-110"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-medium tracking-widest text-slate-400 uppercase">
+                          Dành cho Buồng phòng
+                        </span>
+                        <span className="text-sm font-bold text-white">Check Home</span>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="relative">
@@ -654,10 +715,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </div>
 
           <div className="relative mx-auto max-w-4xl py-10" ref={timelineRef}>
-            {/* Đường line gốc ĐÃ SỬA CĂN GIỮA */}
             <div className="absolute top-0 bottom-0 left-[28px] w-1.5 -translate-x-1/2 rounded-full bg-slate-100 md:left-1/2" />
-
-            {/* Đường line tiến trình ĐÃ SỬA CĂN GIỮA */}
             <div
               className={`absolute top-0 left-[28px] w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b ${product.theme} transition-all duration-100 ease-out md:left-1/2`}
               style={{ height: `${scrollProgress}%` }}
@@ -665,8 +723,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
             {product.roadmap.map((step: any, idx: number) => {
               const isActive = idx <= activeStep
-
-              // CSS của hiệu ứng Reveal (Ẩn & Trượt lên)
               const boxClass = isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
               const circleClass = isActive
                 ? `bg-gradient-to-r ${product.theme} scale-110 shadow-lg text-white border-white`
@@ -679,7 +735,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 >
                   <div className="hidden w-[45%] md:block" />
 
-                  {/* Vòng tròn số ĐÃ SỬA VỊ TRÍ NẰM CHUẨN TRÊN ĐƯỜNG LINE */}
                   <div
                     className={`absolute left-[28px] z-10 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-4 font-black transition-all duration-700 md:left-1/2 ${circleClass}`}
                   >

@@ -1,15 +1,12 @@
 'use client'
-// ĐÃ SỬA: Import thêm useRef để xử lý thanh cuộn Dots trên Mobile
+
 import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import {
   ArrowRight,
-  CheckCircle2,
   LayoutGrid,
-  Cloud,
   ShieldCheck,
-  Database,
   Users,
   ShoppingCart,
   Briefcase,
@@ -20,9 +17,7 @@ import {
   Truck,
   Code2,
   Server,
-  Command,
   Sparkles,
-  Rocket,
   Megaphone,
   MessageCircle,
   Clock,
@@ -42,130 +37,97 @@ const products = [
   {
     id: 'ecom',
     category: 'sales',
-    name: 'ECOM',
-    tagline: 'Bán hàng & thương mại điện tử',
-    desc: 'Nền tảng bán hàng và thương mại điện tử toàn diện, giúp tối ưu hóa quy trình kinh doanh và tăng trưởng doanh thu vượt bậc.',
+    name: 'RIC ECOM',
+    tagline: 'NỀN TẢNG TMĐT',
+    desc: 'Hệ thống bán hàng đa kênh đồng bộ, bứt phá doanh thu với trải nghiệm mượt mà.',
     icon: ShoppingCart,
     image: '/images/solutions/ecom.jpg',
     color: 'blue',
     comingSoon: false,
-    features: [
-      'Quản lý bán hàng đa kênh',
-      'Tích hợp vận chuyển & thanh toán',
-      'Quản lý kho hàng tự động',
-      'Báo cáo doanh thu thời gian thực',
-    ],
   },
   {
     id: 'ric-affiliate',
     category: 'sales',
     name: 'RIC AFFILIATE',
-    tagline: 'Mạng lưới bán hàng & cộng tác viên',
-    desc: 'Hệ thống quản lý Affiliate mạnh mẽ, giúp doanh nghiệp dễ dàng mở rộng và kiểm soát mạng lưới hàng ngàn cộng tác viên.',
+    tagline: 'MẠNG LƯỚI BÁN HÀNG',
+    desc: 'Hệ thống quản lý Affiliate mạnh mẽ, mở rộng và kiểm soát hàng ngàn cộng tác viên.',
     icon: Users,
     image: '/images/solutions/ric-affiliate.jpg',
     color: 'emerald',
     comingSoon: false,
-    features: [
-      'Tính hoa hồng tự động',
-      'Cổng Portal riêng cho CTV',
-      'Theo dõi Link Affiliate',
-      'Quản lý cấp bậc & thưởng',
-    ],
   },
   {
     id: 'ric-message',
     category: 'marketing',
-    name: 'RIC MESSAGE MARKETING',
-    tagline: 'Marketing Automation / Customer Engagement',
-    desc: 'Tự động hóa các chiến dịch Marketing và CSKH qua tin nhắn, cá nhân hóa trải nghiệm để giữ chân khách hàng lâu dài.',
+    name: 'RIC MESSAGE',
+    tagline: 'MARKETING AUTOMATION',
+    desc: 'Tự động hóa chiến dịch CSKH qua tin nhắn, cá nhân hóa trải nghiệm người dùng.',
     icon: Megaphone,
     image: '/images/solutions/ric-message.jpg',
     color: 'cyan',
     comingSoon: false,
-    features: [
-      'Kịch bản tự động hóa',
-      'Gửi SMS & Zalo ZNS hàng loạt',
-      'Phân tập khách hàng chi tiết',
-      'Thống kê chiến dịch trực quan',
-    ],
   },
   {
     id: 'ric-trust',
     category: 'security',
     name: 'RIC TRUST',
-    tagline: 'Chống hàng giả + chống bán lấn kênh',
-    desc: 'Bảo vệ uy tín thương hiệu tuyệt đối với hệ thống mã hóa QR chống giả và cảnh báo kịp thời các hành vi bán phá giá, lấn kênh.',
+    tagline: 'CHỐNG HÀNG GIẢ',
+    desc: 'Bảo vệ uy tín thương hiệu với QR chống giả và cảnh báo kịp thời các hành vi lấn kênh.',
     icon: ShieldCheck,
     image: '/images/solutions/ric-trust.jpg',
     color: 'violet',
     comingSoon: false,
-    features: [
-      'Tem QR Code động định danh',
-      'Truy xuất nguồn gốc sản phẩm',
-      'Hệ thống cảnh báo lấn kênh',
-      'App quét mã cho người dùng',
-    ],
   },
   {
     id: 'ricio',
     category: 'management',
     name: 'RICIO',
-    tagline: 'CRM + PMS cho Villa/Hotel/Resort',
-    desc: 'Giải pháp chuyển đổi số chuyên biệt cho ngành lưu trú. Quản lý đặt phòng, chăm sóc khách hàng và vận hành buồng phòng tập trung.',
+    tagline: 'CRM + PMS LƯU TRÚ',
+    desc: 'Giải pháp số chuyên biệt cho ngành lưu trú. Quản lý đặt phòng và buồng phòng tập trung.',
     icon: Briefcase,
     image: '/images/solutions/ricio.jpg',
     color: 'indigo',
     comingSoon: false,
-    features: [
-      'Sơ đồ phòng (PMS) trực quan',
-      'Lưu trữ thông tin khách hàng (CRM)',
-      'Quản lý dọn phòng/bảo trì',
-      'Tích hợp kênh OTA',
-    ],
   },
   {
     id: 'zhub',
     category: 'marketing',
     name: 'ZHUB',
-    tagline: 'Unified Chat / Conversation Hub',
-    desc: 'Nền tảng giao tiếp hợp nhất, gom toàn bộ tin nhắn từ Fanpage, Zalo, Website về một màn hình duy nhất để xử lý siêu tốc.',
+    tagline: 'UNIFIED CHAT HUB',
+    desc: 'Nền tảng giao tiếp hợp nhất, gom tin nhắn từ Fanpage, Zalo, Website về một màn hình.',
     icon: MessageCircle,
     image: '/images/solutions/zhub.jpg',
     color: 'slate',
     comingSoon: true,
-    features: [
-      'Hộp thư hợp nhất (Omnichannel)',
-      'Tự động phân bổ hội thoại',
-      'Tích hợp Chatbot AI',
-      'Gắn tag & phân loại khách hàng',
-    ],
   },
   {
     id: 'ric-erp',
     category: 'management',
     name: 'RIC ERP',
-    tagline: 'KDL Quản trị doanh nghiệp theo module',
-    desc: 'Hệ thống quản trị doanh nghiệp toàn diện. Lắp ghép các module linh hoạt theo đúng nhu cầu và quy mô phát triển của từng công ty.',
+    tagline: 'QUẢN TRỊ THEO MODULE',
+    desc: 'Hệ thống quản trị doanh nghiệp toàn diện. Lắp ghép module linh hoạt theo nhu cầu.',
     icon: LayoutGrid,
     image: '/images/solutions/ric-erp.jpg',
     color: 'slate',
     comingSoon: true,
-    features: [
-      'Kế toán - Tài chính',
-      'Quản trị nhân sự (HRM)',
-      'Quản trị chuỗi cung ứng (SCM)',
-      'Báo cáo quản trị (BI)',
-    ],
   },
 ]
+
+// CHỈ GIỮ LẠI MÀU CHO BADGE (PILL), BỎ HOÀN TOÀN MÀU NỀN CARD
+const themeMap: Record<string, { badgeBg: string; badgeText: string }> = {
+  blue: { badgeBg: 'bg-cyan-500/30 border-cyan-400/30', badgeText: 'text-cyan-300' },
+  emerald: { badgeBg: 'bg-emerald-500/30 border-emerald-400/30', badgeText: 'text-emerald-300' },
+  cyan: { badgeBg: 'bg-cyan-500/30 border-cyan-400/30', badgeText: 'text-cyan-300' },
+  violet: { badgeBg: 'bg-violet-500/30 border-violet-400/30', badgeText: 'text-violet-300' },
+  indigo: { badgeBg: 'bg-indigo-500/30 border-indigo-400/30', badgeText: 'text-indigo-300' },
+  slate: { badgeBg: 'bg-slate-500/30 border-slate-400/30', badgeText: 'text-slate-300' },
+}
 
 function ProductsContent() {
   const searchParams = useSearchParams()
   const categoryFromUrl = searchParams.get('category')
   const [activeCategory, setActiveCategory] = useState('all')
 
-  // ĐÃ SỬA: Ref và State để tính toán vị trí vuốt ngang trên Mobile
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -183,7 +145,6 @@ function ProductsContent() {
     }
   }, [categoryFromUrl])
 
-  // ĐÃ SỬA: Khi đổi danh mục, tự động lướt thẻ về vị trí đầu tiên
   useEffect(() => {
     setActiveIndex(0)
     if (scrollContainerRef.current) {
@@ -194,18 +155,14 @@ function ProductsContent() {
   const filteredProducts =
     activeCategory === 'all' ? products : products.filter((p) => p.category === activeCategory)
 
-  // ĐÃ SỬA: Hàm tính toán thẻ đang được hiển thị ở giữa màn hình khi vuốt
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget
     const scrollLeft = container.scrollLeft
     const itemElement = container.children[0] as HTMLElement
     if (!itemElement) return
-
-    // Tính toán độ rộng của 1 item + khoảng cách gap (16px)
     const itemWidth = itemElement.offsetWidth
     const gap = 16
     const newIndex = Math.round(scrollLeft / (itemWidth + gap))
-
     if (newIndex !== activeIndex && newIndex >= 0 && newIndex < filteredProducts.length) {
       setActiveIndex(newIndex)
     }
@@ -295,15 +252,17 @@ function ProductsContent() {
         </section>
       </div>
 
-      {/* PHẦN 2: MAIN PRODUCTS */}
-      <section id="solutions" className="relative z-10 bg-slate-50 py-20 md:py-24 lg:py-32">
+      {/* =========================================================
+          PHẦN 2: MAIN PRODUCTS 
+          ========================================================= */}
+      <section id="solutions" className="relative z-10 bg-[#0A0F1C] py-20 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-20">
           <div className="mb-10 flex flex-col md:mb-16">
             <div className="mb-6 max-w-3xl px-2 md:px-0">
-              <h2 className="mb-3 text-3xl font-black tracking-tight text-slate-900 md:mb-4 md:text-5xl">
+              <h2 className="mb-3 text-3xl font-black tracking-tight text-white md:mb-4 md:text-5xl">
                 Khám phá Giải pháp
               </h2>
-              <p className="text-[15px] font-medium text-slate-600 md:text-lg">
+              <p className="text-[15px] font-medium text-slate-400 md:text-lg">
                 Lựa chọn module phù hợp để giải quyết triệt để bài toán vận hành của bạn.
               </p>
             </div>
@@ -313,7 +272,11 @@ function ProductsContent() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${activeCategory === cat.id ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-cyan-600'} ${index === 0 ? 'col-span-2 md:col-span-1' : ''} `}
+                  className={`flex min-h-[40px] w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${
+                    activeCategory === cat.id
+                      ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30'
+                      : 'border border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                  } ${index === 0 ? 'col-span-2 md:col-span-1' : ''} `}
                 >
                   {cat.label}
                 </button>
@@ -321,113 +284,92 @@ function ProductsContent() {
             </div>
           </div>
 
-          {/* =========================================================
-              ĐÃ SỬA: Cấu trúc Vuốt ngang (Swipeable Cards) cho Mobile.
-              Dùng overflow-x-auto, snap-x trên mobile. 
-              Và khôi phục grid, grid-cols-2/3 trên Desktop (md:).
-              ========================================================= */}
           <div className="-mx-4 md:mx-0">
             <div
               ref={scrollContainerRef}
               onScroll={handleScroll}
               className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:grid md:snap-none md:grid-cols-2 md:gap-8 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3"
             >
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  // Trên mobile độ rộng thẻ là 85vw để chừa lại 1 ít thẻ bên cạnh cho khách biết có thể vuốt
-                  className="group flex w-[85vw] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-900/10 md:w-auto md:shrink md:rounded-3xl"
-                >
-                  {/* ẢNH & BADGES */}
-                  <div className="relative h-36 w-full shrink-0 overflow-hidden bg-slate-100 md:h-56">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${product.comingSoon ? 'opacity-50 grayscale' : ''}`}
-                    />
-                    <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/90 px-2.5 py-1 text-[9px] font-bold tracking-widest text-slate-900 uppercase shadow-sm backdrop-blur-md md:top-5 md:left-5 md:gap-2 md:px-3 md:py-1.5 md:text-[10px]">
-                      <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-500" />
-                      {productCategories.find((c) => c.id === product.category)?.label}
-                    </div>
-                    {product.comingSoon && (
-                      <div className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-1 text-[9px] font-bold tracking-widest text-amber-600 uppercase shadow-sm md:top-5 md:right-5 md:gap-1.5 md:px-3 md:py-1.5 md:text-[10px]">
-                        <Clock className="animate-spin-slow h-2.5 w-2.5 md:h-3 md:w-3" /> Sắp ra mắt
-                      </div>
-                    )}
-                  </div>
+              {filteredProducts.map((product) => {
+                const theme = themeMap[product.color] || themeMap.blue
 
-                  {/* TEXT & PADDING */}
-                  <div className="flex flex-1 flex-col p-5 pt-4 md:p-8 md:pt-6">
-                    <div className="mb-3 flex items-center gap-3 md:mb-5 md:gap-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 transition-colors group-hover:bg-cyan-100 md:h-12 md:w-12 md:rounded-2xl">
-                        <product.icon className="h-5 w-5 md:h-6 md:w-6" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg leading-tight font-black text-slate-900 md:text-xl">
+                return (
+                  <div
+                    key={product.id}
+                    // ĐÃ SỬA: Card nền kính trong suốt, chỉ hắt sáng (shadow) khi hover, không nhúc nhích dịch chuyển
+                    className="group relative flex w-[85vw] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] md:min-h-[540px] md:w-auto md:shrink"
+                  >
+                    <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner md:rounded-[2rem]">
+                      <div className="flex flex-1 flex-col px-5 pt-5 md:px-8 md:pt-8">
+                        <span
+                          className={`mb-4 inline-flex w-max items-center rounded-full border px-3 py-1 text-[9px] font-black tracking-widest uppercase shadow-sm md:mb-5 md:px-4 md:py-1.5 md:text-[10px] ${theme.badgeBg} ${theme.badgeText}`}
+                        >
+                          {product.tagline}
+                        </span>
+
+                        <h3 className="mb-2 text-2xl font-black tracking-tight text-white md:mb-4 md:text-4xl">
                           {product.name}
                         </h3>
-                        <p className="mt-0.5 text-[10px] font-bold tracking-wider text-cyan-600 uppercase md:text-xs">
-                          {product.tagline}
+
+                        <p className="text-[13px] leading-relaxed font-medium text-white/80 md:text-[15px]">
+                          {product.desc}
                         </p>
+
+                        <div className="mt-auto pt-6 pb-4 md:pb-6">
+                          {product.comingSoon ? (
+                            <Link
+                              href={`/contact?interest=${product.id}`}
+                              className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-900 transition-shadow hover:bg-amber-400 hover:shadow-[0_0_15px_rgba(245,158,11,0.4)] md:px-6 md:text-sm"
+                            >
+                              Đăng ký nhận tin <Clock className="h-3 w-3 md:h-4 md:w-4" />
+                            </Link>
+                          ) : (
+                            <Link
+                              href={`/products/${product.id}`}
+                              // ĐÃ SỬA: Nút bấm tĩnh, chỉ đổi màu nền/viền và phát sáng shadow khi rê chuột qua Card (group-hover)
+                              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold text-white transition-colors duration-300 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] md:px-6 md:text-sm"
+                            >
+                              Khám phá <ArrowRight className="h-3 w-3 md:h-4 md:w-4" />
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="relative pl-5 md:pl-8">
+                        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl md:rounded-tl-[2rem] md:rounded-br-[2rem]">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            // ĐÃ SỬA: Ảnh hoàn toàn đứng im, ko zoom scale
+                            className="h-full w-full object-cover object-left-top"
+                          />
+                          {/* Lớp phủ sáng lên khi hover */}
+                          <div className="absolute inset-0 bg-slate-950/20 transition-colors duration-500 group-hover:bg-transparent" />
+
+                          {product.comingSoon && (
+                            // Không che ảnh, chỉ có lớp nền đen rất mỏng (bg-slate-900/10) để chữ không bị chìm
+                            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/10 backdrop-blur-[1px]">
+                              <div className="flex items-center gap-1.5 rounded-full bg-amber-500/80 px-4 py-2 text-xs font-bold tracking-widest text-white uppercase shadow-sm">
+                                <Clock className="h-3 w-3 md:h-4 md:w-4" /> Sắp ra mắt
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-
-                    {/* Ẩn bớt text description trên Mobile */}
-                    <p className="mb-4 line-clamp-2 text-[13px] leading-relaxed font-medium text-slate-600 md:mb-8 md:line-clamp-none md:text-sm">
-                      {product.desc}
-                    </p>
-
-                    <ul className="mt-auto mb-5 space-y-2 md:mb-8 md:space-y-3">
-                      {product.features.map((feat, i) => (
-                        <li
-                          key={i}
-                          // Ẩn 2 tính năng dưới cùng trên Mobile
-                          className={`flex items-start gap-2 rounded-lg border border-slate-100 bg-slate-50 p-2 md:gap-3 md:rounded-xl md:p-2.5 ${i >= 2 ? 'hidden md:flex' : ''}`}
-                        >
-                          <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-cyan-500 md:h-4 md:w-4" />
-                          <span className="text-[12px] font-semibold text-slate-700 md:text-sm">
-                            {feat}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="border-t border-slate-100 pt-4 md:pt-6">
-                      {product.comingSoon ? (
-                        <Link
-                          href={`/contact?interest=${product.id}`}
-                          className="group/btn flex w-full items-center justify-between rounded-xl bg-amber-50 px-3 py-2.5 text-[13px] font-bold text-amber-600 transition-colors hover:bg-amber-500 hover:text-white md:px-4 md:py-3 md:text-sm"
-                        >
-                          <span>Đăng ký nhận tin</span>
-                          <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                        </Link>
-                      ) : (
-                        <Link
-                          href={`/products/${product.id}`}
-                          className="group/btn flex w-full items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 text-[13px] font-bold text-slate-900 transition-all hover:bg-cyan-600 hover:text-white hover:shadow-lg hover:shadow-cyan-600/30 md:px-4 md:py-3 md:text-sm"
-                        >
-                          <span>Khám phá chi tiết</span>
-                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1 md:h-4 md:w-4" />
-                        </Link>
-                      )}
-                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
 
-          {/* =========================================================
-              ĐÃ THÊM: Thanh Navigation Dots (Chỉ hiện trên Mobile).
-              Tự động chạy theo đúng thẻ đang được vuốt.
-              ========================================================= */}
           {filteredProducts.length > 1 && (
             <div className="mt-4 flex justify-center gap-1.5 md:hidden">
               {filteredProducts.map((_, index) => (
                 <div
                   key={index}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === index ? 'w-6 bg-cyan-600' : 'w-1.5 bg-slate-300'
+                    activeIndex === index ? 'w-6 bg-cyan-600' : 'w-1.5 bg-slate-600'
                   }`}
                 />
               ))}
@@ -436,8 +378,8 @@ function ProductsContent() {
 
           {filteredProducts.length === 0 && (
             <div className="py-24 text-center">
-              <Search className="mx-auto mb-4 h-12 w-12 text-slate-400" />
-              <p className="font-medium text-slate-600">
+              <Search className="mx-auto mb-4 h-12 w-12 text-slate-500" />
+              <p className="font-medium text-slate-400">
                 Chưa có giải pháp nào trong danh mục này.
               </p>
             </div>
@@ -541,22 +483,22 @@ function ProductsContent() {
         </div>
       </section>
 
-      <section className="relative z-10 bg-slate-50 py-24 lg:py-32">
+      <section className="relative z-10 bg-[#060913] py-24 lg:py-32">
         <div className="container mx-auto px-6 md:px-20">
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white px-8 py-20 text-center shadow-xl md:px-16 md:py-24">
-            <div className="pointer-events-none absolute top-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-100 blur-[80px]" />
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0F1423] px-8 py-20 text-center shadow-xl md:px-16 md:py-24">
+            <div className="pointer-events-none absolute top-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-900/30 blur-[80px]" />
 
-            <h2 className="relative z-10 mx-auto mb-4 max-w-2xl text-4xl leading-tight font-black text-slate-900 md:text-5xl">
+            <h2 className="relative z-10 mx-auto mb-4 max-w-2xl text-4xl leading-tight font-black text-white md:text-5xl">
               Sẵn sàng chuyển đổi số cùng Ricvina?
             </h2>
-            <p className="relative z-10 mx-auto mb-10 max-w-xl text-lg font-medium text-slate-600">
+            <p className="relative z-10 mx-auto mb-10 max-w-xl text-lg font-medium text-slate-400">
               Trải nghiệm hệ sinh thái phần mềm cao cấp, được may đo riêng cho mô hình kinh doanh
               của bạn.
             </p>
 
             <Link
               href="/contact"
-              className="relative z-10 inline-flex items-center gap-3 rounded-full bg-cyan-600 px-8 py-4 font-bold text-white transition-all hover:scale-105 hover:bg-cyan-700 hover:shadow-lg hover:shadow-cyan-600/30"
+              className="relative z-10 inline-flex items-center gap-3 rounded-full bg-cyan-600 px-8 py-4 font-bold text-white transition-shadow hover:bg-cyan-500 hover:shadow-lg hover:shadow-cyan-600/30"
             >
               Yêu cầu bản Demo 1:1 <ArrowRight className="h-5 w-5" />
             </Link>
@@ -569,7 +511,7 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[#0A0F1C]" />}>
       <ProductsContent />
     </Suspense>
   )
