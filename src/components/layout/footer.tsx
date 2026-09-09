@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ChevronDown, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const productLinks = [
   { label: 'RIC ECOM', href: '/products/ecom' },
@@ -59,7 +59,6 @@ function AccordionColumn({
   return (
     <div className="border-b border-white/10 lg:border-none">
       <button
-        // Dùng max-md: để ép thu nhỏ CHỈ trên Mobile, giữ nguyên py-4 gốc cho PC
         className="flex w-full items-center justify-between py-4 text-left max-md:py-3.5 lg:mb-6 lg:cursor-default lg:py-0"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
@@ -74,7 +73,6 @@ function AccordionColumn({
           )}
         />
       </button>
-      {/* Giữ nguyên space-y-3 gốc, chỉ ép xuống space-y-2.5 trên Mobile */}
       <ul
         className={cn(
           'mb-4 space-y-3 text-sm max-md:space-y-2.5 max-md:text-[13px] lg:mt-0 lg:mb-0 lg:block',
@@ -99,6 +97,8 @@ function AccordionColumn({
 
 export function Footer() {
   const pathname = usePathname()
+  const router = useRouter()
+  const [email, setEmail] = useState('')
 
   const handleSmartClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (pathname === '/' && href.includes('?scrollTo=')) {
@@ -112,12 +112,20 @@ export function Footer() {
     }
   }
 
+  // ĐÃ SỬA: Cất email vào Session Storage thay vì ghép lên URL
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (email) {
+      sessionStorage.setItem('prefillContactEmail', email)
+      router.push('/contact')
+    }
+  }
+
   return (
     <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-10 pb-20 max-md:pt-8 max-md:pb-16 md:pb-40 lg:pt-16 lg:pb-48">
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-[800px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
 
       <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
-        {/* Khôi phục lại gap-6 gốc, chỉ chèn gap-0 cho Mobile */}
         <div className="grid grid-cols-1 gap-6 max-md:gap-0 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           <div className="space-y-4 max-md:space-y-3 max-md:pb-5 md:col-span-2 md:space-y-6 lg:col-span-4 lg:pr-12">
             <Link href="/" className="inline-block">
@@ -193,20 +201,24 @@ export function Footer() {
             <p className="mb-4 text-xs leading-relaxed text-slate-400 max-md:mb-3 max-md:text-[11px] max-md:leading-normal md:text-sm lg:mb-6">
               Đăng ký để nhận tư vấn chuyển đổi số miễn phí từ chuyên gia.
             </p>
-            <div className="flex flex-col gap-3 max-md:gap-2">
+
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-3 max-md:gap-2">
               <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 transition-all outline-none focus:border-cyan-400 focus:bg-white/10 focus:ring-1 focus:ring-cyan-400 max-md:px-3.5 max-md:py-2.5 max-md:text-[13px]"
                 placeholder="Email của bạn"
-                type="email"
               />
-              <Link
-                href="/contact"
+              <button
+                type="submit"
                 className="group flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-600 px-4 py-3 text-sm font-bold text-white shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all hover:bg-cyan-500 max-md:px-3.5 max-md:py-2.5 max-md:text-[13px]"
               >
                 Gửi yêu cầu{' '}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 max-md:h-3.5 max-md:w-3.5" />
-              </Link>
-            </div>
+              </button>
+            </form>
           </div>
         </div>
 

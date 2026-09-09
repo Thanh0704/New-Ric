@@ -3,7 +3,7 @@
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Select,
   SelectContent,
@@ -31,19 +31,43 @@ const errorClass = 'mt-1 ml-1 text-xs text-red-500'
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
-  const [submitError, setSubmitError] = useState('') // Thêm state để bắt lỗi kết nối
+  const [submitError, setSubmitError] = useState('')
 
   const {
     register,
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<ContactData>({ resolver: zodResolver(contactSchema) })
 
-  // ĐÃ SỬA: Hàm gửi dữ liệu thực tế đến API
+  // =====================================================================
+  // ĐÃ SỬA LỖI ĐIỀN EMAIL: Tránh xung đột với React Strict Mode
+  // =====================================================================
+  useEffect(() => {
+    // Đọc email từ bộ nhớ tạm mà Footer đã gửi sang
+    const savedEmail = sessionStorage.getItem('prefillContactEmail')
+
+    if (savedEmail) {
+      // Điền email vào ô Input và ép Form phải ghi nhận (Validate) sự thay đổi này
+      setValue('email', savedEmail, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+
+      // Đợi 1 giây cho giao diện ổn định rồi mới dọn rác, tránh lỗi render 2 lần của Next.js
+      const timeout = setTimeout(() => {
+        sessionStorage.removeItem('prefillContactEmail')
+      }, 1000)
+
+      return () => clearTimeout(timeout)
+    }
+  }, [setValue])
+
   async function onSubmit(data: ContactData) {
-    setSubmitError('') // Xóa lỗi cũ trước khi gửi
+    setSubmitError('')
 
     try {
       const response = await fetch('/api/contact', {
@@ -57,15 +81,12 @@ export function ContactForm() {
       const result = await response.json()
 
       if (response.ok) {
-        // Gửi thành công
         setSubmitted(true)
         reset()
       } else {
-        // Lỗi từ backend (VD: sai mật khẩu email, lỗi server)
         setSubmitError(result.message || 'Có lỗi xảy ra khi gửi. Vui lòng thử lại.')
       }
     } catch (error) {
-      // Lỗi mạng hoặc không gọi được API
       setSubmitError('Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.')
     }
   }
@@ -179,7 +200,6 @@ export function ContactForm() {
         {errors.message && <p className={errorClass}>{errors.message.message}</p>}
       </div>
 
-      {/* Hiển thị thông báo lỗi API nếu có */}
       {submitError && (
         <div className="rounded-lg bg-red-50 p-3 text-center text-sm font-medium text-red-600">
           {submitError}

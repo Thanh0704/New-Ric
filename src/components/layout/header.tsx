@@ -107,6 +107,9 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openMobileMenus, setOpenMobileMenus] = useState<Record<string, boolean>>({})
 
+  // ĐÃ THÊM: Biến menuKey để reset trạng thái hover trên PC
+  const [menuKey, setMenuKey] = useState(0)
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10)
     window.addEventListener('scroll', handleScroll)
@@ -127,8 +130,12 @@ export function Header() {
   }
 
   const handleSmartClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Đóng menu mobile
     setIsMobileMenuOpen(false)
     setOpenMobileMenus({})
+
+    // ĐÃ THÊM: Đổi key để ép React reset component trên Laptop, tắt ngay bảng menu đang hover
+    setMenuKey((prev) => prev + 1)
 
     if (pathname === '/') {
       if (href === '/') {
@@ -173,7 +180,8 @@ export function Header() {
           <nav className="hidden items-center gap-x-8 lg:flex">
             {newNavData.map((nav) =>
               nav.children ? (
-                <div key={nav.label} className="group relative py-8">
+                // ĐÃ SỬA: Bọc menuKey vào tham số key của div. Khi menuKey đổi, thẻ div này sẽ được render lại mới hoàn toàn
+                <div key={`${nav.label}-${menuKey}`} className="group relative py-8">
                   <button className="flex items-center gap-1 text-sm font-bold text-slate-200 transition-colors hover:text-cyan-400">
                     {nav.label}{' '}
                     <ChevronDown className="h-4 w-4 transition-transform group-hover:-rotate-180" />
@@ -213,6 +221,7 @@ export function Header() {
                           <div className="mt-6 border-t border-white/10 pt-4 text-center">
                             <Link
                               href="/products"
+                              onClick={(e) => handleSmartClick(e, '/products')}
                               className="text-sm font-bold text-cyan-400 hover:text-cyan-300"
                             >
                               → Xem toàn bộ sản phẩm
@@ -271,9 +280,6 @@ export function Header() {
               <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
 
-            {/* =========================================================
-                ĐÃ SỬA: Nút Đăng nhập trên LAPTOP (Dùng thẻ <a> thay cho <Link>)
-                ========================================================= */}
             <a
               href="https://admin.ricvina.vn/login"
               target="_blank"
@@ -363,10 +369,6 @@ export function Header() {
                     ),
                   )}
 
-                  {/* =========================================================
-                      ĐÃ SỬA: Nút Đăng nhập trên MOBILE (Dùng thẻ <a> thay cho <Link>)
-                      Kèm theo event onClick đóng và dọn dẹp menu
-                      ========================================================= */}
                   <div className="mt-4 border-t border-white/10 pt-6 pb-4">
                     <a
                       href="https://admin.ricvina.vn/login"
