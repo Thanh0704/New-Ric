@@ -150,7 +150,7 @@ export function Footer() {
               </p>
               <p>
                 <span className="font-bold text-slate-300">VP giao dịch:</span> 38 Thâm Tâm, Phường
-                Xuân Phương, Quận Nam Từ Liêm, Hà Nội
+                Yên Hòa, Quận Cầu Giấy, Hà Nội
               </p>
             </div>
           </div>
