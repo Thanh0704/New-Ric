@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter, Montserrat } from 'next/font/google'
 import { Header } from '@/components/layout/header'
+import { ChatWidget } from '@/components/shared/chat-widget'
 import { Footer } from '@/components/layout/footer'
-import { FloatingContact } from '@/components/shared/floating-contact' // 👈 BỘ NÚT LIÊN HỆ ĐÃ TRỞ LẠI
+
 import { SITE_CONFIG } from '@/lib/constants'
 import './globals.css'
 
@@ -79,8 +80,8 @@ export default function RootLayout({
       <body className="flex min-h-dvh flex-col antialiased">
         <Header />
         <main className="flex-1">{children}</main>
+        <ChatWidget />
         <Footer />
-        <FloatingContact /> {/* 👈 BONG BÓNG CHAT CHILL Ở GÓC MÀN HÌNH NHÉ */}
       </body>
     </html>
   )
