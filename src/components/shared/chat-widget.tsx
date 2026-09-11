@@ -25,6 +25,9 @@ export function ChatWidget() {
   // Trạng thái theo dõi bàn phím ảo trên mobile
   const [isFocused, setIsFocused] = useState(false)
 
+  // Style động để trị bệnh "đẩy màn hình" của bàn phím ảo
+  const [mobileStyle, setMobileStyle] = useState<React.CSSProperties>({})
+
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -34,6 +37,69 @@ export function ChatWidget() {
   useEffect(() => {
     scrollToBottom()
   }, [messages, isTyping])
+
+  // =====================================================================
+  // BÍ KÍP TỐI THƯỢNG: Ép khung chat bám dính theo khoảng trống bàn phím
+  // =====================================================================
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const updateLayout = () => {
+      // Chỉ kích hoạt hiệu ứng này trên màn hình Mobile (dưới 640px)
+      if (window.innerWidth >= 640) {
+        setMobileStyle({})
+        return
+      }
+
+      const vv = window.visualViewport
+
+      if (isFocused) {
+        if (vv) {
+          // Tính toán khoảng không gian chính xác còn lại sau khi trừ đi bàn phím
+          setMobileStyle({
+            position: 'fixed',
+            top: `${vv.offsetTop + 10}px`,
+            left: `${vv.offsetLeft + 10}px`,
+            width: `${vv.width - 20}px`,
+            height: `${vv.height - 20}px`,
+            bottom: 'auto',
+            right: 'auto',
+            transition: 'none', // Tắt animation để nó co giãn mượt theo bàn phím
+            zIndex: 9999,
+          })
+        } else {
+          // Phương án dự phòng nếu trình duyệt quá cũ
+          setMobileStyle({
+            position: 'fixed',
+            top: '10px',
+            left: '10px',
+            right: '10px',
+            height: `${window.innerHeight - 20}px`,
+            bottom: 'auto',
+            transition: 'none',
+            zIndex: 9999,
+          })
+        }
+        setTimeout(scrollToBottom, 50)
+      } else {
+        // Trả về mặc định khi tắt bàn phím
+        setMobileStyle({})
+      }
+    }
+
+    updateLayout()
+
+    // Lắng nghe sự thay đổi khi bàn phím trượt lên/xuống hoặc cuộn trang
+    window.visualViewport?.addEventListener('resize', updateLayout)
+    window.visualViewport?.addEventListener('scroll', updateLayout)
+    window.addEventListener('scroll', updateLayout)
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', updateLayout)
+      window.visualViewport?.removeEventListener('scroll', updateLayout)
+      window.removeEventListener('scroll', updateLayout)
+    }
+  }, [isFocused])
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
@@ -108,14 +174,15 @@ export function ChatWidget() {
     <>
       {/* 1. KHUNG CHAT (Nằm độc lập) */}
       <div
-        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
+        style={mobileStyle} // Áp dụng thuật toán tính toán kích thước tự động ở trên vào đây
+        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
             ? isFocused
-              ? // 🚀 BÍ KÍP Ở ĐÂY: Khi gõ phím, neo cả top-2 và bottom-2. Khung sẽ BỊ ÉP CO LẠI lọt thỏm giữa màn hình và bàn phím.
-                'top-2 right-2 bottom-2 left-2 sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
-              : // Khi KHÔNG gõ phím, dùng max-h-[75dvh] để nó không chiếm hết màn hình
-                'top-auto right-4 bottom-[90px] left-4 h-[600px] max-h-[75dvh] sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
-            : 'top-auto right-4 bottom-[90px] left-4 max-h-[500px] sm:right-6 sm:left-auto sm:w-[280px]' // Khung Menu
+              ? // Lớp dự phòng Desktop: Khi bàn phím bật, Mobile để style JS tự xử, Desktop giữ nguyên
+                'sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
+              : // Khi KHÔNG bật bàn phím
+                'top-auto right-4 bottom-[90px] left-4 h-[600px] max-h-[75dvh] transition-all duration-300 sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
+            : 'top-auto right-4 bottom-[90px] left-4 max-h-[500px] transition-all duration-300 sm:right-6 sm:left-auto sm:w-[280px]' // Khung Menu
         } `}
       >
         {activeTab === 'menu' && (
