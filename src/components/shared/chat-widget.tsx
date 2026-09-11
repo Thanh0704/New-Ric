@@ -36,12 +36,10 @@ export function ChatWidget() {
 
     const userText = input.trim()
 
-    // Cập nhật giao diện tin nhắn của khách
     setMessages((prev) => [...prev, { role: 'user', content: userText }])
     setInput('')
     setIsTyping(true)
 
-    // Lọc lấy 4 tin nhắn gần nhất để làm "Trí nhớ ngắn hạn" cho AI
     const chatHistory = messages
       .filter(
         (msg) =>
@@ -51,8 +49,8 @@ export function ChatWidget() {
       .slice(-4)
 
     try {
-      // Gọi API đến server Bot
-      const response = await fetch('http://127.0.0.1:8000/api/chat', {
+      const apiUrl = process.env.NEXT_PUBLIC_CHATBOT_API_URL || 'http://127.0.0.1:8000/api/chat'
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +62,6 @@ export function ChatWidget() {
         }),
       })
 
-      // Bắt lỗi chống Spam 429 từ Laravel
       if (response.status === 429) {
         setMessages((prev) => [
           ...prev,
@@ -104,11 +101,17 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="fixed right-6 bottom-6 z-[9999] flex flex-col items-end">
+    // ĐÃ SỬA: Đổi bao bọc ngoài cùng, gỡ flex-col để không bị chiếm diện tích ảo
+    <div className="fixed right-6 bottom-6 z-[9999]">
       <div
-        className={`mb-4 flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${
+        // ĐÃ SỬA CHÍNH MẠNG: Dùng absolute bottom-[72px] right-0 để nó lơ lửng, gỡ "khiên vô hình" đè lên màn hình
+        className={`absolute right-0 bottom-[72px] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${
           isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'
-        } ${activeTab === 'ai' ? 'h-[500px] w-[350px] sm:w-[400px]' : 'w-[280px]'}`}
+        } ${
+          activeTab === 'ai'
+            ? 'h-[75dvh] w-[calc(100vw-3rem)] sm:h-[500px] sm:w-[400px]'
+            : 'w-[calc(100vw-3rem)] sm:w-[280px]'
+        }`}
       >
         {activeTab === 'menu' && (
           <div className="flex w-full flex-col p-6">
@@ -194,7 +197,7 @@ export function ChatWidget() {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm break-words sm:max-w-[80%] ${
                         msg.role === 'user'
                           ? 'rounded-tr-sm bg-cyan-600 text-white'
                           : 'markdown-body rounded-tl-sm border border-white/5 bg-white/10 text-slate-200'
@@ -242,7 +245,7 @@ export function ChatWidget() {
                   onKeyDown={handleKeyPress}
                   placeholder="Nhập câu hỏi của bạn..."
                   disabled={isTyping}
-                  className="w-full rounded-full border border-white/10 bg-[#060913] py-3 pr-12 pl-4 text-sm text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none disabled:opacity-50"
+                  className="w-full rounded-full border border-white/10 bg-[#060913] py-3 pr-12 pl-4 text-base text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none disabled:opacity-50 sm:text-sm"
                 />
                 <button
                   onClick={handleSendMessage}
