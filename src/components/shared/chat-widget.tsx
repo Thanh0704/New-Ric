@@ -22,11 +22,15 @@ export function ChatWidget() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
 
+  // Trạng thái theo dõi bàn phím ảo trên mobile
+  const [isFocused, setIsFocused] = useState(false)
+
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
+
   useEffect(() => {
     scrollToBottom()
   }, [messages, isTyping])
@@ -101,17 +105,16 @@ export function ChatWidget() {
   }
 
   return (
-    // ĐÃ SỬA: Đổi bao bọc ngoài cùng, gỡ flex-col để không bị chiếm diện tích ảo
-    <div className="fixed right-6 bottom-6 z-[9999]">
+    <>
+      {/* 1. KHUNG CHAT (Nằm độc lập) */}
       <div
-        // ĐÃ SỬA CHÍNH MẠNG: Dùng absolute bottom-[72px] right-0 để nó lơ lửng, gỡ "khiên vô hình" đè lên màn hình
-        className={`absolute right-0 bottom-[72px] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${
-          isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'
-        } ${
+        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
-            ? 'h-[75dvh] w-[calc(100vw-3rem)] sm:h-[500px] sm:w-[400px]'
-            : 'w-[calc(100vw-3rem)] sm:w-[280px]'
-        }`}
+            ? isFocused
+              ? 'top-3 right-3 left-3 h-[calc(100dvh-24px)] sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]' // Lúc bật bàn phím
+              : 'top-4 right-4 left-4 h-[calc(100dvh-104px)] sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]' // Lúc tắt bàn phím
+            : 'top-auto right-4 bottom-[90px] left-auto w-[calc(100vw-2rem)] sm:right-6 sm:w-[280px]' // Khung Menu
+        } `}
       >
         {activeTab === 'menu' && (
           <div className="flex w-full flex-col p-6">
@@ -166,7 +169,7 @@ export function ChatWidget() {
 
         {activeTab === 'ai' && (
           <>
-            <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-4 py-3">
+            <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-white/5 px-4 py-3">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setActiveTab('menu')}
@@ -236,19 +239,25 @@ export function ChatWidget() {
               </div>
             </div>
 
-            <div className="border-t border-white/10 bg-white/5 p-3">
+            <div className="shrink-0 border-t border-white/10 bg-white/5 p-3">
               <div className="relative flex items-center">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyPress}
+                  onFocus={() => {
+                    setIsFocused(true)
+                    setTimeout(scrollToBottom, 150) // Căn trễ nhịp để bàn phím đẩy lên xong mới trượt
+                  }}
+                  onBlur={() => setIsFocused(false)}
                   placeholder="Nhập câu hỏi của bạn..."
                   disabled={isTyping}
                   className="w-full rounded-full border border-white/10 bg-[#060913] py-3 pr-12 pl-4 text-base text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none disabled:opacity-50 sm:text-sm"
                 />
                 <button
                   onClick={handleSendMessage}
+                  onMouseDown={(e) => e.preventDefault()} // Bí kíp chống mất Focus khi bấm nút Gửi
                   disabled={!input.trim() || isTyping}
                   className="absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-full bg-cyan-600 text-white transition-colors hover:bg-cyan-500 disabled:bg-slate-700 disabled:text-slate-400"
                 >
@@ -264,12 +273,13 @@ export function ChatWidget() {
         )}
       </div>
 
+      {/* 2. NÚT BẤM (Đã xóa chữ relative để không bị tụt xuống đáy màn hình) */}
       <button
         onClick={() => {
           setIsOpen(!isOpen)
           if (!isOpen) setActiveTab('menu')
         }}
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-600/40 transition-all hover:scale-110"
+        className="group fixed right-6 bottom-6 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-600/40 transition-all hover:scale-110"
       >
         <div className="absolute inset-0 -z-10 animate-ping rounded-full bg-cyan-500/40 opacity-75"></div>
         {isOpen ? (
@@ -279,6 +289,7 @@ export function ChatWidget() {
         )}
       </button>
 
+      {/* CSS Toàn cục */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -298,6 +309,6 @@ export function ChatWidget() {
       `,
         }}
       />
-    </div>
+    </>
   )
 }
