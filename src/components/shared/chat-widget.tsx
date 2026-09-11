@@ -22,13 +22,12 @@ export function ChatWidget() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
 
-  // Trạng thái theo dõi bàn phím ảo trên mobile
+  // Trạng thái theo dõi bàn phím
   const [isFocused, setIsFocused] = useState(false)
 
-  // Style động để trị bệnh "đẩy màn hình" của bàn phím ảo
-  const [mobileStyle, setMobileStyle] = useState<React.CSSProperties>({})
-
+  // Refs để thao tác trực tiếp với giao diện (Chống lag)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -39,65 +38,66 @@ export function ChatWidget() {
   }, [messages, isTyping])
 
   // =====================================================================
-  // BÍ KÍP TỐI THƯỢNG: Ép khung chat bám dính theo khoảng trống bàn phím
+  // BÍ KÍP 1: KHÓA CUỘN NỀN TRANG WEB KHI MỞ CHAT (CHỐNG TRƯỢT NỀN)
   // =====================================================================
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (isOpen && window.innerWidth < 640) {
+      // Khóa scroll body
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+    } else {
+      // Mở lại scroll khi đóng
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+    }
+  }, [isOpen])
 
-    const updateLayout = () => {
-      // Chỉ kích hoạt hiệu ứng này trên màn hình Mobile (dưới 640px)
-      if (window.innerWidth >= 640) {
-        setMobileStyle({})
+  // =====================================================================
+  // BÍ KÍP 2: THAO TÁC DOM TRỰC TIẾP CHỐNG LAG/GIẬT/XẾ GIAO DIỆN
+  // =====================================================================
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return
+
+    const vv = window.visualViewport
+    const chatEl = chatContainerRef.current
+
+    const handleResize = () => {
+      if (!chatEl || window.innerWidth >= 640) {
+        if (chatEl) chatEl.style.cssText = '' // Xóa style nội tuyến trên PC
         return
       }
 
-      const vv = window.visualViewport
-
       if (isFocused) {
-        if (vv) {
-          // Tính toán khoảng không gian chính xác còn lại sau khi trừ đi bàn phím
-          setMobileStyle({
-            position: 'fixed',
-            top: `${vv.offsetTop + 10}px`,
-            left: `${vv.offsetLeft + 10}px`,
-            width: `${vv.width - 20}px`,
-            height: `${vv.height - 20}px`,
-            bottom: 'auto',
-            right: 'auto',
-            transition: 'none', // Tắt animation để nó co giãn mượt theo bàn phím
-            zIndex: 9999,
-          })
-        } else {
-          // Phương án dự phòng nếu trình duyệt quá cũ
-          setMobileStyle({
-            position: 'fixed',
-            top: '10px',
-            left: '10px',
-            right: '10px',
-            height: `${window.innerHeight - 20}px`,
-            bottom: 'auto',
-            transition: 'none',
-            zIndex: 9999,
-          })
-        }
-        setTimeout(scrollToBottom, 50)
+        // Áp dụng CSS thẳng vào thẻ HTML (Bỏ qua React render để mượt 60fps)
+        chatEl.style.transition = 'none'
+        chatEl.style.top = `${vv.offsetTop + 10}px`
+        chatEl.style.left = `${vv.offsetLeft + 10}px`
+        chatEl.style.width = `${vv.width - 20}px`
+        chatEl.style.height = `${vv.height - 20}px`
+        chatEl.style.bottom = 'auto'
+        chatEl.style.right = 'auto'
+        chatEl.style.zIndex = '9999'
       } else {
-        // Trả về mặc định khi tắt bàn phím
-        setMobileStyle({})
+        // Khi hạ bàn phím, xóa toàn bộ style DOM, trả lại quyền cho TailwindCSS -> Hiệu ứng thu lại cực mượt
+        chatEl.style.cssText = ''
       }
     }
 
-    updateLayout()
-
-    // Lắng nghe sự thay đổi khi bàn phím trượt lên/xuống hoặc cuộn trang
-    window.visualViewport?.addEventListener('resize', updateLayout)
-    window.visualViewport?.addEventListener('scroll', updateLayout)
-    window.addEventListener('scroll', updateLayout)
+    // Gắn sự kiện
+    vv.addEventListener('resize', handleResize)
+    vv.addEventListener('scroll', handleResize)
+    handleResize() // Chạy lần đầu
 
     return () => {
-      window.visualViewport?.removeEventListener('resize', updateLayout)
-      window.visualViewport?.removeEventListener('scroll', updateLayout)
-      window.removeEventListener('scroll', updateLayout)
+      vv.removeEventListener('resize', handleResize)
+      vv.removeEventListener('scroll', handleResize)
     }
   }, [isFocused])
 
@@ -174,15 +174,15 @@ export function ChatWidget() {
     <>
       {/* 1. KHUNG CHAT (Nằm độc lập) */}
       <div
-        style={mobileStyle} // Áp dụng thuật toán tính toán kích thước tự động ở trên vào đây
-        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
+        ref={chatContainerRef} // ĐÃ THÊM REF ĐỂ ĐIỀU KHIỂN DOM
+        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
             ? isFocused
-              ? // Lớp dự phòng Desktop: Khi bàn phím bật, Mobile để style JS tự xử, Desktop giữ nguyên
+              ? // Lớp dự phòng: Khi bật bàn phím, PC không đổi, Mobile do DOM tự xử lý
                 'sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
-              : // Khi KHÔNG bật bàn phím
-                'top-auto right-4 bottom-[90px] left-4 h-[600px] max-h-[75dvh] transition-all duration-300 sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
-            : 'top-auto right-4 bottom-[90px] left-4 max-h-[500px] transition-all duration-300 sm:right-6 sm:left-auto sm:w-[280px]' // Khung Menu
+              : // Khi KHÔNG bật bàn phím: Để nó tự căn đáy và cao max 75% màn hình
+                'top-auto right-4 bottom-[90px] left-4 h-[75dvh] sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
+            : 'top-auto right-4 bottom-[90px] left-4 h-auto sm:right-6 sm:left-auto sm:w-[280px]' // Khung Menu
         } `}
       >
         {activeTab === 'menu' && (
@@ -261,7 +261,8 @@ export function ChatWidget() {
               </div>
             </div>
 
-            <div className="hide-scrollbar flex-1 overflow-y-auto p-4">
+            {/* ĐÃ THÊM: overscroll-contain để vuốt kịch trần không bị dội lại */}
+            <div className="hide-scrollbar flex-1 overflow-y-auto overscroll-contain p-4">
               <div className="flex flex-col gap-4">
                 {messages.map((msg, idx) => (
                   <div
@@ -317,11 +318,12 @@ export function ChatWidget() {
                   onKeyDown={handleKeyPress}
                   onFocus={() => {
                     setIsFocused(true)
-                    setTimeout(scrollToBottom, 150)
+                    setTimeout(scrollToBottom, 50)
                   }}
                   onBlur={() => setIsFocused(false)}
                   placeholder="Nhập câu hỏi của bạn..."
                   disabled={isTyping}
+                  // text-base (16px) để ngăn iPhone tự động zoom màn hình
                   className="w-full rounded-full border border-white/10 bg-[#060913] py-3 pr-12 pl-4 text-base text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none disabled:opacity-50 sm:text-sm"
                 />
                 <button
@@ -342,7 +344,7 @@ export function ChatWidget() {
         )}
       </div>
 
-      {/* 2. NÚT BẤM CHAT (Tàng hình khi gõ phím để nhường chỗ) */}
+      {/* 2. NÚT BẤM CHAT */}
       <button
         onClick={() => {
           setIsOpen(!isOpen)
