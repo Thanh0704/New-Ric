@@ -489,6 +489,16 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Ẩn thanh cuộn trên Mobile nhưng vẫn cho phép vuốt */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `,
+        }}
+      />
+
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-slate-950 pt-8 pb-20 text-white lg:pt-12 lg:pb-32">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
@@ -543,12 +553,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </a>
               </div>
 
-              {/* =========================================================
-                  ĐÃ THÊM: Phần hiển thị Logo App riêng cho RICIO
-                  ========================================================= */}
-              {/* =========================================================
-                  ĐÃ THÊM: Phần hiển thị Logo App riêng cho RICIO (CÓ KÈM TEXT)
-                  ========================================================= */}
+              {/* Phần hiển thị Logo App riêng cho RICIO */}
               {id === 'ricio' && (
                 <div className="mt-8 border-t border-white/10 pt-8 md:mt-10">
                   <p className="mb-4 text-sm font-medium tracking-wide text-slate-400">
@@ -628,8 +633,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* 2. KHỐI ƯU ĐIỂM */}
-      <section id="details" className="relative z-10 bg-white py-24">
+      {/* =========================================================
+          2. KHỐI ƯU ĐIỂM (Slider vuốt ngang Mobile - w-[75vw])
+          ========================================================= */}
+      <section id="details" className="relative z-10 overflow-hidden bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="mb-6 text-4xl font-black tracking-tight text-slate-900">
@@ -639,11 +646,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               Sức mạnh công nghệ giúp {product.name} tạo ra sự khác biệt trên thị trường.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+
+          <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-8 md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0">
             {product.advantages.map((adv: any, idx: number) => (
               <div
                 key={idx}
-                className={`rounded-[2rem] border border-slate-100 p-8 ${product.bgLight} transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
+                className={`w-[75vw] shrink-0 snap-center rounded-[2rem] border border-slate-100 p-8 md:w-auto md:shrink ${product.bgLight} transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
               >
                 <div
                   className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-white shadow-sm ${product.iconColor}`}
@@ -658,28 +666,32 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* 3. LỢI ÍCH */}
-      <section className="relative z-10 border-y border-slate-200 bg-slate-50 py-24">
+      {/* =========================================================
+          3. LỢI ÍCH (Slider vuốt ngang Mobile - w-[75vw])
+          ========================================================= */}
+      <section className="relative z-10 overflow-hidden border-y border-slate-200 bg-slate-50 py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div>
               <h2 className="mb-8 text-4xl font-black tracking-tight text-slate-900">
                 Giá trị thực tế mang lại cho doanh nghiệp
               </h2>
-              <div className="space-y-6">
+
+              <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-8 md:mx-0 md:flex-col md:gap-0 md:space-y-6 md:overflow-visible md:px-0 md:pb-0">
                 {product.benefits.map((benefit: string, idx: number) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-colors hover:border-slate-300"
+                    className="flex w-[75vw] shrink-0 snap-center items-start gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-colors hover:border-slate-300 md:w-auto md:shrink"
                   >
                     <CheckSquare className={`mt-0.5 h-6 w-6 shrink-0 ${product.iconColor}`} />
-                    <p className="text-lg leading-relaxed font-semibold text-slate-700">
+                    <p className="text-lg leading-relaxed font-semibold whitespace-normal text-slate-700">
                       {benefit}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
+
             <div className="group relative flex h-full min-h-[400px] flex-col justify-center overflow-hidden rounded-[3rem] p-10 shadow-2xl">
               <Image
                 src={product.image}
