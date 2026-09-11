@@ -24,7 +24,6 @@ export function ChatWidget() {
 
   // Trạng thái theo dõi bàn phím ảo trên mobile
   const [isFocused, setIsFocused] = useState(false)
-  const [mobileStyle, setMobileStyle] = useState({})
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -35,41 +34,6 @@ export function ChatWidget() {
   useEffect(() => {
     scrollToBottom()
   }, [messages, isTyping])
-
-  // =====================================================================
-  // BÍ KÍP TỐI THƯỢNG: Ép khung chat bám dính theo khoảng trống bàn phím
-  // =====================================================================
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.visualViewport) return
-
-    const handleViewportChange = () => {
-      if (isFocused && window.innerWidth < 640) {
-        // Lấy kích thước thực tế của vùng nhìn thấy sau khi bật bàn phím
-        const vv = window.visualViewport
-        setMobileStyle({
-          top: `${vv.offsetTop + 16}px`, // Bám dính vào mép trên cùng
-          height: `${vv.height - 32}px`, // Co ngắn lại đúng bằng vùng trống
-          bottom: 'auto',
-          transition: 'none', // Tắt hiệu ứng mượt để bám sát tốc độ bàn phím
-        })
-        setTimeout(scrollToBottom, 50)
-      } else {
-        // Trả về mặc định khi tắt bàn phím
-        setMobileStyle({ transition: 'all 0.3s' })
-      }
-    }
-
-    // Lắng nghe sự kiện bàn phím bật/tắt hoặc cuộn trang
-    window.visualViewport.addEventListener('resize', handleViewportChange)
-    window.visualViewport.addEventListener('scroll', handleViewportChange)
-
-    handleViewportChange()
-
-    return () => {
-      window.visualViewport?.removeEventListener('resize', handleViewportChange)
-      window.visualViewport?.removeEventListener('scroll', handleViewportChange)
-    }
-  }, [isFocused])
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
@@ -142,16 +106,16 @@ export function ChatWidget() {
 
   return (
     <>
-      {/* 1. KHUNG CHAT */}
+      {/* 1. KHUNG CHAT (Nằm độc lập) */}
       <div
-        style={mobileStyle} // Gắn style tự động tính toán từ Visual Viewport vào đây
-        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
+        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
             ? isFocused
-              ? // Lớp fallback: Nếu Visual Viewport bị lỗi, vẫn dùng cấu hình này
-                'top-4 right-4 bottom-4 left-4 sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
-              : 'top-12 right-4 bottom-[90px] left-4 sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
-            : 'top-auto right-4 bottom-[90px] left-auto w-[calc(100vw-2rem)] sm:right-6 sm:w-[280px]'
+              ? // 🚀 BÍ KÍP Ở ĐÂY: Khi gõ phím, neo cả top-2 và bottom-2. Khung sẽ BỊ ÉP CO LẠI lọt thỏm giữa màn hình và bàn phím.
+                'top-2 right-2 bottom-2 left-2 sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
+              : // Khi KHÔNG gõ phím, dùng max-h-[75dvh] để nó không chiếm hết màn hình
+                'top-auto right-4 bottom-[90px] left-4 h-[600px] max-h-[75dvh] sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
+            : 'top-auto right-4 bottom-[90px] left-4 max-h-[500px] sm:right-6 sm:left-auto sm:w-[280px]' // Khung Menu
         } `}
       >
         {activeTab === 'menu' && (
@@ -286,7 +250,7 @@ export function ChatWidget() {
                   onKeyDown={handleKeyPress}
                   onFocus={() => {
                     setIsFocused(true)
-                    setTimeout(scrollToBottom, 300) // Trễ nhịp đợi bàn phím đẩy lên xong
+                    setTimeout(scrollToBottom, 150)
                   }}
                   onBlur={() => setIsFocused(false)}
                   placeholder="Nhập câu hỏi của bạn..."
@@ -311,7 +275,7 @@ export function ChatWidget() {
         )}
       </div>
 
-      {/* 2. NÚT BẤM (Tàng hình khi gõ phím) */}
+      {/* 2. NÚT BẤM CHAT (Tàng hình khi gõ phím để nhường chỗ) */}
       <button
         onClick={() => {
           setIsOpen(!isOpen)
