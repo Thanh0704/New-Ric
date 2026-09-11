@@ -111,8 +111,10 @@ export function ChatWidget() {
         className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
             ? isFocused
-              ? 'top-3 right-3 left-3 h-[calc(100dvh-24px)] sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]' // Lúc bật bàn phím
-              : 'top-4 right-4 left-4 h-[calc(100dvh-104px)] sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]' // Lúc tắt bàn phím
+              ? // ĐÃ SỬA: Neo top-4 và bottom-4 để tự động ÉP KHUNG CO LẠI khi bàn phím bật lên
+                'top-4 right-4 bottom-4 left-4 sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
+              : // Khi không gõ phím, né cái nút X ở dưới ra (bottom-[90px])
+                'top-12 right-4 bottom-[90px] left-4 sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
             : 'top-auto right-4 bottom-[90px] left-auto w-[calc(100vw-2rem)] sm:right-6 sm:w-[280px]' // Khung Menu
         } `}
       >
@@ -248,7 +250,7 @@ export function ChatWidget() {
                   onKeyDown={handleKeyPress}
                   onFocus={() => {
                     setIsFocused(true)
-                    setTimeout(scrollToBottom, 150) // Căn trễ nhịp để bàn phím đẩy lên xong mới trượt
+                    setTimeout(scrollToBottom, 150)
                   }}
                   onBlur={() => setIsFocused(false)}
                   placeholder="Nhập câu hỏi của bạn..."
@@ -257,7 +259,7 @@ export function ChatWidget() {
                 />
                 <button
                   onClick={handleSendMessage}
-                  onMouseDown={(e) => e.preventDefault()} // Bí kíp chống mất Focus khi bấm nút Gửi
+                  onMouseDown={(e) => e.preventDefault()}
                   disabled={!input.trim() || isTyping}
                   className="absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-full bg-cyan-600 text-white transition-colors hover:bg-cyan-500 disabled:bg-slate-700 disabled:text-slate-400"
                 >
@@ -273,13 +275,18 @@ export function ChatWidget() {
         )}
       </div>
 
-      {/* 2. NÚT BẤM (Đã xóa chữ relative để không bị tụt xuống đáy màn hình) */}
+      {/* 2. NÚT BẤM */}
       <button
         onClick={() => {
           setIsOpen(!isOpen)
           if (!isOpen) setActiveTab('menu')
         }}
-        className="group fixed right-6 bottom-6 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-600/40 transition-all hover:scale-110"
+        // ĐÃ SỬA: Thêm hiệu ứng tàng hình (opacity-0) và vô hiệu hóa (pointer-events-none) khi đang gõ phím
+        className={`group fixed right-6 bottom-6 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-600/40 transition-all duration-300 hover:scale-110 ${
+          isFocused
+            ? 'pointer-events-none translate-y-12 opacity-0 sm:pointer-events-auto sm:translate-y-0 sm:opacity-100'
+            : 'pointer-events-auto translate-y-0 opacity-100'
+        }`}
       >
         <div className="absolute inset-0 -z-10 animate-ping rounded-full bg-cyan-500/40 opacity-75"></div>
         {isOpen ? (
