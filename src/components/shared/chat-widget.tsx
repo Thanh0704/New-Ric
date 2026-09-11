@@ -29,6 +29,9 @@ export function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
+  // 🚀 ĐÃ THÊM: Ref để quản lý toàn bộ vùng của Widget (Khung + Nút)
+  const widgetWrapperRef = useRef<HTMLDivElement>(null)
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -38,16 +41,40 @@ export function ChatWidget() {
   }, [messages, isTyping])
 
   // =====================================================================
-  // BÍ KÍP 1: KHÓA CUỘN NỀN TRANG WEB KHI MỞ CHAT (CHỐNG TRƯỢT NỀN)
+  // BÍ KÍP MỚI: BẤM RA NGOÀI ĐỂ TỰ ĐỘNG ĐÓNG KHUNG CHAT
+  // =====================================================================
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      // Nếu Chat đang mở, và click chuột KHÔNG NẰM TRONG widgetWrapperRef -> Đóng chat
+      if (
+        isOpen &&
+        widgetWrapperRef.current &&
+        !widgetWrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
+        setActiveTab('menu') // Reset lại tab menu cho lần mở sau
+      }
+    }
+
+    // Lắng nghe cả sự kiện click (PC) và chạm (Mobile)
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [isOpen])
+
+  // =====================================================================
+  // KHÓA CUỘN NỀN TRANG WEB KHI MỞ CHAT (CHỐNG TRƯỢT NỀN)
   // =====================================================================
   useEffect(() => {
     if (isOpen && window.innerWidth < 640) {
-      // Khóa scroll body
       document.body.style.overflow = 'hidden'
       document.body.style.position = 'fixed'
       document.body.style.width = '100%'
     } else {
-      // Mở lại scroll khi đóng
       document.body.style.overflow = ''
       document.body.style.position = ''
       document.body.style.width = ''
@@ -60,7 +87,7 @@ export function ChatWidget() {
   }, [isOpen])
 
   // =====================================================================
-  // BÍ KÍP 2: THAO TÁC DOM TRỰC TIẾP CHỐNG LAG/GIẬT/XẾ GIAO DIỆN
+  // THAO TÁC DOM TRỰC TIẾP CHỐNG LAG/GIẬT KHI BẬT BÀN PHÍM
   // =====================================================================
   useEffect(() => {
     if (typeof window === 'undefined' || !window.visualViewport) return
@@ -70,12 +97,11 @@ export function ChatWidget() {
 
     const handleResize = () => {
       if (!chatEl || window.innerWidth >= 640) {
-        if (chatEl) chatEl.style.cssText = '' // Xóa style nội tuyến trên PC
+        if (chatEl) chatEl.style.cssText = ''
         return
       }
 
       if (isFocused) {
-        // Áp dụng CSS thẳng vào thẻ HTML (Bỏ qua React render để mượt 60fps)
         chatEl.style.transition = 'none'
         chatEl.style.top = `${vv.offsetTop + 10}px`
         chatEl.style.left = `${vv.offsetLeft + 10}px`
@@ -85,15 +111,13 @@ export function ChatWidget() {
         chatEl.style.right = 'auto'
         chatEl.style.zIndex = '9999'
       } else {
-        // Khi hạ bàn phím, xóa toàn bộ style DOM, trả lại quyền cho TailwindCSS -> Hiệu ứng thu lại cực mượt
         chatEl.style.cssText = ''
       }
     }
 
-    // Gắn sự kiện
     vv.addEventListener('resize', handleResize)
     vv.addEventListener('scroll', handleResize)
-    handleResize() // Chạy lần đầu
+    handleResize()
 
     return () => {
       vv.removeEventListener('resize', handleResize)
@@ -171,18 +195,17 @@ export function ChatWidget() {
   }
 
   return (
-    <>
-      {/* 1. KHUNG CHAT (Nằm độc lập) */}
+    // 🚀 ĐÃ THÊM: Đổi Fragment (<>) thành thẻ <div> và gắn widgetWrapperRef
+    <div ref={widgetWrapperRef}>
+      {/* 1. KHUNG CHAT */}
       <div
-        ref={chatContainerRef} // ĐÃ THÊM REF ĐỂ ĐIỀU KHIỂN DOM
+        ref={chatContainerRef}
         className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
             ? isFocused
-              ? // Lớp dự phòng: Khi bật bàn phím, PC không đổi, Mobile do DOM tự xử lý
-                'sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
-              : // Khi KHÔNG bật bàn phím: Để nó tự căn đáy và cao max 75% màn hình
-                'top-auto right-4 bottom-[90px] left-4 h-[75dvh] sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
-            : 'top-auto right-4 bottom-[90px] left-4 h-auto sm:right-6 sm:left-auto sm:w-[280px]' // Khung Menu
+              ? 'sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
+              : 'top-auto right-4 bottom-[90px] left-4 h-[75dvh] sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
+            : 'top-auto right-4 bottom-[90px] left-4 h-auto sm:right-6 sm:left-auto sm:w-[280px]'
         } `}
       >
         {activeTab === 'menu' && (
@@ -261,7 +284,6 @@ export function ChatWidget() {
               </div>
             </div>
 
-            {/* ĐÃ THÊM: overscroll-contain để vuốt kịch trần không bị dội lại */}
             <div className="hide-scrollbar flex-1 overflow-y-auto overscroll-contain p-4">
               <div className="flex flex-col gap-4">
                 {messages.map((msg, idx) => (
@@ -323,7 +345,6 @@ export function ChatWidget() {
                   onBlur={() => setIsFocused(false)}
                   placeholder="Nhập câu hỏi của bạn..."
                   disabled={isTyping}
-                  // text-base (16px) để ngăn iPhone tự động zoom màn hình
                   className="w-full rounded-full border border-white/10 bg-[#060913] py-3 pr-12 pl-4 text-base text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none disabled:opacity-50 sm:text-sm"
                 />
                 <button
@@ -384,6 +405,6 @@ export function ChatWidget() {
       `,
         }}
       />
-    </>
+    </div>
   )
 }
