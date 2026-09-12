@@ -30,7 +30,7 @@ export function ChatWidget() {
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const widgetWrapperRef = useRef<HTMLDivElement>(null)
 
-  // 🚀 KHO LƯU TRỮ TỌA ĐỘ CUỘN: GIỮ CHO WEB ĐỨNG IM KHI MỞ CHAT MOBILE
+  // Kho lưu trữ tọa độ cuộn
   const scrollYRef = useRef(0)
   const isBodyLocked = useRef(false)
 
@@ -67,40 +67,34 @@ export function ChatWidget() {
   }, [isOpen])
 
   // =====================================================================
-  // 🚀 KHÓA CUỘN NỀN CHUẨN XÁC, KHÔNG TỰ NHẢY LÊN ĐẦU TRANG
+  // 🚀 KHÓA CUỘN NỀN CHUẨN XÁC VÀ ĐỒNG BỘ 100%
   // =====================================================================
   useEffect(() => {
     if (window.innerWidth >= 640) return // Chỉ áp dụng cho Mobile
 
     if (isOpen) {
-      // 1. Lưu tọa độ hiện tại
+      // 1. Lưu toạ độ
       scrollYRef.current = window.scrollY
 
-      // 2. Ép cứng trang web & Bật cờ lính canh
+      // 2. Khóa nền trang web
       document.body.style.position = 'fixed'
       document.body.style.top = `-${scrollYRef.current}px`
+      document.body.style.left = '0'
+      document.body.style.right = '0'
       document.body.style.width = '100%'
       isBodyLocked.current = true
-    } else if (isBodyLocked.current) {
-      // 3. MỞ KHÓA VÀ TRẢ VỀ VỊ TRÍ CŨ NGAY LẬP TỨC
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-
-      window.scrollTo({
-        top: scrollYRef.current,
-        behavior: 'instant',
-      })
-
-      isBodyLocked.current = false
-    }
-
-    // Cleanup an toàn khi thoát trang
-    return () => {
+    } else {
+      // 3. Xử lý mở khoá và cuộn ngay trong nhánh else
+      // Đã loại bỏ hàm dọn dẹp (cleanup) phá bĩnh
       if (isBodyLocked.current) {
         document.body.style.position = ''
         document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
         document.body.style.width = ''
+
+        // Trả lại tọa độ ngay lập tức
+        window.scrollTo(0, scrollYRef.current)
         isBodyLocked.current = false
       }
     }
