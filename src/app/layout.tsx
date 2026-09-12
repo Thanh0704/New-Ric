@@ -78,6 +78,21 @@ export default function RootLayout({
     // Bỏ hẳn thuộc tính scroll-smooth vì nó đôi khi gây lỗi tính toán tọa độ cuộn chuột (Lenis hoặc React Scroll sẽ làm tốt hơn)
     <html lang="vi" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="flex min-h-dvh flex-col antialiased">
+        {/* ======================================================================
+            🚀 LÍNH CANH TOÀN CỤC BẢN TỐI THƯỢNG (ABSOLUTE DRAG BLOCKER)
+            Bóp chết 100% hành vi Kéo Thả (Drag) mặc định của trình duyệt 
+            áp dụng cho MỌI THÀNH PHẦN (Ảnh, Link, Text, Div...)
+        ====================================================================== */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+              }, { passive: false });
+            `,
+          }}
+        />
+
         <Header />
         <main className="flex-1">{children}</main>
         <ChatWidget />

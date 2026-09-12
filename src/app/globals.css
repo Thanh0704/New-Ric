@@ -202,4 +202,11 @@
   textarea {
     font-family: var(--font-inter), sans-serif;
   }
+  /* 🚀 BÍ KÍP TOÀN CỤC: CHẶN TRÌNH DUYỆT CƯỚP QUYỀN KÉO THẢ */
+  a,
+  img,
+  svg,
+  video {
+    -webkit-user-drag: none; /* Hoạt động tốt trên Chrome, Safari, Edge */
+  }
 }

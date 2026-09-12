@@ -30,9 +30,8 @@ export function ChatWidget() {
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const widgetWrapperRef = useRef<HTMLDivElement>(null)
 
-  // Kho lưu trữ tọa độ cuộn siêu tốc
+  // 🚀 KHO LƯU TRỮ TỌA ĐỘ CUỘN: GIỮ CHO WEB ĐỨNG IM KHI MỞ CHAT MOBILE
   const scrollYRef = useRef(0)
-  // 🚀 ĐÃ THÊM: Cờ "Lính canh" kiểm tra xem nền đã thực sự bị khóa chưa
   const isBodyLocked = useRef(false)
 
   const scrollToBottom = () => {
@@ -68,7 +67,7 @@ export function ChatWidget() {
   }, [isOpen])
 
   // =====================================================================
-  // 🚀 ĐÃ SỬA: KHÓA CUỘN NỀN CHUẨN XÁC, KHÔNG TỰ NHẢY LÊN ĐẦU TRANG
+  // 🚀 KHÓA CUỘN NỀN CHUẨN XÁC, KHÔNG TỰ NHẢY LÊN ĐẦU TRANG
   // =====================================================================
   useEffect(() => {
     if (window.innerWidth >= 640) return // Chỉ áp dụng cho Mobile
@@ -83,18 +82,16 @@ export function ChatWidget() {
       document.body.style.width = '100%'
       isBodyLocked.current = true
     } else if (isBodyLocked.current) {
-      // 3. CHỈ MỞ KHÓA VÀ TRẢ VỀ VỊ TRÍ CŨ NẾU TRƯỚC ĐÓ ĐÃ KHÓA
+      // 3. MỞ KHÓA VÀ TRẢ VỀ VỊ TRÍ CŨ NGAY LẬP TỨC
       document.body.style.position = ''
       document.body.style.top = ''
       document.body.style.width = ''
 
-      // Trả về đúng vị trí lập tức không độ trễ
       window.scrollTo({
         top: scrollYRef.current,
         behavior: 'instant',
       })
 
-      // Tắt cờ lính canh
       isBodyLocked.current = false
     }
 

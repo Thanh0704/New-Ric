@@ -14,8 +14,7 @@ const mainProducts = [
     tagline: 'Nền tảng TMĐT',
     desc: 'Hệ thống bán hàng đa kênh đồng bộ, bứt phá doanh thu với trải nghiệm mượt mà.',
     image: '/images/solutions/ecom.jpg',
-    link: '/products/ecom', // Chú ý link chuẩn là /products/ecom
-    color: 'blue',
+    link: '/products/ecom',
   },
   {
     id: 'ricio',
@@ -24,7 +23,6 @@ const mainProducts = [
     desc: 'Tự động hóa hoàn toàn quy trình Booking và quản lý cho chuỗi Khách sạn, Resort.',
     image: '/images/solutions/ricio.jpg',
     link: '/products/ricio',
-    color: 'indigo',
   },
   {
     id: 'trust',
@@ -33,7 +31,6 @@ const mainProducts = [
     desc: 'Bảo vệ thương hiệu bằng công nghệ mã hóa QR Code nhiều lớp, kiểm soát hàng hóa.',
     image: '/images/solutions/ric-trust.jpg',
     link: '/products/ric-trust',
-    color: 'violet',
   },
   {
     id: 'message',
@@ -42,7 +39,6 @@ const mainProducts = [
     desc: 'Nuôi dưỡng khách hàng tự động qua kịch bản Zalo ZNS và SMS Brandname.',
     image: '/images/solutions/ric-message.jpg',
     link: '/products/ric-message',
-    color: 'cyan',
   },
   {
     id: 'affiliate',
@@ -51,7 +47,6 @@ const mainProducts = [
     desc: 'Xây dựng mạng lưới cộng tác viên, tự động đối soát hoa hồng minh bạch.',
     image: '/images/solutions/ric-affiliate.jpg',
     link: '/products/ric-affiliate',
-    color: 'emerald',
   },
 ]
 
@@ -72,6 +67,53 @@ const comingSoonProducts = [
 
 export function ProductShowcase() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  // =====================================================================
+  // 🚀 ĐỘNG CƠ VUỐT NGANG (DRAG-TO-SCROLL) SIÊU MƯỢT CHO DESKTOP
+  // =====================================================================
+  const isDragging = useRef(false)
+  const startX = useRef(0)
+  const scrollLeft = useRef(0)
+  const draggedDistance = useRef(0)
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true
+    draggedDistance.current = 0
+    if (scrollContainerRef.current) {
+      startX.current = e.pageX - scrollContainerRef.current.offsetLeft
+      scrollLeft.current = scrollContainerRef.current.scrollLeft
+
+      // Tắt tính năng Snap (khựng) tạm thời để kéo cho trơn tru
+      scrollContainerRef.current.style.scrollSnapType = 'none'
+      scrollContainerRef.current.style.scrollBehavior = 'auto'
+    }
+  }
+
+  const onMouseLeaveOrUp = () => {
+    isDragging.current = false
+    if (scrollContainerRef.current) {
+      // Bật lại tính năng Snap sau khi nhả chuột
+      scrollContainerRef.current.style.scrollSnapType = 'x mandatory'
+      scrollContainerRef.current.style.scrollBehavior = 'smooth'
+    }
+  }
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollContainerRef.current) return
+    e.preventDefault()
+    const x = e.pageX - scrollContainerRef.current.offsetLeft
+    const walk = (x - startX.current) * 1.5 // Nhân 1.5 để kéo nhạy hơn
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk
+    draggedDistance.current = Math.abs(x - startX.current)
+  }
+
+  // 🛡️ CHỐT CHẶN: Chống click nhầm vào Link khi người dùng đang có ý định vuốt
+  const preventClickIfDragging = (e: React.MouseEvent) => {
+    if (draggedDistance.current > 5) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -130,7 +172,11 @@ export function ProductShowcase() {
 
       <div
         ref={scrollContainerRef}
-        className="hide-scrollbar relative z-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-12 sm:px-6 md:gap-6 md:px-12 lg:gap-10"
+        className="hide-scrollbar relative z-10 flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-12 select-none active:cursor-grabbing sm:px-6 md:gap-6 md:px-12 lg:gap-10"
+        onMouseDown={onMouseDown}
+        onMouseLeave={onMouseLeaveOrUp}
+        onMouseUp={onMouseLeaveOrUp}
+        onMouseMove={onMouseMove}
       >
         <div className="w-[2vw] shrink-0 md:w-[5vw]"></div>
 
@@ -138,6 +184,8 @@ export function ProductShowcase() {
           <Link
             href={product.link}
             key={product.id}
+            draggable={false}
+            onClick={preventClickIfDragging}
             className="group relative flex h-[460px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-[320px] md:h-[540px] md:w-[380px] md:rounded-[2.5rem] md:p-3"
           >
             <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner md:rounded-[2rem]">
@@ -168,6 +216,8 @@ export function ProductShowcase() {
                     src={product.image}
                     alt={product.title}
                     fill
+                    draggable={false}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover object-left-top"
                   />
                   <div className="absolute inset-0 bg-slate-950/20 transition-colors duration-500 group-hover:bg-transparent" />
@@ -180,6 +230,7 @@ export function ProductShowcase() {
         {comingSoonProducts.map((product) => (
           <div
             key={`mobile-soon-${product.id}`}
+            draggable={false}
             className="group relative flex h-[460px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-[320px] md:hidden"
           >
             <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner">
@@ -199,6 +250,8 @@ export function ProductShowcase() {
                 <div className="mt-auto pb-4">
                   <Link
                     href="/contact"
+                    draggable={false}
+                    onClick={preventClickIfDragging}
                     className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-900 transition-shadow hover:bg-amber-400 hover:shadow-[0_0_15px_rgba(245,158,11,0.4)]"
                   >
                     <BellRing className="h-3 w-3" /> Đăng ký nhận tin
@@ -206,13 +259,14 @@ export function ProductShowcase() {
                 </div>
               </div>
 
-              {/* ĐÃ SỬA MOBILE: Ảnh hiện rõ, bỏ kính mờ và đen trắng */}
               <div className="relative pl-5">
                 <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl">
                   <Image
                     src={product.image}
                     alt={product.title}
                     fill
+                    draggable={false}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover object-left-top transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-slate-950/30 transition-colors duration-500 group-hover:bg-transparent" />
@@ -246,7 +300,6 @@ export function ProductShowcase() {
                   key={product.id}
                   className="group flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 transition-all hover:border-cyan-500/30 hover:bg-white/10 sm:flex-row sm:gap-6 sm:p-4"
                 >
-                  {/* ĐÃ SỬA LAPTOP: Bỏ hiệu ứng đen trắng để ảnh hiện rõ nét */}
                   <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-lg border border-white/10 bg-slate-900 sm:h-28 sm:w-32">
                     <Image
                       src={product.image}
