@@ -25,12 +25,15 @@ export function ChatWidget() {
   // Trạng thái theo dõi bàn phím
   const [isFocused, setIsFocused] = useState(false)
 
-  // Refs để thao tác trực tiếp với giao diện (Chống lag)
+  // Refs để thao tác trực tiếp với giao diện
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
-
-  // 🚀 ĐÃ THÊM: Ref để quản lý toàn bộ vùng của Widget (Khung + Nút)
   const widgetWrapperRef = useRef<HTMLDivElement>(null)
+
+  // Kho lưu trữ tọa độ cuộn siêu tốc
+  const scrollYRef = useRef(0)
+  // 🚀 ĐÃ THÊM: Cờ "Lính canh" kiểm tra xem nền đã thực sự bị khóa chưa
+  const isBodyLocked = useRef(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -41,22 +44,20 @@ export function ChatWidget() {
   }, [messages, isTyping])
 
   // =====================================================================
-  // BÍ KÍP MỚI: BẤM RA NGOÀI ĐỂ TỰ ĐỘNG ĐÓNG KHUNG CHAT
+  // BẤM RA NGOÀI ĐỂ TỰ ĐỘNG ĐÓNG KHUNG CHAT
   // =====================================================================
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      // Nếu Chat đang mở, và click chuột KHÔNG NẰM TRONG widgetWrapperRef -> Đóng chat
       if (
         isOpen &&
         widgetWrapperRef.current &&
         !widgetWrapperRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false)
-        setActiveTab('menu') // Reset lại tab menu cho lần mở sau
+        setActiveTab('menu')
       }
     }
 
-    // Lắng nghe cả sự kiện click (PC) và chạm (Mobile)
     document.addEventListener('mousedown', handleClickOutside)
     document.addEventListener('touchstart', handleClickOutside)
 
@@ -67,22 +68,44 @@ export function ChatWidget() {
   }, [isOpen])
 
   // =====================================================================
-  // KHÓA CUỘN NỀN TRANG WEB KHI MỞ CHAT (CHỐNG TRƯỢT NỀN)
+  // 🚀 ĐÃ SỬA: KHÓA CUỘN NỀN CHUẨN XÁC, KHÔNG TỰ NHẢY LÊN ĐẦU TRANG
   // =====================================================================
   useEffect(() => {
-    if (isOpen && window.innerWidth < 640) {
-      document.body.style.overflow = 'hidden'
+    if (window.innerWidth >= 640) return // Chỉ áp dụng cho Mobile
+
+    if (isOpen) {
+      // 1. Lưu tọa độ hiện tại
+      scrollYRef.current = window.scrollY
+
+      // 2. Ép cứng trang web & Bật cờ lính canh
       document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollYRef.current}px`
       document.body.style.width = '100%'
-    } else {
-      document.body.style.overflow = ''
+      isBodyLocked.current = true
+    } else if (isBodyLocked.current) {
+      // 3. CHỈ MỞ KHÓA VÀ TRẢ VỀ VỊ TRÍ CŨ NẾU TRƯỚC ĐÓ ĐÃ KHÓA
       document.body.style.position = ''
+      document.body.style.top = ''
       document.body.style.width = ''
+
+      // Trả về đúng vị trí lập tức không độ trễ
+      window.scrollTo({
+        top: scrollYRef.current,
+        behavior: 'instant',
+      })
+
+      // Tắt cờ lính canh
+      isBodyLocked.current = false
     }
+
+    // Cleanup an toàn khi thoát trang
     return () => {
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
+      if (isBodyLocked.current) {
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        isBodyLocked.current = false
+      }
     }
   }, [isOpen])
 
@@ -195,7 +218,6 @@ export function ChatWidget() {
   }
 
   return (
-    // 🚀 ĐÃ THÊM: Đổi Fragment (<>) thành thẻ <div> và gắn widgetWrapperRef
     <div ref={widgetWrapperRef}>
       {/* 1. KHUNG CHAT */}
       <div
