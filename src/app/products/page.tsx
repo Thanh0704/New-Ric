@@ -128,7 +128,6 @@ function ProductsContent() {
   const router = useRouter()
   const pathname = usePathname()
 
-  // Khởi tạo thông minh để không nháy giao diện khi F5
   const [activeCategory, setActiveCategory] = useState(() => {
     const categoryFromUrl = searchParams.get('category')
     const isValid = productCategories.some((cat) => cat.id === categoryFromUrl)
@@ -138,27 +137,28 @@ function ProductsContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // ========================================================================
-  // 🔥 ĐÃ THÊM: Biến "Cảnh sát giao thông" để phân biệt click Menu hay click Nội bộ
-  // ========================================================================
   const isLocalClick = useRef(false)
 
-  // Xử lý Lắng nghe mọi sự thay đổi của URL
   useEffect(() => {
-    // 1. NẾU USER BẤM NÚT LỌC BÊN DƯỚI (Local Click)
     if (isLocalClick.current) {
-      isLocalClick.current = false // Hạ cờ xuống, kết thúc phiên làm việc
-      return // Bỏ qua toàn bộ lệnh cuộn trang ở dưới
+      isLocalClick.current = false
+      return
     }
 
-    // 2. NẾU USER TỪ NƠI KHÁC ĐẾN (Header Menu, Trang chủ, F5, Back/Forward...) -> AUTO CUỘN!
-    const scrollTimer = setTimeout(() => {
-      document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 300)
-
-    // Đồng bộ lại State giao diện với URL
-    let stateTimer: ReturnType<typeof setTimeout>
     const categoryFromUrl = searchParams.get('category')
+    let scrollTimer: ReturnType<typeof setTimeout> | undefined
+
+    // ========================================================================
+    // 🔥 ĐÃ FIX: CHỈ AUTO-CUỘN KHI NGƯỜI DÙNG CÓ CHỦ ĐÍCH CHỌN CATEGORY CỤ THỂ
+    // Nếu link chỉ là '/products' (từ nút Xem toàn bộ sản phẩm), nó sẽ bỏ qua lệnh cuộn này
+    // ========================================================================
+    if (categoryFromUrl) {
+      scrollTimer = setTimeout(() => {
+        document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 300)
+    }
+
+    let stateTimer: ReturnType<typeof setTimeout>
 
     if (categoryFromUrl && productCategories.some((cat) => cat.id === categoryFromUrl)) {
       stateTimer = setTimeout(() => setActiveCategory(categoryFromUrl), 0)
@@ -167,10 +167,10 @@ function ProductsContent() {
     }
 
     return () => {
-      clearTimeout(scrollTimer)
+      if (scrollTimer) clearTimeout(scrollTimer)
       if (stateTimer) clearTimeout(stateTimer)
     }
-  }, [searchParams]) // Lắng nghe trực tiếp vào sự thay đổi của URL (searchParams)
+  }, [searchParams])
 
   useEffect(() => {
     const indexTimer = setTimeout(() => {
@@ -184,11 +184,8 @@ function ProductsContent() {
     return () => clearTimeout(indexTimer)
   }, [activeCategory])
 
-  // Hàm xử lý khi bấm các nút lọc tròn tròn trên giao diện
   const handleCategoryChange = (categoryId: string) => {
-    // Giơ biển "Cảnh sát" lên báo hiệu: "Đây là click nội bộ, cấm cuộn trang!"
     isLocalClick.current = true
-
     setActiveCategory(categoryId)
     router.replace(`${pathname}?category=${categoryId}`, { scroll: false })
   }
