@@ -66,7 +66,8 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="bg-privacy-bg">
       <div className="px-6 py-16 md:px-20 md:py-24">
-        <div className="mx-auto max-w-[1000px]">
+        <div className="mx-auto max-w-[calc(1000px)]">
+          {' '}
           {/* Page header */}
           <header className="mb-16 text-center">
             <h1 className="mb-4 text-4xl font-black text-slate-900 md:text-5xl">
@@ -75,7 +76,6 @@ export default function PrivacyPolicyPage() {
             <div className="bg-electric mx-auto h-1.5 w-20 rounded-full" />
             <p className="mt-6 text-slate-500">Cập nhật lần cuối: 24 tháng 5, 2024</p>
           </header>
-
           {/* Content card */}
           <div className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm md:p-16">
             <p className="mb-10 text-lg leading-relaxed text-slate-600">
