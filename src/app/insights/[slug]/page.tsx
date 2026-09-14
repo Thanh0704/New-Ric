@@ -187,8 +187,15 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
           </div>
 
           <div className="mx-auto mb-16 max-w-5xl">
-            <div className="relative aspect-[16/7] w-full overflow-hidden rounded-3xl bg-slate-100 shadow-xl shadow-slate-200">
-              <Image src={article.image} alt={article.title} fill className="object-cover" />
+            <div className="relative aspect-16/7 w-full overflow-hidden rounded-3xl bg-slate-100 shadow-xl shadow-slate-200">
+              <Image
+                src={article.image}
+                alt={article.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                draggable={false}
+                className="object-cover"
+              />
             </div>
           </div>
 

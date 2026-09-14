@@ -135,7 +135,7 @@ export default function InsightsPage() {
                   key={item.id}
                   className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white transition-all hover:-translate-y-2 hover:border-blue-300 hover:shadow-xl"
                 >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                  <div className="relative aspect-16/10 w-full overflow-hidden bg-slate-100">
                     <Image
                       src={item.image}
                       alt={item.title}

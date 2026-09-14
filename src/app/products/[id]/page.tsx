@@ -1,25 +1,21 @@
 'use client'
 
-import { use, useEffect, useState, useRef } from 'react'
+import React, { use, useEffect, useState, useRef } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
   ChevronRight,
   ArrowRight,
-  CheckCircle2,
   LayoutGrid,
   ShieldCheck,
   Zap,
   BarChart3,
-  ShoppingCart,
   Users,
   Megaphone,
   Briefcase,
   Smartphone,
   Globe,
-  Server,
-  Lock,
   Fingerprint,
   Target,
   Rocket,
@@ -30,10 +26,41 @@ import {
   Link2,
 } from 'lucide-react'
 
+// ==============================================================================
+// 🔥 KHAI BÁO KIỂU DỮ LIỆU ĐỂ TRỊ LỖI "Unexpected any" 🔥
+// ==============================================================================
+type Advantage = {
+  icon: React.ElementType
+  title: string
+  desc: string
+}
+
+type RoadmapStep = {
+  phase: string
+  title: string
+  desc: string
+}
+
+type ProductData = {
+  name: string
+  category: string
+  tagline: string
+  description: string
+  target: string
+  image: string
+  theme: string
+  iconColor: string
+  bgLight: string
+  advantages: Advantage[]
+  benefits: string[]
+  roadmap: RoadmapStep[]
+}
+
 // ----------------------------------------------------------------------
 // DATABASE: NỘI DUNG CHI TIẾT SẢN PHẨM
 // ----------------------------------------------------------------------
-const productDetails: Record<string, any> = {
+// ✅ Đã sửa 'any' thành 'ProductData'
+const productDetails: Record<string, ProductData> = {
   ecom: {
     name: 'RIC ECOM',
     category: 'Bán hàng & Thương mại',
@@ -470,7 +497,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
       const stepSize = 100 / (product.roadmap.length || 1)
       let currentStep = -1
-      product.roadmap.forEach((_: any, i: number) => {
+      product.roadmap.forEach((_: unknown, i: number) => {
         if (progress > i * stepSize + 5) {
           currentStep = i
         }
@@ -503,7 +530,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       <section className="relative overflow-hidden bg-slate-950 pt-8 pb-20 text-white lg:pt-12 lg:pb-32">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
         <div
-          className={`absolute top-[-20%] right-[-10%] h-[800px] w-[800px] rounded-full bg-gradient-to-br ${product.theme} pointer-events-none opacity-20 blur-[120px]`}
+          className={`absolute top-[-20%] right-[-10%] h-200 w-200 rounded-full bg-linear-to-br ${product.theme} pointer-events-none opacity-20 blur-[120px]`}
         />
 
         <div className="relative z-10 container mx-auto px-6 md:px-20">
@@ -528,7 +555,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               <h1 className="mb-6 text-5xl leading-[1.1] font-black tracking-tight md:text-6xl lg:text-7xl">
                 {product.name} <br />
                 <span
-                  className={`bg-gradient-to-r bg-clip-text text-transparent ${product.theme} mt-4 block text-4xl md:text-5xl`}
+                  className={`bg-linear-to-r bg-clip-text text-transparent ${product.theme} mt-4 block text-4xl md:text-5xl`}
                 >
                   {product.tagline}
                 </span>
@@ -538,71 +565,81 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {product.description}
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              {/* ==========================================
+                  🚀 ĐÃ TỐI ƯU CỤM NÚT CTA BÁN HÀNG
+                  ========================================== */}
+              <div className="flex w-full flex-col gap-3 sm:w-max sm:flex-row sm:gap-4">
                 <Link
                   href={`/contact?interest=${id}`}
-                  className={`rounded-full bg-gradient-to-r px-10 py-4 font-bold text-white shadow-lg transition-all hover:scale-105 ${product.theme}`}
+                  className={`flex w-full items-center justify-center rounded-full bg-linear-to-r px-8 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-105 sm:w-auto sm:px-10 sm:py-4 ${product.theme}`}
                 >
                   Đăng ký Demo 1:1
                 </Link>
                 <a
                   href="#details"
-                  className="flex items-center gap-2 rounded-full border border-slate-700 px-10 py-4 font-bold text-white transition-all hover:bg-slate-800"
+                  className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-700 px-8 py-3.5 font-bold text-white transition-all hover:bg-slate-800 sm:w-auto sm:px-10 sm:py-4"
                 >
                   Tìm hiểu chi tiết <ArrowRight className="h-5 w-5" />
                 </a>
               </div>
 
-              {/* Phần hiển thị Logo App riêng cho RICIO */}
+              {/* ==========================================
+                  🚀 ĐÃ TỐI ƯU CỤM NÚT TẢI APP (GRID 2 CỘT)
+                  ========================================== */}
               {id === 'ricio' && (
                 <div className="mt-8 border-t border-white/10 pt-8 md:mt-10">
                   <p className="mb-4 text-sm font-medium tracking-wide text-slate-400">
                     Tải ứng dụng quản lý di động:
                   </p>
-                  <div className="flex flex-wrap items-center gap-4">
+
+                  <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:gap-4">
                     {/* Nút Ricio */}
                     <Link
-                      href="#" // Điền link tải App Ricio
+                      href="#"
                       target="_blank"
-                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-1.5 pr-5 transition-all hover:border-cyan-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+                      className="group flex w-full items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 transition-all hover:border-cyan-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] sm:w-auto sm:gap-3 sm:p-1.5 sm:pr-5"
                     >
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-white">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white sm:h-11 sm:w-11 sm:rounded-[12px]">
                         <Image
                           src="/images/apps/Logo Ricio tách nền.png"
                           alt="Logo Ricio App"
                           width={32}
                           height={32}
-                          className="object-contain transition-transform group-hover:scale-110"
+                          className="h-6 w-6 object-contain transition-transform group-hover:scale-110 sm:h-8 sm:w-8"
                         />
                       </div>
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-medium tracking-widest text-slate-400 uppercase">
+                      <div className="flex flex-col overflow-hidden pr-1 sm:pr-0">
+                        <span className="truncate text-[8px] font-medium tracking-widest text-slate-400 uppercase">
                           Dành cho Quản lý
                         </span>
-                        <span className="text-sm font-bold text-white">Ricio App</span>
+                        <span className="truncate text-xs font-bold text-white sm:text-sm">
+                          Ricio App
+                        </span>
                       </div>
                     </Link>
 
                     {/* Nút Check Home */}
                     <Link
-                      href="#" // Điền link tải App Check Home
+                      href="#"
                       target="_blank"
-                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-1.5 pr-5 transition-all hover:border-cyan-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+                      className="group flex w-full items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 transition-all hover:border-cyan-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] sm:w-auto sm:gap-3 sm:p-1.5 sm:pr-5"
                     >
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-white">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white sm:h-11 sm:w-11 sm:rounded-[12px]">
                         <Image
                           src="/images/apps/logo Check Home tách nền.png"
                           alt="Logo Check Home App"
                           width={32}
                           height={32}
-                          className="object-contain transition-transform group-hover:scale-110"
+                          className="h-6 w-6 object-contain transition-transform group-hover:scale-110 sm:h-8 sm:w-8"
                         />
                       </div>
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-medium tracking-widest text-slate-400 uppercase">
-                          Dành cho Buồng phòng
+                      <div className="flex flex-col overflow-hidden pr-1 sm:pr-0">
+                        <span className="truncate text-[8px] font-medium tracking-widest text-slate-400 uppercase">
+                          Cho Buồng phòng
                         </span>
-                        <span className="text-sm font-bold text-white">Check Home</span>
+                        <span className="truncate text-xs font-bold text-white sm:text-sm">
+                          Check Home
+                        </span>
                       </div>
                     </Link>
                   </div>
@@ -611,14 +648,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             </div>
 
             <div className="relative">
-              <div className="group relative aspect-square overflow-hidden rounded-[2.5rem] border border-slate-800 shadow-2xl md:aspect-[4/3]">
+              <div className="group relative aspect-square overflow-hidden rounded-[2.5rem] border border-slate-800 shadow-2xl md:aspect-4/3">
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-10">
                   <div className="mb-3 inline-flex items-center gap-2 text-sm font-bold tracking-wider text-amber-400 uppercase">
                     <Target className="h-5 w-5" /> Giải pháp này dành cho ai?
@@ -648,7 +685,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </div>
 
           <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-8 md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0">
-            {product.advantages.map((adv: any, idx: number) => (
+            {product.advantages.map((adv: Advantage, idx: number) => (
               <div
                 key={idx}
                 className={`w-[75vw] shrink-0 snap-center rounded-[2rem] border border-slate-100 p-8 md:w-auto md:shrink ${product.bgLight} transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
@@ -692,7 +729,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </div>
             </div>
 
-            <div className="group relative flex h-full min-h-[400px] flex-col justify-center overflow-hidden rounded-[3rem] p-10 shadow-2xl">
+            <div className="group relative flex h-full min-h-100 flex-col justify-center overflow-hidden rounded-[3rem] p-10 shadow-2xl">
               <Image
                 src={product.image}
                 alt="Vận hành thông minh"
@@ -727,13 +764,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </div>
 
           <div className="relative mx-auto max-w-4xl py-10" ref={timelineRef}>
-            <div className="absolute top-0 bottom-0 left-[28px] w-1.5 -translate-x-1/2 rounded-full bg-slate-100 md:left-1/2" />
+            <div className="absolute top-0 bottom-0 left-7 w-1.5 -translate-x-1/2 rounded-full bg-slate-100 md:left-1/2" />
             <div
-              className={`absolute top-0 left-[28px] w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b ${product.theme} transition-all duration-100 ease-out md:left-1/2`}
+              className={`absolute top-0 left-7 w-1.5 -translate-x-1/2 rounded-full bg-linear-to-b ${product.theme} transition-all duration-100 ease-out md:left-1/2`}
               style={{ height: `${scrollProgress}%` }}
             />
 
-            {product.roadmap.map((step: any, idx: number) => {
+            {product.roadmap.map((step: RoadmapStep, idx: number) => {
               const isActive = idx <= activeStep
               const boxClass = isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
               const circleClass = isActive
@@ -748,7 +785,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   <div className="hidden w-[45%] md:block" />
 
                   <div
-                    className={`absolute left-[28px] z-10 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-4 font-black transition-all duration-700 md:left-1/2 ${circleClass}`}
+                    className={`absolute left-7 z-10 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-4 font-black transition-all duration-700 md:left-1/2 ${circleClass}`}
                   >
                     {idx + 1}
                   </div>
@@ -777,7 +814,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       <section className="relative container mx-auto border-t border-slate-100 bg-white px-6 py-20 md:px-20">
         <div className="relative overflow-hidden rounded-[3rem] bg-slate-900 px-8 py-20 text-center shadow-2xl md:px-16 md:py-24">
           <div
-            className={`absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l ${product.theme} pointer-events-none opacity-20 blur-[100px]`}
+            className={`absolute top-0 right-0 h-full w-1/2 bg-linear-to-l ${product.theme} pointer-events-none opacity-20 blur-[100px]`}
           />
           <h2 className="relative z-10 mx-auto mb-6 max-w-3xl text-3xl leading-tight font-black text-white md:text-5xl">
             Bắt đầu số hóa cùng {product.name}
