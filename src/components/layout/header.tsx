@@ -54,6 +54,7 @@ const newNavData = [
           { label: 'Marketing & Tương tác', href: '/products?category=marketing' },
           { label: 'Quản trị chuyên ngành', href: '/products?category=management' },
           { label: 'Bảo vệ thương hiệu', href: '/products?category=security' },
+          { label: 'Tất cả Giải pháp', href: '/products?category=all' },
         ],
       },
       {

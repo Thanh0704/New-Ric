@@ -133,30 +133,31 @@ function ProductsContent() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    if (categoryFromUrl && categoryFromUrl !== activeCategory) {
+    // Nếu trên thanh địa chỉ có chữ ?category=...
+    if (categoryFromUrl) {
       const isValidCategory = productCategories.some((cat) => cat.id === categoryFromUrl)
 
       if (isValidCategory) {
-        // ĐÃ FIX LỖI: Bọc setActiveCategory vào setTimeout (Callback) để né lỗi "gọi trực tiếp" của React
+        // 1. Bọc trong setTimeout 0ms để lách luật cảnh sát React (Lỗi set-state-in-effect)
         const stateTimer = setTimeout(() => {
           setActiveCategory(categoryFromUrl)
         }, 0)
 
-        // Vẫn giữ nguyên logic đợi 300ms rồi cuộn trang mượt mà
+        // 2. Đợi 300ms cho giao diện vẽ xong xuôi thì ra lệnh cuộn mượt mà
         const scrollTimer = setTimeout(() => {
           document
             .getElementById('solutions')
             ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }, 300)
 
-        // Dọn dẹp cả 2 bộ đếm để bộ nhớ web luôn sạch sẽ
+        // Dọn dẹp cả 2 bộ đếm để chống rò rỉ bộ nhớ
         return () => {
           clearTimeout(stateTimer)
           clearTimeout(scrollTimer)
         }
       }
     }
-  }, [categoryFromUrl, activeCategory])
+  }, [categoryFromUrl]) // 🔥 VẪN BỎ activeCategory đi: Bí quyết để không bị lỗi "tự hủy lệnh cuộn"
 
   useEffect(() => {
     // ĐÃ FIX LỖI: Bọc lệnh set state vào Callback (setTimeout 0ms)
@@ -269,8 +270,8 @@ function ProductsContent() {
       </div>
 
       {/* =========================================================
-          PHẦN 2: MAIN PRODUCTS 
-          ========================================================= */}
+         PHẦN 2: MAIN PRODUCTS 
+         ========================================================= */}
       <section id="solutions" className="relative z-10 bg-[#0A0F1C] py-20 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-20">
           <div className="mb-10 flex flex-col md:mb-16">
