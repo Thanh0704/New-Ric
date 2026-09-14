@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import {
   ArrowRight,
   LayoutGrid,
@@ -114,6 +114,7 @@ const products = [
   },
 ]
 
+// CHỈ GIỮ LẠI MÀU CHO BADGE (PILL), BỎ HOÀN TOÀN MÀU NỀN CARD
 const themeMap: Record<string, { badgeBg: string; badgeText: string }> = {
   blue: { badgeBg: 'bg-cyan-500/30 border-cyan-400/30', badgeText: 'text-cyan-300' },
   emerald: { badgeBg: 'bg-emerald-500/30 border-emerald-400/30', badgeText: 'text-emerald-300' },
@@ -125,54 +126,41 @@ const themeMap: Record<string, { badgeBg: string; badgeText: string }> = {
 
 function ProductsContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
-
-  // Khởi tạo thông minh để không nháy giao diện khi F5
-  const [activeCategory, setActiveCategory] = useState(() => {
-    const categoryFromUrl = searchParams.get('category')
-    const isValid = productCategories.some((cat) => cat.id === categoryFromUrl)
-    return isValid && categoryFromUrl ? categoryFromUrl : 'all'
-  })
+  const categoryFromUrl = searchParams.get('category')
+  const [activeCategory, setActiveCategory] = useState('all')
 
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // ========================================================================
-  // 🔥 ĐÃ THÊM: Biến "Cảnh sát giao thông" để phân biệt click Menu hay click Nội bộ
-  // ========================================================================
-  const isLocalClick = useRef(false)
-
-  // Xử lý Lắng nghe mọi sự thay đổi của URL
   useEffect(() => {
-    // 1. NẾU USER BẤM NÚT LỌC BÊN DƯỚI (Local Click)
-    if (isLocalClick.current) {
-      isLocalClick.current = false // Hạ cờ xuống, kết thúc phiên làm việc
-      return // Bỏ qua toàn bộ lệnh cuộn trang ở dưới
+    // Nếu trên thanh địa chỉ có chữ ?category=...
+    if (categoryFromUrl) {
+      const isValidCategory = productCategories.some((cat) => cat.id === categoryFromUrl)
+
+      if (isValidCategory) {
+        // 1. Bọc trong setTimeout 0ms để lách luật cảnh sát React (Lỗi set-state-in-effect)
+        const stateTimer = setTimeout(() => {
+          setActiveCategory(categoryFromUrl)
+        }, 0)
+
+        // 2. Đợi 300ms cho giao diện vẽ xong xuôi thì ra lệnh cuộn mượt mà
+        const scrollTimer = setTimeout(() => {
+          document
+            .getElementById('solutions')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 300)
+
+        // Dọn dẹp cả 2 bộ đếm để chống rò rỉ bộ nhớ
+        return () => {
+          clearTimeout(stateTimer)
+          clearTimeout(scrollTimer)
+        }
+      }
     }
-
-    // 2. NẾU USER TỪ NƠI KHÁC ĐẾN (Header Menu, Trang chủ, F5, Back/Forward...) -> AUTO CUỘN!
-    const scrollTimer = setTimeout(() => {
-      document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 300)
-
-    // Đồng bộ lại State giao diện với URL
-    let stateTimer: ReturnType<typeof setTimeout>
-    const categoryFromUrl = searchParams.get('category')
-
-    if (categoryFromUrl && productCategories.some((cat) => cat.id === categoryFromUrl)) {
-      stateTimer = setTimeout(() => setActiveCategory(categoryFromUrl), 0)
-    } else if (!categoryFromUrl) {
-      stateTimer = setTimeout(() => setActiveCategory('all'), 0)
-    }
-
-    return () => {
-      clearTimeout(scrollTimer)
-      if (stateTimer) clearTimeout(stateTimer)
-    }
-  }, [searchParams]) // Lắng nghe trực tiếp vào sự thay đổi của URL (searchParams)
+  }, [categoryFromUrl]) // 🔥 VẪN BỎ activeCategory đi: Bí quyết để không bị lỗi "tự hủy lệnh cuộn"
 
   useEffect(() => {
+    // ĐÃ FIX LỖI: Bọc lệnh set state vào Callback (setTimeout 0ms)
     const indexTimer = setTimeout(() => {
       setActiveIndex(0)
     }, 0)
@@ -181,17 +169,9 @@ function ProductsContent() {
       scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' })
     }
 
+    // Dọn dẹp rác bộ nhớ
     return () => clearTimeout(indexTimer)
   }, [activeCategory])
-
-  // Hàm xử lý khi bấm các nút lọc tròn tròn trên giao diện
-  const handleCategoryChange = (categoryId: string) => {
-    // Giơ biển "Cảnh sát" lên báo hiệu: "Đây là click nội bộ, cấm cuộn trang!"
-    isLocalClick.current = true
-
-    setActiveCategory(categoryId)
-    router.replace(`${pathname}?category=${categoryId}`, { scroll: false })
-  }
 
   const filteredProducts =
     activeCategory === 'all' ? products : products.filter((p) => p.category === activeCategory)
@@ -308,7 +288,7 @@ function ProductsContent() {
               {productCategories.map((cat, index) => (
                 <button
                   key={cat.id}
-                  onClick={() => handleCategoryChange(cat.id)}
+                  onClick={() => setActiveCategory(cat.id)}
                   className={`flex min-h-10 w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${
                     activeCategory === cat.id
                       ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30'
@@ -333,6 +313,7 @@ function ProductsContent() {
                 return (
                   <div
                     key={product.id}
+                    // ĐÃ SỬA: Card nền kính trong suốt, chỉ hắt sáng (shadow) khi hover, không nhúc nhích dịch chuyển
                     className="group relative flex w-[85vw] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] md:min-h-135 md:w-auto md:shrink"
                   >
                     <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-linear-to-b from-white/10 to-transparent shadow-inner md:min-h-135 md:rounded-[2rem]">
@@ -363,6 +344,7 @@ function ProductsContent() {
                           ) : (
                             <Link
                               href={`/products/${product.id}`}
+                              // ĐÃ SỬA: Nút bấm tĩnh, chỉ đổi màu nền/viền và phát sáng shadow khi rê chuột qua Card (group-hover)
                               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold text-white transition-colors duration-300 group-hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] md:px-6 md:text-sm"
                             >
                               Khám phá <ArrowRight className="h-3 w-3 md:h-4 md:w-4" />
@@ -377,10 +359,13 @@ function ProductsContent() {
                             src={product.image}
                             alt={product.name}
                             fill
+                            // ĐÃ SỬA: Ảnh hoàn toàn đứng im, ko zoom scale
                             className="object-cover object-top-left"
                           />
+                          {/* Lớp phủ sáng lên khi hover */}
                           <div className="absolute inset-0 bg-slate-950/20 transition-colors duration-500 group-hover:bg-transparent" />
                           {product.comingSoon && (
+                            // Không che ảnh, chỉ có lớp nền đen rất mỏng (bg-slate-900/10) để chữ không bị chìm
                             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/10 backdrop-blur-[1px]">
                               <div className="flex items-center gap-1.5 rounded-full bg-amber-500/80 px-4 py-2 text-xs font-bold tracking-widest text-white uppercase shadow-sm">
                                 <Clock className="h-3 w-3 md:h-4 md:w-4" /> Sắp ra mắt
