@@ -7,7 +7,7 @@ import { AnimateOnScroll } from '@/components/shared/animate-on-scroll'
 export function Hero() {
   return (
     <section
-      className="relative flex min-h-[100svh] items-center overflow-hidden bg-cover bg-center bg-no-repeat pt-24 pb-12 lg:min-h-screen lg:pt-24 lg:pb-32"
+      className="relative flex min-h-svh items-center overflow-hidden bg-cover bg-center bg-no-repeat pt-24 pb-12 lg:min-h-screen lg:pt-24 lg:pb-32"
       style={{ backgroundImage: "url('/images/hero/hero-bg.jpg')" }}
     >
       <div className="absolute inset-0 bg-white/20 backdrop-blur-[1px]"></div>
@@ -23,7 +23,8 @@ export function Hero() {
               {/* TỐI ƯU: Đưa về text-3xl cho Mobile, thêm leading-[1.2] để không rớt dòng xấu */}
               <h1 className="mb-4 text-3xl leading-[1.2] font-black tracking-tight text-slate-900 drop-shadow-md sm:text-4xl md:text-5xl lg:mb-6 lg:text-6xl">
                 Chuyển đổi số <br />
-                <span className="bg-gradient-to-r from-blue-700 to-cyan-600 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-700 to-cyan-600 bg-clip-text text-transparent">
+                  {' '}
                   bền vững & hiệu quả
                 </span>
               </h1>

@@ -74,8 +74,7 @@ export function CareersFilter() {
               className="group relative flex flex-col justify-between gap-6 overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-500 hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.15)]"
             >
               {/* Lớp nền gradient mờ ảo quét qua khi hover */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-50/0 via-blue-50/40 to-blue-50/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-blue-50/0 via-blue-50/40 to-blue-50/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               {/* 1. Header Card: Icon Trái & Mũi Tên Phải */}
               <div className="relative z-10 flex items-start justify-between">
                 {/* Icon bộ phận thay đổi màu và lơ lửng khi hover */}
@@ -86,11 +85,13 @@ export function CareersFilter() {
                 {/* NÚT CTA BÊN PHẢI VỚI HIỆU ỨNG SHOOTING ARROW */}
                 <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-sm transition-all duration-500 group-hover:border-blue-600 group-hover:bg-blue-600 group-hover:shadow-md">
                   {/* Mũi tên cũ bay ra ngoài */}
-                  <div className="absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
+                  <div className="group-hover:translate-x-150% group-hover:-translate-y-150% absolute transition-transform duration-500">
+                    {' '}
                     <ArrowUpRight className="h-5 w-5 text-slate-400" />
                   </div>
                   {/* Mũi tên mới màu trắng bay từ góc trái dưới lên */}
-                  <div className="absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
+                  <div className="-translate-x-150% translate-y-150% absolute transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
+                    {' '}
                     <ArrowUpRight className="h-5 w-5 text-white" />
                   </div>
                 </div>

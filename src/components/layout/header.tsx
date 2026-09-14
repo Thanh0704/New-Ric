@@ -157,7 +157,7 @@ export function Header() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 isolate z-40 w-full bg-slate-900 bg-gradient-to-r from-blue-900 to-slate-900 transition-all duration-300',
+          'fixed top-0 left-0 isolate z-40 w-full bg-slate-900 bg-linear-to-r from-blue-900 to-slate-900 transition-all duration-300',
           isScrolled ? 'border-b border-white/10 shadow-xl' : 'border-b border-transparent',
         )}
       >
@@ -172,7 +172,7 @@ export function Header() {
               alt="RIC Việt Nam Logo"
               width={260}
               height={80}
-              className="h-12 w-auto origin-left scale-125 object-contain md:h-[60px] md:scale-[1.35] lg:scale-150"
+              className="h-12 w-auto origin-left scale-125 object-contain md:h-15 md:scale-[1.35] lg:scale-150"
               priority
             />
           </Link>
@@ -190,7 +190,7 @@ export function Header() {
                   <div
                     className={cn(
                       'invisible absolute top-full mt-2 opacity-0 shadow-2xl shadow-cyan-900/20 transition-all group-hover:visible group-hover:mt-0 group-hover:opacity-100',
-                      nav.isMega ? 'left-1/2 w-[600px] -translate-x-1/2' : 'left-0 w-[260px]',
+                      nav.isMega ? 'left-1/2 w-150 -translate-x-1/2' : 'left-0 w-65',
                     )}
                   >
                     <div className="rounded-2xl border border-white/10 bg-slate-900 p-6">

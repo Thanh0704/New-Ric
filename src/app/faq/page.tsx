@@ -17,7 +17,8 @@ export default function FaqPage() {
   return (
     <div className="bg-privacy-bg min-h-screen">
       <div className="px-6 py-16 md:px-20 md:py-24">
-        <div className="mx-auto max-w-[1000px]">
+        <div className="mx-auto max-w-250">
+          {' '}
           {/* Header */}
           <div className="mb-16 text-center">
             <h1 className="mb-6 text-4xl font-black text-slate-900 uppercase md:text-5xl">
@@ -25,10 +26,8 @@ export default function FaqPage() {
             </h1>
             <div className="bg-electric mx-auto mb-10 h-1.5 w-20 rounded-full" />
           </div>
-
           {/* Interactive: search + tabs + accordion */}
           <FaqClient />
-
           {/* CTA */}
           <div className="mt-20 flex flex-col items-center justify-between gap-8 rounded-3xl border border-slate-100 bg-white p-8 shadow-sm md:flex-row md:p-12">
             <div className="text-center md:text-left">

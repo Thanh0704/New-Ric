@@ -122,9 +122,9 @@ export function Footer() {
   }
 
   return (
-    <footer className="relative w-full overflow-hidden bg-slate-900 bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 pt-10 pb-20 max-md:pt-8 max-md:pb-16 md:pb-40 lg:pt-16 lg:pb-48">
-      <div className="pointer-events-none absolute bottom-0 left-1/2 h-[800px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
-
+    <footer className="relative w-full overflow-hidden bg-slate-900 bg-linear-to-r from-blue-950 via-slate-900 to-slate-950 pt-10 pb-20 max-md:pt-8 max-md:pb-16 md:pb-40 lg:pt-16 lg:pb-48">
+      {' '}
+      <div className="pointer-events-none absolute bottom-0 left-1/2 h-200 w-200 -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>{' '}
       <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
         <div className="grid grid-cols-1 gap-6 max-md:gap-0 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           <div className="space-y-4 max-md:space-y-3 max-md:pb-5 md:col-span-2 md:space-y-6 lg:col-span-4 lg:pr-12">
@@ -229,10 +229,9 @@ export function Footer() {
           </p>
         </div>
       </div>
-
       <div className="pointer-events-none absolute bottom-0 left-1/2 z-0 flex w-full -translate-x-1/2 justify-center select-none">
         <span
-          className="translate-y-[28%] bg-gradient-to-b from-white/20 to-transparent bg-clip-text text-[15vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] sm:text-[18vw] xl:text-[220px]"
+          className="translate-y-1/4 bg-linear-to-b from-white/20 to-transparent bg-clip-text text-[12vw] leading-none font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] sm:text-[14vw] lg:text-[16vw] xl:text-[220px]"
           style={{ fontFamily: "'Arial Rounded MT Bold', 'Quicksand', 'Nunito', sans-serif" }}
         >
           RICVINA

@@ -42,7 +42,8 @@ export default async function CareerDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-[1400px] px-6 py-12">
+      <div className="mx-auto max-w-350 px-6 py-12">
+        {' '}
         <Link
           href="/careers"
           className="group mb-12 inline-flex items-center gap-3 text-sm font-bold text-slate-500 transition-colors hover:text-blue-600"
@@ -52,7 +53,6 @@ export default async function CareerDetailPage({ params }: Props) {
           </div>
           Quay lại danh sách
         </Link>
-
         {/* ── SPLIT SCREEN LAYOUT ── */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
           {/* ── CỘT TRÁI (STICKY HEADER) ── */}

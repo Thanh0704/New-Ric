@@ -161,7 +161,7 @@ export function FaqClient() {
                 <AccordionItem
                   key={i}
                   value={String(i)}
-                  className="data-[open]:border-electric data-[open]:ring-electric/30 mb-4 overflow-hidden rounded-xl border border-slate-100 bg-white last:mb-0 data-[open]:ring-1"
+                  className="data-open:border-electric data-open:ring-electric/30 mb-4 overflow-hidden rounded-xl border border-slate-100 bg-white last:mb-0 data-open:ring-1"
                 >
                   <AccordionTrigger className="p-6 text-base font-bold text-slate-900 no-underline hover:no-underline">
                     {item.question}

@@ -143,7 +143,7 @@ export function Testimonials() {
             onMouseLeave={handleMouseLeave}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
-            className={`flex [scrollbar-width:none] gap-6 overflow-x-auto pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
+            className={`::-webkit-scrollbar:hidden flex scrollbar-none gap-6 overflow-x-auto pb-6 [-ms-overflow-style:none] ${
               isDragging ? 'cursor-grabbing select-none' : 'cursor-grab snap-x snap-mandatory'
             }`}
           >
@@ -155,7 +155,8 @@ export function Testimonials() {
                 }`}
               >
                 <Link href={news.slug} className="block w-full">
-                  <div className="relative mb-5 aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+                  <div className="relative mb-5 aspect-4/3 w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+                    {' '}
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                       style={{ backgroundImage: `url('${news.image}')` }}

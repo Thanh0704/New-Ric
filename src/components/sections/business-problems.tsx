@@ -32,12 +32,12 @@ const problems = [
 
 export function BusinessProblems() {
   return (
-    <section className="relative bg-slate-900 bg-gradient-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
+    <section className="relative bg-slate-900 bg-linear-to-br from-blue-900 to-slate-900 py-12 md:py-24 lg:py-32">
+      {' '}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 h-[500px] w-[500px] translate-x-1/3 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]"></div>
-        <div className="absolute bottom-0 left-0 h-[600px] w-[600px] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
+        <div className="absolute top-0 right-0 h-125 w-125 translate-x-1/3 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]"></div>
+        <div className="absolute bottom-0 left-0 h-150 w-150 -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/20 blur-[150px]"></div>
       </div>
-
       <Container className="relative z-10">
         <div className="relative w-full pb-[15vh] md:pb-0">
           {/* 1. TIÊU ĐỀ: Vẫn đứng im ở top-[10vh] */}
@@ -47,8 +47,8 @@ export function BusinessProblems() {
                 Doanh nghiệp của bạn đang gặp khó khăn?
               </h2>
               <p className="px-2 text-center text-sm font-medium text-slate-300 sm:text-base md:text-lg">
-                Những "nút thắt" đang âm thầm cản trở đà tăng trưởng và làm rò rỉ lợi nhuận của bạn
-                mỗi ngày.
+                Những &quot;nút thắt&quot; đang âm thầm cản trở đà tăng trưởng và làm rò rỉ lợi
+                nhuận của bạn mỗi ngày.
               </p>
             </AnimateOnScroll>
           </div>
@@ -69,7 +69,7 @@ export function BusinessProblems() {
               return (
                 <div
                   key={item.id}
-                  className={`sticky ${mobileStickyTops[index]} ${mobileZIndexes[index]} ${mobileMargins} w-full md:relative md:top-auto md:z-auto md:mt-0 md:h-full [&>*]:h-full`}
+                  className={`sticky ${mobileStickyTops[index]} ${mobileZIndexes[index]} ${mobileMargins} w-full *:h-full md:relative md:top-auto md:z-auto md:mt-0 md:h-full`}
                 >
                   <AnimateOnScroll delay={index * 100}>
                     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 md:bg-white/5 md:p-8 md:shadow-2xl md:hover:-translate-y-2 md:hover:border-cyan-400/50 md:hover:bg-white/10 md:hover:shadow-cyan-900/40">
@@ -104,7 +104,8 @@ export function BusinessProblems() {
         <div className="relative z-10 mt-16 text-center md:mt-24">
           <AnimateOnScroll delay={100}>
             <div className="inline-flex flex-col items-center justify-center">
-              <p className="mx-auto mb-3 max-w-[280px] text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
+              <p className="mx-auto mb-3 max-w-70 text-sm font-bold text-white sm:max-w-full md:mb-4 md:text-lg">
+                {' '}
                 RICVINA mang đến hệ sinh thái giúp bạn giải quyết triệt để những vấn đề trên.
               </p>
               <div className="flex h-8 w-8 animate-bounce items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-500/20 text-cyan-400 md:h-10 md:w-10">

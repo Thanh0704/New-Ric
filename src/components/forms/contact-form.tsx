@@ -86,7 +86,7 @@ export function ContactForm() {
       } else {
         setSubmitError(result.message || 'Có lỗi xảy ra khi gửi. Vui lòng thử lại.')
       }
-    } catch (error) {
+    } catch {
       setSubmitError('Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.')
     }
   }

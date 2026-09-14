@@ -13,7 +13,7 @@ export function DiscoveryModal({ isOpen, onClose }: ModalProps) {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [selectedNeed, setSelectedNeed] = useState('')
-  const [selectedStage, setSelectedStage] = useState('')
+  const [, setSelectedStage] = useState('')
 
   if (!isOpen) return null
 
@@ -131,7 +131,8 @@ export function DiscoveryModal({ isOpen, onClose }: ModalProps) {
                 Giải pháp dành riêng cho bạn
               </h3>
               <p className="mb-8 text-slate-600">
-                Dựa trên nhu cầu <strong>"{selectedNeed}"</strong>, RICVINA đề xuất hệ sinh thái:
+                Dựa trên nhu cầu <strong>&quot;{selectedNeed}&quot;</strong>, RICVINA đề xuất hệ
+                sinh thái:{' '}
               </p>
 
               <div className="mx-auto mb-8 flex max-w-sm flex-col gap-3">

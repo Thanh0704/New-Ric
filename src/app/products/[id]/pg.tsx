@@ -566,8 +566,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </p>
 
               {/* ==========================================
-                 🚀 ĐÃ TỐI ƯU CỤM NÚT CTA BÁN HÀNG
-                 ========================================== */}
+                  🚀 ĐÃ TỐI ƯU CỤM NÚT CTA BÁN HÀNG
+                  ========================================== */}
               <div className="flex w-full flex-col gap-3 sm:w-max sm:flex-row sm:gap-4">
                 <Link
                   href={`/contact?interest=${id}`}
@@ -584,8 +584,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </div>
 
               {/* ==========================================
-                 🚀 ĐÃ TỐI ƯU CỤM NÚT TẢI APP (GRID 2 CỘT)
-                 ========================================== */}
+                  🚀 ĐÃ TỐI ƯU CỤM NÚT TẢI APP (GRID 2 CỘT)
+                  ========================================== */}
               {id === 'ricio' && (
                 <div className="mt-8 border-t border-white/10 pt-8 md:mt-10">
                   <p className="mb-4 text-sm font-medium tracking-wide text-slate-400">
@@ -653,7 +653,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   src={product.image}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
@@ -672,8 +671,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* =========================================================
-         2. KHỐI ƯU ĐIỂM (Slider vuốt ngang Mobile - w-[75vw])
-         ========================================================= */}
+          2. KHỐI ƯU ĐIỂM (Slider vuốt ngang Mobile - w-[75vw])
+          ========================================================= */}
       <section id="details" className="relative z-10 overflow-hidden bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="mx-auto mb-16 max-w-3xl text-center">
@@ -705,8 +704,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* =========================================================
-         3. LỢI ÍCH (Slider vuốt ngang Mobile - w-[75vw])
-         ========================================================= */}
+          3. LỢI ÍCH (Slider vuốt ngang Mobile - w-[75vw])
+          ========================================================= */}
       <section className="relative z-10 overflow-hidden border-y border-slate-200 bg-slate-50 py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
@@ -735,7 +734,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 src={product.image}
                 alt="Vận hành thông minh"
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[3px] transition-colors duration-500 group-hover:bg-slate-900/70" />

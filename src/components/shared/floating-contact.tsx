@@ -23,12 +23,13 @@ export function FloatingContact() {
           ========================================================= */}
       <div
         className={cn(
-          'fixed right-6 bottom-24 z-[60] flex w-[340px] origin-bottom-right flex-col overflow-hidden rounded-2xl bg-white shadow-2xl transition-all duration-300 md:right-8 md:bottom-28',
+          'fixed right-6 bottom-24 z-60 flex w-[calc(340px)] origin-bottom-right flex-col overflow-hidden rounded-2xl bg-white shadow-2xl transition-all duration-300 md:right-8 md:bottom-28',
           showLiveChat ? 'scale-100 opacity-100' : 'pointer-events-none scale-50 opacity-0',
         )}
       >
         {/* Header khung chat */}
-        <div className="flex items-center justify-between bg-gradient-to-r from-cyan-600 to-blue-600 px-4 py-3 text-white">
+        <div className="flex items-center justify-between bg-linear-to-r from-cyan-600 to-blue-600 px-4 py-3 text-white">
+          {' '}
           <div className="flex items-center gap-2">
             <div className="relative">
               <Image
@@ -62,7 +63,8 @@ export function FloatingContact() {
         </div>
 
         {/* Thân khung chat (Chứa tin nhắn) */}
-        <div className="flex h-[320px] flex-col gap-3 overflow-y-auto bg-slate-50 p-4">
+        <div className="flex h-[calc(320px)] flex-col gap-3 overflow-y-auto bg-slate-50 p-4">
+          {' '}
           <div className="self-start rounded-2xl rounded-tl-sm bg-slate-200 px-4 py-2 text-sm text-slate-800">
             Xin chào! RIC Việt Nam có thể giúp gì cho doanh nghiệp của bạn? 👋
           </div>
@@ -106,7 +108,7 @@ export function FloatingContact() {
             </span>
             <button
               onClick={openLiveChat}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg transition-transform hover:scale-110"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg transition-transform hover:scale-110"
             >
               <MessagesSquare className="h-5 w-5" />
             </button>
@@ -120,7 +122,7 @@ export function FloatingContact() {
             <Link
               href="https://m.me/YOUR_FANPAGE_ID"
               target="_blank"
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg transition-transform hover:scale-110"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-r from-blue-600 to-blue-500 text-white shadow-lg transition-transform hover:scale-110"
             >
               <svg viewBox="0 0 36 36" className="h-6 w-6 fill-current">
                 <path d="M18 2C9.163 2 2 8.784 2 17.15c0 4.75 2.4 8.98 6.138 11.751V34l5.632-3.104c1.378.384 2.822.589 4.23.589 8.837 0 16-6.784 16-15.15C34 8.784 26.837 2 18 2zm1.092 19.986l-4.444-4.743-8.683 4.743 9.553-10.14 4.542 4.743 8.585-4.743-9.553 10.14z" />
@@ -136,7 +138,7 @@ export function FloatingContact() {
             <Link
               href="https://zalo.me/YOUR_ZALO_OA_ID"
               target="_blank"
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transition-transform hover:scale-110"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-r from-blue-500 to-cyan-500 text-white shadow-lg transition-transform hover:scale-110"
             >
               <span className="text-sm font-bold tracking-tighter">Zalo</span>
             </Link>
@@ -148,7 +150,7 @@ export function FloatingContact() {
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
             'relative flex h-16 w-16 items-center justify-center rounded-full text-white shadow-[0_0_25px_rgba(6,182,212,0.5)] transition-all duration-300 hover:scale-105',
-            isExpanded ? 'bg-slate-800' : 'bg-gradient-to-r from-cyan-500 to-blue-600',
+            isExpanded ? 'bg-slate-800' : 'bg-linear-to-r from-cyan-500 to-blue-600',
           )}
         >
           {/* Vòng sáng đập nhịp tim (chỉ hiện khi chưa mở menu) */}

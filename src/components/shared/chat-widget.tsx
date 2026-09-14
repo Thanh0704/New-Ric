@@ -213,12 +213,12 @@ export function ChatWidget() {
       {/* 1. KHUNG CHAT */}
       <div
         ref={chatContainerRef}
-        className={`fixed z-[9998] flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
+        className={`fixed z-9998 flex origin-bottom-right flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F1423]/90 shadow-2xl backdrop-blur-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-0 opacity-0'} ${
           activeTab === 'ai'
             ? isFocused
-              ? 'sm:top-auto sm:right-6 sm:bottom-[90px] sm:left-auto sm:h-[500px] sm:w-[400px]'
-              : 'top-auto right-4 bottom-[90px] left-4 h-[75dvh] sm:right-6 sm:left-auto sm:h-[500px] sm:w-[400px]'
-            : 'top-auto right-4 bottom-[90px] left-4 h-auto sm:right-6 sm:left-auto sm:w-[280px]'
+              ? 'sm:top-auto sm:right-6 sm:bottom-[calc(90px)] sm:left-auto sm:h-[calc(500px)] sm:w-[calc(400px)]'
+              : 'top-auto right-4 bottom-[calc(90px)] left-4 h-[75dvh] sm:right-6 sm:left-auto sm:h-[calc(500px)] sm:w-[calc(400px)]'
+            : 'top-auto right-4 bottom-[calc(90px)] left-4 h-auto sm:right-6 sm:left-auto sm:w-[calc(280px)]'
         } `}
       >
         {activeTab === 'menu' && (
@@ -232,7 +232,7 @@ export function ChatWidget() {
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => setActiveTab('ai')}
-                className="group flex items-center gap-4 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 p-4 text-left transition-all hover:shadow-lg hover:shadow-cyan-600/30"
+                className="group flex items-center gap-4 rounded-2xl bg-linear-to-r from-cyan-600 to-blue-600 p-4 text-left transition-all hover:shadow-lg hover:shadow-cyan-600/30"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20">
                   <Bot className="h-5 w-5 text-white" />
@@ -305,7 +305,7 @@ export function ChatWidget() {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm break-words sm:max-w-[80%] ${
+                      className={`break-word max-w-[85%] rounded-2xl px-4 py-2.5 text-sm sm:max-w-4/5 ${
                         msg.role === 'user'
                           ? 'rounded-tr-sm bg-cyan-600 text-white'
                           : 'markdown-body rounded-tl-sm border border-white/5 bg-white/10 text-slate-200'
@@ -384,7 +384,7 @@ export function ChatWidget() {
           setIsOpen(!isOpen)
           if (!isOpen) setActiveTab('menu')
         }}
-        className={`group fixed right-6 bottom-6 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-600/40 transition-all duration-300 hover:scale-110 ${
+        className={`group fixed right-6 bottom-6 z-9999 flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-600/40 transition-all duration-300 hover:scale-110 ${
           isFocused
             ? 'pointer-events-none translate-y-12 opacity-0 sm:pointer-events-auto sm:translate-y-0 sm:opacity-100'
             : 'pointer-events-auto translate-y-0 opacity-100'

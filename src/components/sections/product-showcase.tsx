@@ -123,7 +123,8 @@ export function ProductShowcase() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-950 to-slate-950 py-12 md:py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-linear-to-r from-blue-900 via-blue-950 to-slate-950 py-12 md:py-24 lg:py-32">
+      {' '}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -132,16 +133,15 @@ export function ProductShowcase() {
       `,
         }}
       />
-
-      <div className="pointer-events-none absolute top-0 left-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-[120px]"></div>
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/20 blur-[150px]"></div>
-
+      <div className="pointer-events-none absolute top-0 left-0 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-[120px]"></div>
+      <div className="pointer-events-none absolute right-0 bottom-0 h-150 w-150 translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/20 blur-[150px]"></div>
       <Container className="relative z-10 mb-6 lg:mb-12">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <AnimateOnScroll>
             <h2 className="mb-2 text-2xl font-black tracking-tight text-white uppercase sm:text-3xl md:mb-4 lg:text-5xl">
               HỆ SINH THÁI <br />
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
+                {' '}
                 SẢN PHẨM
               </span>
             </h2>
@@ -169,7 +169,6 @@ export function ProductShowcase() {
           </AnimateOnScroll>
         </div>
       </Container>
-
       <div
         ref={scrollContainerRef}
         className="hide-scrollbar relative z-10 flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-12 select-none active:cursor-grabbing sm:px-6 md:gap-6 md:px-12 lg:gap-10"
@@ -186,9 +185,10 @@ export function ProductShowcase() {
             key={product.id}
             draggable={false}
             onClick={preventClickIfDragging}
-            className="group relative flex h-[460px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-[320px] md:h-[540px] md:w-[380px] md:rounded-[2.5rem] md:p-3"
+            className="group relative flex h-115 w-[85vw] max-w-80 shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-80 md:h-135 md:w-95 md:rounded-[2.5rem] md:p-3"
           >
-            <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner md:rounded-[2rem]">
+            <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-linear-to-b from-white/10 to-transparent shadow-inner md:rounded-[2rem]">
+              {' '}
               <div className="flex flex-1 flex-col px-5 pt-5 md:px-8 md:pt-8">
                 <span className="mb-4 inline-flex w-max items-center rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-[9px] font-black tracking-widest text-cyan-300 uppercase shadow-sm md:mb-5 md:px-4 md:py-1.5 md:text-[10px]">
                   {product.tagline}
@@ -209,16 +209,16 @@ export function ProductShowcase() {
                   </div>
                 </div>
               </div>
-
               <div className="relative pl-5 md:pl-8">
-                <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl md:rounded-tl-[2rem] md:rounded-br-[2rem]">
+                <div className="relative aspect-16/11 w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl md:rounded-tl-[2rem] md:rounded-br-[2rem]">
+                  {' '}
                   <Image
                     src={product.image}
                     alt={product.title}
                     fill
                     draggable={false}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-left-top"
+                    className="object-cover object-top-left"
                   />
                   <div className="absolute inset-0 bg-slate-950/20 transition-colors duration-500 group-hover:bg-transparent" />
                 </div>
@@ -231,9 +231,10 @@ export function ProductShowcase() {
           <div
             key={`mobile-soon-${product.id}`}
             draggable={false}
-            className="group relative flex h-[460px] w-[85vw] max-w-[320px] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-[320px] md:hidden"
+            className="group relative flex h-115 w-[85vw] max-w-80 shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] sm:w-80 md:hidden"
           >
-            <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner">
+            <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-linear-to-b from-white/10 to-transparent shadow-inner">
+              {' '}
               <div className="flex flex-1 flex-col px-5 pt-5">
                 <span className="mb-4 inline-flex w-max items-center rounded-full border border-slate-500/50 bg-slate-500/20 px-3 py-1 text-[9px] font-black tracking-widest text-slate-300 uppercase shadow-sm">
                   {product.tagline}
@@ -258,16 +259,16 @@ export function ProductShowcase() {
                   </Link>
                 </div>
               </div>
-
               <div className="relative pl-5">
-                <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl">
+                <div className="relative aspect-16/11 w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl">
+                  {' '}
                   <Image
                     src={product.image}
                     alt={product.title}
                     fill
                     draggable={false}
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover object-left-top transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover object-top-left transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-slate-950/30 transition-colors duration-500 group-hover:bg-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -283,7 +284,6 @@ export function ProductShowcase() {
 
         <div className="w-[2vw] shrink-0 md:w-[5vw]"></div>
       </div>
-
       <Container className="relative z-10 hidden md:block">
         <AnimateOnScroll delay={300}>
           <div className="mt-2 rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl md:mt-8 md:rounded-[2.5rem] md:p-6 lg:p-10">

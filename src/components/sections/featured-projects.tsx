@@ -68,15 +68,15 @@ export function FeaturedProjects() {
                 className="group relative block h-full overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-slate-200 md:rounded-[2rem]"
               >
                 {/* TỐI ƯU MOBILE: Aspect ratio giữ form ảnh không bị bóp méo */}
-                <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/3] lg:aspect-auto lg:h-[400px]">
+                <div className="relative aspect-4/5 w-full overflow-hidden sm:aspect-4/3 lg:aspect-auto lg:h-100">
+                  {' '}
                   <Image
                     src={featuredProject.image}
                     alt={featuredProject.title}
                     fill
                     className="object-cover opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
-
+                  <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/60 to-transparent"></div>{' '}
                   {/* TỐI ƯU MOBILE: p-5 thay vì p-8 */}
                   <div className="absolute right-0 bottom-0 left-0 p-5 md:p-8">
                     <span className="mb-2 inline-block rounded-lg bg-blue-600 px-2.5 py-1 text-[10px] font-bold tracking-wider text-white uppercase md:mb-3 md:text-xs">
@@ -120,7 +120,7 @@ export function FeaturedProjects() {
                 {/* TỐI ƯU MOBILE: Dùng h-auto thay vì h-32 để linh hoạt chiều cao */}
                 <Link
                   href={project.href}
-                  className="group flex h-auto min-h-[100px] items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-2 backdrop-blur-sm transition-all hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-slate-100 md:min-h-[128px] md:gap-4 md:rounded-2xl md:p-3"
+                  className="group flex h-auto min-h-25 items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-2 backdrop-blur-sm transition-all hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-slate-100 md:min-h-32 md:gap-4 md:rounded-2xl md:p-3"
                 >
                   <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 md:h-24 md:w-1/3 md:rounded-xl">
                     <Image

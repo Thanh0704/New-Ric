@@ -19,15 +19,15 @@ export function RegisterDemo() {
 
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 py-12 md:py-20 lg:py-32">
-      <div className="pointer-events-none absolute -top-40 left-0 h-[600px] w-[600px] rounded-full bg-blue-100/60 blur-[100px]"></div>
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-cyan-100/40 blur-[100px]"></div>
+      <div className="pointer-events-none absolute -top-40 left-0 h-150 w-150 rounded-full bg-blue-100/60 blur-[100px]"></div>
+      <div className="pointer-events-none absolute right-0 bottom-0 h-150 w-150 translate-x-1/3 translate-y-1/3 rounded-full bg-cyan-100/40 blur-[100px]"></div>
 
       <div className="relative z-10 mx-auto w-[92%] max-w-[1800px] lg:w-[96%] lg:px-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-24">
           <AnimateOnScroll>
             <div>
               <span className="mb-2 block text-[10px] font-bold tracking-widest text-blue-600 uppercase md:mb-4 md:text-sm">
-                // Bắt đầu ngay hôm nay
+                {'// Bắt đầu ngay hôm nay'}
               </span>
               <h2 className="mb-3 text-2xl leading-[1.2] font-extrabold text-slate-900 sm:text-3xl md:mb-6 md:text-5xl lg:text-6xl">
                 Trải nghiệm kỷ nguyên <br className="hidden md:block" /> công nghệ số

@@ -56,8 +56,7 @@ export function SolutionCategories() {
         }}
       />
 
-      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-50 blur-[120px]"></div>
-
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-125 w-200 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-50 blur-[120px]"></div>
       <Container className="relative z-10">
         <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16">
           <AnimateOnScroll>

@@ -59,8 +59,7 @@ export default function CareersPage() {
 
         {/* Lớp Overlay tối màu giúp nổi bật chữ */}
         <div className="absolute inset-0 z-0 bg-slate-900/60 mix-blend-multiply" />
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
-
+        <div className="absolute inset-0 z-0 bg-linear-to-t from-slate-900 via-transparent to-transparent opacity-80" />
         <div className="relative z-10 flex flex-col items-center px-6 text-center">
           {/* Icon trôi nổi đã được chuyển sang hiệu ứng kính (Glassmorphism) để hợp với nền ảnh */}
           <div className="animate-float mb-8 inline-flex h-16 w-16 rotate-12 items-center justify-center rounded-3xl border border-white/20 bg-white/10 shadow-2xl backdrop-blur-md">
@@ -76,7 +75,7 @@ export default function CareersPage() {
           </p>
 
           <div className="mt-12 flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-white/30" />
+            <div className="h-px w-12 bg-white/30" />{' '}
             <Link
               href="#openings"
               className="group flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-blue-300"
@@ -84,7 +83,7 @@ export default function CareersPage() {
               Khám phá vị trí{' '}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
-            <div className="h-[1px] w-12 bg-white/30" />
+            <div className="h-px w-12 bg-white/30" />
           </div>
         </div>
       </section>
@@ -131,7 +130,7 @@ export default function CareersPage() {
                   key={idx}
                   className={`${delay} group relative rounded-[2rem] border border-slate-100 bg-white p-8 shadow-lg shadow-slate-200/50 transition-colors hover:border-blue-300`}
                 >
-                  <div className="pointer-events-none absolute top-0 right-0 -mt-4 -mr-4 h-24 w-24 rounded-full bg-gradient-to-br from-blue-50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute top-0 right-0 -mt-4 -mr-4 h-24 w-24 rounded-full bg-linear-to-br from-blue-50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />{' '}
                   <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 shadow-sm transition-colors duration-500 group-hover:bg-blue-600">
                     <Icon className="h-6 w-6 text-slate-600 transition-colors duration-500 group-hover:text-white" />
                   </div>
@@ -250,7 +249,7 @@ export default function CareersPage() {
       <section className="px-6 py-24">
         {/* Ở đây giữ nguyên group cũ cho thẻ to */}
         <div className="group relative mx-auto max-w-4xl">
-          <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-r from-blue-600 to-cyan-500 opacity-20 blur-xl transition-opacity duration-700 group-hover:opacity-40" />
+          <div className="absolute inset-0 rounded-[3rem] bg-linear-to-r from-blue-600 to-cyan-500 opacity-20 blur-xl transition-opacity duration-700 group-hover:opacity-40" />{' '}
           <div className="relative rounded-[3rem] border border-slate-200 bg-white p-12 text-center shadow-2xl transition-transform duration-700 group-hover:-translate-y-2 md:p-20">
             <Briefcase className="mx-auto mb-6 h-12 w-12 text-blue-600" />
             <h2 className="mb-6 text-3xl font-black text-slate-900 md:text-4xl">

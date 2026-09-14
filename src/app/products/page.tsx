@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, Suspense, useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import {
@@ -132,24 +133,43 @@ function ProductsContent() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    if (categoryFromUrl) {
+    if (categoryFromUrl && categoryFromUrl !== activeCategory) {
       const isValidCategory = productCategories.some((cat) => cat.id === categoryFromUrl)
+
       if (isValidCategory) {
-        setActiveCategory(categoryFromUrl)
-        setTimeout(() => {
+        // ĐÃ FIX LỖI: Bọc setActiveCategory vào setTimeout (Callback) để né lỗi "gọi trực tiếp" của React
+        const stateTimer = setTimeout(() => {
+          setActiveCategory(categoryFromUrl)
+        }, 0)
+
+        // Vẫn giữ nguyên logic đợi 300ms rồi cuộn trang mượt mà
+        const scrollTimer = setTimeout(() => {
           document
             .getElementById('solutions')
             ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }, 300)
+
+        // Dọn dẹp cả 2 bộ đếm để bộ nhớ web luôn sạch sẽ
+        return () => {
+          clearTimeout(stateTimer)
+          clearTimeout(scrollTimer)
+        }
       }
     }
-  }, [categoryFromUrl])
+  }, [categoryFromUrl, activeCategory])
 
   useEffect(() => {
-    setActiveIndex(0)
+    // ĐÃ FIX LỖI: Bọc lệnh set state vào Callback (setTimeout 0ms)
+    const indexTimer = setTimeout(() => {
+      setActiveIndex(0)
+    }, 0)
+
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' })
     }
+
+    // Dọn dẹp rác bộ nhớ
+    return () => clearTimeout(indexTimer)
   }, [activeCategory])
 
   const filteredProducts =
@@ -184,10 +204,8 @@ function ProductsContent() {
 
       {/* PHẦN 1: HERO & MARQUEE */}
       <div className="relative overflow-hidden bg-[#060913] text-slate-200">
-        <div className="pointer-events-none absolute top-[-20%] left-[-10%] h-[800px] w-[800px] rounded-full bg-blue-900/20 blur-[150px]" />
-        <div className="pointer-events-none absolute right-[-10%] bottom-[-10%] h-[600px] w-[600px] rounded-full bg-cyan-900/15 blur-[120px]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] bg-[size:64px_64px]" />
-
+        <div className="pointer-events-none absolute -top-1/5 left-[-10%] h-200 w-200 rounded-full bg-blue-900/20 blur-[150px]" />
+        <div className="pointer-events-none absolute right-[-10%] bottom-[-10%] h-150 w-150 rounded-full bg-cyan-900/15 blur-[120px]" />
         <div className="relative z-20 border-b border-white/5 pt-8 pb-4">
           <div className="container mx-auto px-6 text-xs font-medium tracking-wide text-slate-500 uppercase md:px-20">
             <div className="flex items-center gap-2">
@@ -199,7 +217,6 @@ function ProductsContent() {
             </div>
           </div>
         </div>
-
         <section className="relative z-10 pt-20 pb-24 lg:pt-32 lg:pb-32">
           <div className="container mx-auto max-w-5xl px-6 text-center md:px-20">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-xs font-bold tracking-widest text-cyan-400 uppercase shadow-[0_0_20px_rgba(6,182,212,0.15)]">
@@ -207,7 +224,7 @@ function ProductsContent() {
             </div>
             <h1 className="mb-8 text-5xl leading-tight font-black tracking-tight text-white md:text-7xl lg:text-8xl">
               Định hình lại <br />
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
                 tương lai doanh nghiệp.
               </span>
             </h1>
@@ -217,16 +234,15 @@ function ProductsContent() {
             </p>
           </div>
         </section>
-
-        <section className="relative z-10 border-t border-white/5 bg-white/[0.02] py-8 backdrop-blur-md">
+        <section className="relative z-10 border-t border-white/5 bg-white/2 py-8 backdrop-blur-md">
           <div className="container mx-auto mb-6 px-6 text-center md:px-20">
             <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
               Mở rộng không giới hạn với các đối tác công nghệ
             </p>
           </div>
           <div className="group relative flex w-full overflow-x-hidden opacity-60 transition-opacity duration-500 hover:opacity-100">
-            <div className="absolute top-0 bottom-0 left-0 z-10 w-40 bg-gradient-to-r from-[#060913] to-transparent" />
-            <div className="absolute top-0 right-0 bottom-0 z-10 w-40 bg-gradient-to-l from-[#060913] to-transparent" />
+            <div className="absolute top-0 bottom-0 left-0 z-10 w-40 bg-linear-to-r from-[#060913] to-transparent" />
+            <div className="absolute top-0 right-0 bottom-0 z-10 w-40 bg-linear-to-l from-[#060913] to-transparent" />
             <div className="animate-marquee items-center gap-20 pl-20 whitespace-nowrap">
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex items-center gap-20 text-slate-400">
@@ -272,7 +288,7 @@ function ProductsContent() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${
+                  className={`flex min-h-10 w-full items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight font-bold transition-all duration-300 md:w-auto md:px-5 md:py-2.5 md:text-sm ${
                     activeCategory === cat.id
                       ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30'
                       : 'border border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
@@ -297,9 +313,10 @@ function ProductsContent() {
                   <div
                     key={product.id}
                     // ĐÃ SỬA: Card nền kính trong suốt, chỉ hắt sáng (shadow) khi hover, không nhúc nhích dịch chuyển
-                    className="group relative flex w-[85vw] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] md:min-h-[540px] md:w-auto md:shrink"
+                    className="group relative flex w-[85vw] shrink-0 snap-center flex-col rounded-[2rem] border border-white/10 bg-white/5 p-2.5 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] md:min-h-135 md:w-auto md:shrink"
                   >
-                    <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-gradient-to-b from-white/10 to-transparent shadow-inner md:rounded-[2rem]">
+                    <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.5rem] border border-white/5 bg-linear-to-b from-white/10 to-transparent shadow-inner md:min-h-135 md:rounded-[2rem]">
+                      {' '}
                       <div className="flex flex-1 flex-col px-5 pt-5 md:px-8 md:pt-8">
                         <span
                           className={`mb-4 inline-flex w-max items-center rounded-full border px-3 py-1 text-[9px] font-black tracking-widest uppercase shadow-sm md:mb-5 md:px-4 md:py-1.5 md:text-[10px] ${theme.badgeBg} ${theme.badgeText}`}
@@ -334,18 +351,18 @@ function ProductsContent() {
                           )}
                         </div>
                       </div>
-
                       <div className="relative pl-5 md:pl-8">
-                        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl md:rounded-tl-[2rem] md:rounded-br-[2rem]">
-                          <img
+                        <div className="relative aspect-16/11 w-full overflow-hidden rounded-tl-[1.5rem] rounded-br-[1.5rem] border-t border-l border-white/20 bg-slate-900 shadow-2xl md:rounded-tl-[2rem] md:rounded-br-[2rem]">
+                          {' '}
+                          <Image
                             src={product.image}
                             alt={product.name}
+                            fill
                             // ĐÃ SỬA: Ảnh hoàn toàn đứng im, ko zoom scale
-                            className="h-full w-full object-cover object-left-top"
+                            className="object-cover object-top-left"
                           />
                           {/* Lớp phủ sáng lên khi hover */}
                           <div className="absolute inset-0 bg-slate-950/20 transition-colors duration-500 group-hover:bg-transparent" />
-
                           {product.comingSoon && (
                             // Không che ảnh, chỉ có lớp nền đen rất mỏng (bg-slate-900/10) để chữ không bị chìm
                             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/10 backdrop-blur-[1px]">
@@ -431,7 +448,7 @@ function ProductsContent() {
                 <p>
                   <span className="text-[#FF7B72]">import</span> {`{ RicvinaCore }`}{' '}
                   <span className="text-[#FF7B72]">from</span>{' '}
-                  <span className="text-[#A5D6FF]">'@ricvina/sdk'</span>;
+                  <span className="text-[#A5D6FF]">&apos;@ricvina/sdk&apos;</span>;
                 </p>
                 <br />
                 <p>
@@ -446,13 +463,13 @@ function ProductsContent() {
                 </p>
                 <p className="pl-4">
                   <span className="text-[#79C0FF]">environment</span>:{' '}
-                  <span className="text-[#A5D6FF]">'production'</span>
+                  <span className="text-[#A5D6FF]">&apos;production&apos;</span>
                 </p>
                 <p>{`});`}</p>
                 <br />
                 <p>
                   <span className="text-[#8B949E]">
-                    // Đồng bộ dữ liệu bán hàng đa kênh tự động
+                    {`// Đồng bộ dữ liệu bán hàng đa kênh tự động`}
                   </span>
                 </p>
                 <p>
@@ -462,9 +479,9 @@ function ProductsContent() {
                 </p>
                 <p className="pl-4">
                   <span className="text-[#79C0FF]">channels</span>: [
-                  <span className="text-[#A5D6FF]">'shopee'</span>,{' '}
-                  <span className="text-[#A5D6FF]">'tiktok'</span>,{' '}
-                  <span className="text-[#A5D6FF]">'website'</span>],
+                  <span className="text-[#A5D6FF]">&apos;shopee&apos;</span>,{' '}
+                  <span className="text-[#A5D6FF]">&apos;tiktok&apos;</span>,{' '}
+                  <span className="text-[#A5D6FF]">&apos;website&apos;</span>],
                 </p>
                 <p className="pl-4">
                   <span className="text-[#79C0FF]">autoFulfill</span>:{' '}
@@ -475,7 +492,10 @@ function ProductsContent() {
                 <p>
                   <span className="text-[#79C0FF]">console</span>.
                   <span className="text-[#D2A8FF]">log</span>(
-                  <span className="text-[#A5D6FF]">'🚀 Systems are perfectly synced!'</span>);
+                  <span className="text-[#A5D6FF]">
+                    &apos;🚀 Systems are perfectly synced!&apos;
+                  </span>
+                  );
                 </p>
               </div>
             </div>
@@ -486,8 +506,7 @@ function ProductsContent() {
       <section className="relative z-10 bg-[#060913] py-24 lg:py-32">
         <div className="container mx-auto px-6 md:px-20">
           <div className="relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0F1423] px-8 py-20 text-center shadow-xl md:px-16 md:py-24">
-            <div className="pointer-events-none absolute top-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-900/30 blur-[80px]" />
-
+            <div className="pointer-events-none absolute top-0 left-1/2 h-75 w-150 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-900/30 blur-[80px]" />
             <h2 className="relative z-10 mx-auto mb-4 max-w-2xl text-4xl leading-tight font-black text-white md:text-5xl">
               Sẵn sàng chuyển đổi số cùng Ricvina?
             </h2>

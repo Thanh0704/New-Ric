@@ -38,20 +38,18 @@ const steps = [
 
 export function RicvinaStandard() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-950 to-slate-950 pt-16 pb-24 md:pt-24 md:pb-32">
+    <section className="relative overflow-hidden bg-linear-to-r from-blue-900 via-blue-950 to-slate-950 pt-16 pb-24 md:pt-24 md:pb-32">
+      {' '}
       {/* Vệt sáng ngăn cách */}
       <div className="absolute top-0 left-0 z-20 w-full">
-        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-80 shadow-[0_0_15px_rgba(34,211,238,1)]"></div>
-        <div className="mx-auto h-[120px] w-[80%] max-w-4xl bg-gradient-to-b from-cyan-400/20 to-transparent blur-2xl"></div>
+        <div className="h-0.5 w-full bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-80 shadow-[0_0_15px_rgba(34,211,238,1)]"></div>
+        <div className="mx-auto h-30 w-4/5 max-w-4xl bg-linear-to-b from-cyan-400/20 to-transparent blur-2xl"></div>
       </div>
-
       {/* Grid line background */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] bg-[size:40px_40px]"></div>
-
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] mask-[radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] bg-size-[40px_40px]"></div>{' '}
       {/* Glow effects */}
-      <div className="pointer-events-none absolute top-0 left-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[800px] w-[800px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/10 blur-[150px]"></div>
-
+      <div className="pointer-events-none absolute top-0 left-0 h-150 w-150 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]"></div>
+      <div className="pointer-events-none absolute right-0 bottom-0 h-200 w-200 translate-x-1/3 translate-y-1/3 rounded-full bg-blue-600/10 blur-[150px]"></div>
       <Container className="relative z-10">
         {/* TIÊU ĐỀ LỘ TRÌNH ĐƯỢC CĂN GIỮA */}
         <div className="mx-auto mb-12 max-w-3xl text-center md:mb-20">
@@ -61,7 +59,7 @@ export function RicvinaStandard() {
             </div>
             <h2 className="mb-3 text-3xl font-black tracking-tight text-white sm:text-4xl md:mb-5 md:text-5xl">
               Lộ trình triển khai{' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
                 tinh gọn
               </span>
             </h2>
@@ -69,20 +67,18 @@ export function RicvinaStandard() {
               Mọi dự án đều được vận hành qua 5 bước tiêu chuẩn, đảm bảo đúng tiến độ, tối ưu chi
               phí.
             </p>
-          </AnimateOnScroll>
+          </AnimateOnScroll>{' '}
         </div>
 
         <div className="relative mx-auto max-w-6xl px-2 md:px-0">
           {/* =========================================================
               TRỤC TIMELINE NGANG (CHỈ HIỆN TRÊN LAPTOP)
               ========================================================= */}
-          <div className="absolute top-[3.5rem] right-[10%] left-[10%] hidden h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent lg:block"></div>
-
+          <div className="absolute top-14 right-[10%] left-[10%] hidden h-0.5 bg-linear-to-r from-transparent via-cyan-500/30 to-transparent lg:block"></div>
           {/* =========================================================
               TRỤC TIMELINE DỌC (CHỈ HIỆN TRÊN MOBILE)
               ========================================================= */}
-          <div className="absolute top-[1.75rem] bottom-[1.75rem] left-[2.25rem] z-0 w-[2px] bg-gradient-to-b from-cyan-400/80 via-cyan-400/20 to-transparent md:hidden"></div>
-
+          <div className="absolute top-7 bottom-7 left-9 z-0 w-0.5 bg-linear-to-b from-cyan-400/80 via-cyan-400/20 to-transparent md:hidden"></div>
           <div className="relative z-10 flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-5">
             {steps.map((step, index) => {
               const Icon = step.icon

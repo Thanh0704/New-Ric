@@ -26,7 +26,8 @@ export default function ContactPage() {
     <>
       {/* Section 1: Contact info + form */}
       <section className="px-6 py-16 md:px-20 md:py-24">
-        <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-start gap-16 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-300 grid-cols-1 items-start gap-16 lg:grid-cols-2">
+          {' '}
           {/* Left: info + map */}
           <div className="space-y-12">
             <div className="space-y-6">
@@ -72,7 +73,6 @@ export default function ContactPage() {
               />
             </div>
           </div>
-
           {/* Right: form card */}
           <div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-xl shadow-slate-200/50 md:p-10 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
             <h3 className="mb-8 text-2xl font-bold text-slate-900 dark:text-slate-100">

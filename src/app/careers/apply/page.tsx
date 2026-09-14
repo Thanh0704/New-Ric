@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -28,18 +28,11 @@ function ApplyFormContent() {
   // Khai báo state cho các input
   const [formData, setFormData] = useState({
     name: '',
-    position: positionFromUrl,
+    position: positionFromUrl || '',
     email: '',
     phone: '',
     message: '',
   })
-
-  // Cập nhật lại form nếu URL thay đổi
-  useEffect(() => {
-    if (positionFromUrl) {
-      setFormData((prev) => ({ ...prev, position: positionFromUrl }))
-    }
-  }, [positionFromUrl])
 
   // Xử lý khi chọn file
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +75,7 @@ function ApplyFormContent() {
       } else {
         alert('Có lỗi xảy ra khi gửi hồ sơ. Vui lòng thử lại!')
       }
-    } catch (error) {
+    } catch {
       alert('Không thể kết nối đến máy chủ.')
     } finally {
       setIsSubmitting(false)
@@ -235,7 +228,7 @@ function ApplyFormContent() {
                     {file ? (
                       <div className="flex flex-col items-center text-blue-600">
                         <FileText className="mb-3 h-10 w-10" />
-                        <span className="w-full px-4 text-center font-bold break-words">
+                        <span className="w-full px-4 text-center font-bold wrap-break-word">
                           {file.name}
                         </span>
                         <span className="mt-1 text-sm text-slate-500">Nhấn để chọn file khác</span>
