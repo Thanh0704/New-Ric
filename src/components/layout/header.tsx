@@ -89,7 +89,6 @@ const newNavData = [
         items: [
           { label: 'Câu chuyện của chúng tôi', href: '/about' },
           { label: 'Hệ sinh thái RIC', href: '/ecosystem' },
-          { label: 'Đối tác', href: '#' },
           { label: 'Tuyển dụng', href: '/careers' },
           { label: 'Liên hệ', href: '/contact' },
         ],

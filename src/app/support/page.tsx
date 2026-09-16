@@ -5,293 +5,447 @@ import Link from 'next/link'
 import {
   ChevronRight,
   Search,
-  MessageCircle,
-  PhoneCall,
-  LifeBuoy,
   ChevronDown,
-  ArrowRight,
-  Server,
+  ChevronLeft,
+  LifeBuoy,
+  PhoneCall,
+  MessageCircle,
 } from 'lucide-react'
 
 // ==============================================================================
-// 🛠️ MOCK DATA: BỘ CÂU HỎI THƯỜNG GẶP (FAQ) & KÊNH HỖ TRỢ B2B
+// 🔥 KHAI BÁO TYPESCRIPT
 // ==============================================================================
-const FAQ_CATEGORIES = [
+type Category = {
+  id: string
+  label: string
+}
+
+type FAQ = {
+  id: string
+  categoryId: string
+  question: string
+  answer: React.ReactNode
+}
+
+// ==============================================================================
+// 📦 MOCK DATA: DANH MỤC & CÂU HỎI THƯỜNG GẶP
+// ==============================================================================
+const CATEGORIES: Category[] = [
   { id: 'all', label: 'Tất cả câu hỏi' },
   { id: 'account', label: 'Tài khoản & Bảo mật' },
-  { id: 'integration', label: 'Tích hợp & API' },
+  { id: 'api', label: 'Tích hợp & API' },
   { id: 'billing', label: 'Gói cước & Thanh toán' },
-  { id: 'troubleshooting', label: 'Khắc phục sự cố' },
+  { id: 'troubleshoot', label: 'Khắc phục sự cố' },
 ]
 
-const FAQS = [
+const FAQS: FAQ[] = [
+  // --- TÀI KHOẢN & BẢO MẬT ---
   {
     id: 'faq-1',
-    category: 'account',
+    categoryId: 'account',
     question: 'Làm thế nào để thiết lập bảo mật 2 lớp (2FA) cho tài khoản Quản trị viên?',
-    answer:
-      'Để bảo vệ dữ liệu doanh nghiệp, RICVINA bắt buộc bật 2FA cho cấp độ Admin. Bạn truy cập vào Cài đặt Hệ thống > Bảo mật > Xác thực 2 yếu tố. Hệ thống hỗ trợ Google Authenticator, Microsoft Authenticator hoặc SMS OTP. Với gói Enterprise, chúng tôi hỗ trợ tích hợp SSO (Single Sign-On) qua Azure AD hoặc Google Workspace.',
+    answer: (
+      <p>
+        Sự an toàn của dữ liệu là ưu tiên hàng đầu. Để bật 2FA, sếp vui lòng truy cập{' '}
+        <strong>Cài đặt &gt; Bảo mật &gt; Xác thực 2 bước</strong>. Hệ thống hỗ trợ nhận mã qua ứng
+        dụng Google Authenticator hoặc nhận mã OTP trực tiếp qua Zalo ZNS/SMS. Khuyến nghị áp dụng
+        bắt buộc (Force 2FA) cho toàn bộ tài khoản cấp C-Level.
+      </p>
+    ),
   },
   {
     id: 'faq-2',
-    category: 'integration',
-    question: 'Hệ thống RIC ERP có tích hợp được với phần mềm kế toán MISA không?',
-    answer:
-      'Có. RICVINA cung cấp API Gateway chuẩn RESTful để đấu nối trực tiếp với MISA SME và MISA AMIS. Dữ liệu đơn hàng, phiếu thu/chi và đối soát công nợ sẽ được đồng bộ Real-time. Vui lòng truy cập "Thư viện tài liệu" để xem API Documentation hoặc liên hệ chuyên viên kỹ thuật để được cấp App ID và Secret Key.',
+    categoryId: 'account',
+    question: 'Tôi muốn phân quyền cho nhân viên Kho chỉ xem được tồn kho chi nhánh của họ?',
+    answer: (
+      <p>
+        RIC ERP được thiết kế với cơ chế phân quyền đa tầng (Role-Based Access Control). Bạn có thể
+        vào <strong>Quản trị nhân sự &gt; Vai trò (Roles)</strong>, tạo một quyền mới và giới hạn
+        phạm vi truy cập dữ liệu (Data Scope) theo chi nhánh cụ thể. Nhân viên đó sẽ hoàn toàn không
+        nhìn thấy số liệu của các chi nhánh khác.
+      </p>
+    ),
   },
   {
     id: 'faq-3',
-    category: 'troubleshooting',
-    question: 'Kênh Zalo ZNS báo lỗi "Từ chối gửi tin" trên RIC MESSAGE, tôi phải làm gì?',
-    answer:
-      'Lỗi này thường xảy ra khi Template ZNS của bạn chưa được Zalo duyệt, hoặc tài khoản Zalo OA không đủ số dư. Vui lòng kiểm tra lại trạng thái Template trong tab "Cấu hình ZNS". Nếu Template đã duyệt, hãy đảm bảo số dư ví ZCA (Zalo Cloud Account) lớn hơn 0. Khuyến nghị thiết lập cảnh báo số dư tự động trên hệ thống.',
+    categoryId: 'account',
+    question: 'Cách thu hồi quyền truy cập của nhân sự khi họ nghỉ việc?',
+    answer: (
+      <p>
+        Khi có nhân sự nghỉ việc, bạn chỉ cần chuyển trạng thái tài khoản của họ sang{' '}
+        <strong>&quot;Vô hiệu hóa&quot; (Deactivated)</strong>. Toàn bộ phiên đăng nhập trên tất cả
+        các thiết bị sẽ lập tức bị đăng xuất. Mọi lịch sử thao tác của nhân sự này vẫn được lưu trữ
+        nguyên vẹn để phục vụ đối soát.
+      </p>
+    ),
   },
   {
     id: 'faq-4',
-    category: 'billing',
-    question: 'Chính sách tính phí vượt ngưỡng (Overages) đối với API Call được tính như thế nào?',
-    answer:
-      'Mỗi gói cước (Standard/Professional/Enterprise) đều có định mức API Call/tháng nhất định (Ví dụ: Gói Pro là 500,000 requests/tháng). Nếu vượt quá số lượng này, hệ thống sẽ không tự động ngắt kết nối mà sẽ tính phí Overages là 15đ/request. Chi phí này sẽ được tổng hợp vào hóa đơn tháng tiếp theo.',
+    categoryId: 'account',
+    question: 'Hệ thống có ghi lại lịch sử thao tác (Log) của người dùng không?',
+    answer: (
+      <p>
+        Có. Tính năng <strong>Audit Trail (Nhật ký hệ thống)</strong> tự động ghi nhận mọi thao tác:
+        Ai làm gì, vào thời gian nào, trên máy tính nào (địa chỉ IP). Tính năng này đặc biệt hữu ích
+        cho Kế toán trưởng khi cần truy vết các lệnh sửa/xóa chứng từ tài chính.
+      </p>
+    ),
   },
+
+  // --- TÍCH HỢP & API ---
   {
     id: 'faq-5',
-    category: 'account',
-    question: 'Tôi muốn phân quyền cho nhân viên Kho chỉ xem được tồn kho chi nhánh của họ?',
-    answer:
-      'RICVINA hỗ trợ phân quyền cực kỳ chi tiết theo mô hình RBAC (Role-Based Access Control). Bạn vào Quản trị nhân sự > Phân quyền vai trò > Thêm Role mới (Nhân viên Kho chi nhánh). Tại tab "Dữ liệu truy cập", hãy check vào ô "Chỉ xem dữ liệu theo chi nhánh trực thuộc".',
+    categoryId: 'api',
+    question: 'Hệ thống RIC ERP có tích hợp được với phần mềm kế toán MISA không?',
+    answer: (
+      <p>
+        Hoàn toàn được. RIC ERP cung cấp sẵn Plugin tích hợp MISA SME và MISA AMIS. Hệ thống sẽ tự
+        động đẩy các bút toán doanh thu, công nợ và phiếu xuất/nhập kho sang MISA theo thời gian
+        thực (Real-time), giúp bộ phận kế toán loại bỏ 100% thao tác nhập liệu thủ công.
+      </p>
+    ),
   },
   {
     id: 'faq-6',
-    category: 'integration',
+    categoryId: 'api',
     question: 'Webhook trên ZHUB có hỗ trợ retry (thử lại) khi endpoint của tôi bị sập không?',
-    answer:
-      'Có. Cơ chế Webhook của ZHUB có tích hợp tính năng Exponential Backoff. Nếu server của bạn trả về mã lỗi 5xx hoặc timeout, hệ thống sẽ tự động gửi lại payload tối đa 5 lần với thời gian trễ tăng dần (1m, 5m, 15m, 1h, 6h). Bạn có thể theo dõi log các lần retry tại Dashboard > Webhook Logs.',
+    answer: (
+      <p>
+        Có. Cơ chế Webhook của ZHUB áp dụng thuật toán Exponential Backoff. Nếu server của bạn phản
+        hồi lỗi (Status 5xx) hoặc timeout, ZHUB sẽ tự động thử gửi lại (retry) tối đa 5 lần trong
+        vòng 24 giờ tiếp theo để đảm bảo bạn không bị mất bất kỳ bản ghi dữ liệu nào.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-7',
+    categoryId: 'api',
+    question: 'Giới hạn tốc độ gọi API (Rate Limit) của RIC GATEWAY là bao nhiêu?',
+    answer: (
+      <p>
+        Mặc định, các gói Enterprise được cấp hạn mức <strong>100 requests/giây</strong> cho mỗi API
+        Key. Nếu doanh nghiệp của bạn đang chạy các chiến dịch Flash Sale cần lưu lượng lớn hơn, vui
+        lòng liên hệ bộ phận hỗ trợ kỹ thuật để được mở rộng băng thông tạm thời.
+      </p>
+    ),
+  },
+
+  // --- GÓI CƯỚC & THANH TOÁN ---
+  {
+    id: 'faq-8',
+    categoryId: 'billing',
+    question: 'Chính sách tính phí vượt ngưỡng (Overages) đối với API Call được tính như thế nào?',
+    answer: (
+      <p>
+        RICVINA không khóa hệ thống khi bạn dùng vượt gói. Thay vào đó, chi phí vượt ngưỡng sẽ được
+        tính theo chu kỳ thanh toán tiếp theo với mức giá niêm yết là{' '}
+        <strong>15.000 VNĐ / 1.000 API Calls</strong>. Hệ thống sẽ tự động gửi email cảnh báo khi
+        bạn sử dụng đạt 80% dung lượng.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-9',
+    categoryId: 'billing',
+    question: 'Tôi có thể nâng cấp/hạ cấp gói (Upgrade/Downgrade) giữa kỳ thanh toán không?',
+    answer: (
+      <p>
+        Bạn hoàn toàn có thể <strong>Nâng cấp</strong> bất cứ lúc nào. Chi phí sẽ được tính bù trừ
+        (Pro-rated) theo số ngày còn lại. Việc <strong>Hạ cấp</strong> sẽ chỉ có hiệu lực vào chu kỳ
+        thanh toán tiếp theo để đảm bảo dữ liệu hiện tại của bạn không bị ảnh hưởng.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-10',
+    categoryId: 'billing',
+    question: 'RICVINA có hỗ trợ xuất hóa đơn VAT điện tử cho doanh nghiệp không?',
+    answer: (
+      <p>
+        Chắc chắn có. Toàn bộ các khoản thanh toán gia hạn phần mềm SaaS đều được xuất hóa đơn điện
+        tử tự động và gửi về email Kế toán của doanh nghiệp chậm nhất trong vòng 24h làm việc.
+      </p>
+    ),
+  },
+
+  // --- KHẮC PHỤC SỰ CỐ ---
+  {
+    id: 'faq-11',
+    categoryId: 'troubleshoot',
+    question: 'Kênh Zalo ZNS báo lỗi "Từ chối gửi tin" trên RIC MESSAGE, tôi phải làm gì?',
+    answer: (
+      <p>
+        Lỗi này thường xảy ra do Template ZNS của bạn chứa từ khóa cấm hoặc khách hàng đã chặn tin
+        nhắn từ Zalo OA. Bạn vui lòng kiểm tra lại <strong>Mã lỗi (Error Code)</strong> trả về trong
+        phần Lịch sử gửi tin, hoặc tải lại bản Mẫu ZNS mới nhất đã được Zalo phê duyệt.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-12',
+    categoryId: 'troubleshoot',
+    question: 'Trạng thái đơn hàng trên RIC ECOM không đồng bộ về kho ERP?',
+    answer: (
+      <p>
+        Hãy kiểm tra lại phần Cấu hình Kho (Mapping) giữa ECOM và ERP. Đôi khi mã SKU sản phẩm trên
+        Website không trùng khớp với mã SKU trong kho vật lý. Vào mục{' '}
+        <strong>Cấu hình &gt; Đồng bộ dữ liệu</strong> và nhấn nút &quot;Đồng bộ lại toàn bộ&quot;.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-13',
+    categoryId: 'troubleshoot',
+    question: 'Làm sao để khôi phục dữ liệu lỡ tay xóa nhầm trên hệ thống?',
+    answer: (
+      <p>
+        Đừng quá lo lắng! Mọi dữ liệu khi bị xóa sẽ được đưa vào{' '}
+        <strong>Thùng rác (Recycle Bin)</strong> và lưu trữ trong 30 ngày. Quản trị viên cấp cao có
+        thể vào khu vực này để khôi phục (Restore) lại nguyên trạng bản ghi chỉ với 1 cú click
+        chuột.
+      </p>
+    ),
   },
 ]
 
-const SUPPORT_CHANNELS = [
-  {
-    title: 'Hỗ trợ Kỹ thuật (Gửi Ticket)',
-    desc: 'Giải quyết các vấn đề liên quan đến lỗi phần mềm, gián đoạn kết nối API hoặc cấu hình hệ thống.',
-    sla: 'Thời gian phản hồi: Dưới 30 phút (Hỗ trợ 24/7 đối với sự cố P1)',
-    icon: LifeBuoy,
-    action: 'Tạo Ticket Mới',
-    link: '#',
-    theme: 'bg-blue-50 text-blue-600 border-blue-200 hover:border-blue-500',
-  },
-  {
-    title: 'Tổng đài Hotline',
-    desc: 'Đường dây nóng dành riêng cho các vấn đề khẩn cấp, cần can thiệp hệ thống ngay lập tức.',
-    sla: 'Hoạt động: Trong giờ hành chính (8h00 - 18h00, T2 - T7)',
-    icon: PhoneCall,
-    action: 'Gọi 1900 1000',
-    link: 'tel:19001000',
-    theme: 'bg-emerald-50 text-emerald-600 border-emerald-200 hover:border-emerald-500',
-  },
-  {
-    title: 'Tư vấn Chuyên gia 1:1',
-    desc: 'Cần tư vấn mở rộng module, nâng cấp gói cước hoặc thiết kế lại luồng quy trình vận hành.',
-    sla: 'Thời gian sắp xếp cuộc gọi: Trong vòng 24 giờ làm việc',
-    icon: MessageCircle,
-    action: 'Đặt lịch gọi',
-    link: '/contact',
-    theme: 'bg-purple-50 text-purple-600 border-purple-200 hover:border-purple-500',
-  },
-]
+// ==============================================================================
+// ⚙️ CẤU HÌNH PHÂN TRANG
+// ==============================================================================
+const ITEMS_PER_PAGE = 5 // Hiển thị 5 câu/trang để vừa khít với chiều cao của menu bên trái
 
-export default function SupportCenterPage() {
-  const [searchQuery, setSearchQuery] = useState('')
+export default function SupportPage() {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1') // Mở sẵn câu đầu tiên
+  const [searchQuery, setSearchQuery] = useState('')
+  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // Logic lọc FAQ
+  // 1. LỌC CÂU HỎI
   const filteredFaqs = FAQS.filter((faq) => {
-    const matchCategory = activeCategory === 'all' || faq.category === activeCategory
-    const matchSearch =
-      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchCategory = activeCategory === 'all' || faq.categoryId === activeCategory
+    const matchSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase())
     return matchCategory && matchSearch
   })
 
+  // 2. TÍNH TOÁN PHÂN TRANG
+  const totalPages = Math.ceil(filteredFaqs.length / ITEMS_PER_PAGE)
+  const currentFaqs = filteredFaqs.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  )
+
+  // 3. XỬ LÝ ACCORDION
+  const toggleFaq = (id: string) => {
+    setExpandedId(expandedId === id ? null : id)
+  }
+
   return (
-    <main className="min-h-screen bg-slate-50 selection:bg-cyan-500/30">
+    <main className="min-h-screen bg-slate-50 selection:bg-blue-500/30">
       {/* ==========================================
-          1. HERO & SMART SEARCH
+          1. HERO SECTION TÌM KIẾM
           ========================================== */}
-      <section className="relative overflow-hidden bg-slate-950 pt-32 pb-24 text-white md:pt-40 md:pb-32">
+      <section className="relative overflow-hidden bg-slate-900 pt-32 pb-24 text-white">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
-        <div className="pointer-events-none absolute top-0 left-0 h-full w-full bg-linear-to-b from-blue-600/10 to-transparent" />
-        <div className="pointer-events-none absolute top-1/2 left-1/2 h-200 w-200 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-150 w-150 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/20 blur-[120px]" />
+
         <div className="relative z-10 container mx-auto px-6 text-center md:px-20">
-          {/* Breadcrumb */}
-          <div className="mb-8 flex items-center justify-center gap-2 text-xs font-bold tracking-widest text-slate-400 uppercase">
-            <Link href="/" className="transition-colors hover:text-cyan-400">
+          <div className="mb-6 flex items-center justify-center gap-2 text-xs font-bold tracking-widest text-slate-400 uppercase">
+            <Link href="/" className="transition-colors hover:text-blue-400">
               Trang chủ
             </Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-cyan-400">Trung tâm hỗ trợ</span>
+            <span className="text-blue-400">Trung tâm Hỗ trợ</span>
           </div>
-
-          <h1 className="mb-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">
-            Chúng tôi có thể giúp gì cho bạn?
+          <h1 className="mb-6 text-4xl font-black md:text-5xl lg:text-6xl">
+            Bạn cần giúp đỡ điều gì?
           </h1>
-          <p className="mx-auto mb-12 max-w-2xl text-lg font-medium text-slate-400 md:text-xl">
-            Tìm kiếm giải pháp nhanh chóng trong cơ sở tri thức của chúng tôi hoặc liên hệ trực tiếp
-            với đội ngũ kỹ thuật.
+          <p className="mx-auto mb-10 max-w-2xl text-lg font-medium text-slate-400">
+            Tra cứu nhanh các tình huống nghiệp vụ hoặc kết nối trực tiếp với đội ngũ kỹ sư giải
+            pháp của RICVINA.
           </p>
 
-          {/* Thanh tìm kiếm trung tâm */}
-          <div className="relative mx-auto max-w-3xl">
+          <div className="relative mx-auto max-w-2xl">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-6">
-              <Search className="h-6 w-6 text-slate-400" />
+              <Search className="h-5 w-5 text-slate-400" />
             </div>
             <input
               type="text"
-              placeholder="Nhập câu hỏi, mã lỗi, hoặc từ khóa cần tìm kiếm..."
+              placeholder="Tìm kiếm lỗi Zalo, Phân quyền, Tích hợp MISA..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-full border-2 border-transparent bg-white py-5 pr-6 pl-16 text-lg font-medium text-slate-900 placeholder-slate-400 shadow-2xl transition-all focus:border-cyan-500 focus:outline-hidden"
+              onChange={(e) => {
+                setSearchQuery(e.target.value)
+                setCurrentPage(1) // Reset trang khi tìm kiếm
+                setExpandedId(null)
+              }}
+              className="w-full rounded-full bg-white py-4 pr-6 pl-14 font-medium text-slate-900 shadow-2xl focus:ring-4 focus:ring-blue-500/20 focus:outline-hidden"
             />
           </div>
-
-          {/* Quick Topics */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-sm font-bold tracking-widest text-slate-400 uppercase">
-              Chủ đề phổ biến:
-            </span>
-            {['Thiết lập 2FA', 'Tích hợp API', 'Tính phí Overages', 'Phân quyền'].map((topic) => (
-              <button
-                key={topic}
-                onClick={() => setSearchQuery(topic)}
-                className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-slate-300 transition-all hover:bg-white/10 hover:text-white"
-              >
-                {topic}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* ==========================================
-          2. TRẠM TRẠNG THÁI HỆ THỐNG (SYSTEM STATUS) - Tăng độ Trust B2B
+          2. FAQ & LỌC (CÓ PHÂN TRANG)
           ========================================== */}
-      <section className="border-b border-slate-200 bg-white">
-        <div className="container mx-auto px-6 py-4 md:px-20">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex items-center gap-3">
-              <div className="relative flex h-4 w-4">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex h-4 w-4 rounded-full bg-emerald-500"></span>
-              </div>
-              <span className="text-sm font-bold text-slate-700">
-                Tất cả hệ thống đang hoạt động bình thường
-              </span>
-            </div>
-            <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
-              <span className="flex items-center gap-1.5">
-                <Server className="h-4 w-4" /> Uptime: 99.99%
-              </span>
-              <Link
-                href="#"
-                className="flex items-center gap-1 font-bold text-cyan-600 hover:text-cyan-700"
-              >
-                Xem trang trạng thái <ArrowRight className="h-3 w-3" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ==========================================
-          3. CÂU HỎI THƯỜNG GẶP (FAQ ACCORDION)
-          ========================================== */}
-      <section className="bg-slate-50 py-24">
+      <section className="bg-slate-50 py-20">
         <div className="container mx-auto px-6 md:px-20">
-          <div className="flex flex-col gap-16 lg:flex-row">
-            {/* Bộ lọc bên trái */}
-            <div className="w-full shrink-0 lg:w-1/3">
-              <h2 className="mb-6 text-3xl font-black text-slate-900">Câu hỏi thường gặp</h2>
-              <p className="mb-8 leading-relaxed font-medium text-slate-500">
-                Tổng hợp các câu hỏi và tình huống nghiệp vụ phổ biến nhất trong quá trình vận hành
-                hệ sinh thái phần mềm RICVINA.
-              </p>
+          <div className="mb-12 max-w-2xl">
+            <h2 className="mb-4 text-3xl font-black text-slate-900 md:text-4xl">
+              Câu hỏi thường gặp
+            </h2>
+            <p className="text-lg leading-relaxed font-medium text-slate-500">
+              Tổng hợp các câu hỏi và tình huống nghiệp vụ phổ biến nhất trong quá trình vận hành hệ
+              sinh thái phần mềm RICVINA.
+            </p>
+          </div>
 
-              <div className="flex flex-col gap-2">
-                {FAQ_CATEGORIES.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      setActiveCategory(cat.id)
-                      setSearchQuery('')
-                    }}
-                    className={`flex items-center justify-between rounded-2xl px-5 py-4 font-bold transition-all ${
-                      activeCategory === cat.id
-                        ? 'bg-slate-900 text-white shadow-lg'
-                        : 'border border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                    <ChevronRight
-                      className={`h-4 w-4 ${activeCategory === cat.id ? 'text-white' : 'text-slate-400'}`}
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Danh sách FAQ Accordion bên phải */}
-            <div className="w-full lg:w-2/3">
-              {filteredFaqs.length > 0 ? (
-                <div className="flex flex-col gap-4">
-                  {filteredFaqs.map((faq) => {
-                    const isOpen = openFaqId === faq.id
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12">
+            {/* SIDEBAR DANH MỤC */}
+            <div className="lg:sticky lg:top-28 lg:col-span-4">
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-3 shadow-sm">
+                <div className="space-y-1">
+                  {CATEGORIES.map((cat) => {
+                    const isActive = activeCategory === cat.id
                     return (
-                      <div
-                        key={faq.id}
-                        className={`overflow-hidden rounded-2xl border bg-white transition-all duration-300 ${
-                          isOpen
-                            ? 'border-cyan-500 shadow-[0_10px_30px_rgba(6,182,212,0.1)]'
-                            : 'border-slate-200 hover:border-slate-300'
+                      <button
+                        key={cat.id}
+                        onClick={() => {
+                          setActiveCategory(cat.id)
+                          setCurrentPage(1) // Reset trang khi đổi danh mục
+                          setExpandedId(null)
+                        }}
+                        className={`flex w-full items-center justify-between rounded-xl px-6 py-4 font-bold transition-all ${
+                          isActive
+                            ? 'bg-slate-900 text-white shadow-lg'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
-                        <button
-                          onClick={() => setOpenFaqId(isOpen ? null : faq.id)}
-                          className="flex w-full items-start justify-between gap-4 p-6 text-left focus:outline-hidden"
-                        >
-                          <span
-                            className={`text-lg font-black transition-colors ${isOpen ? 'text-slate-900' : 'text-slate-700'}`}
-                          >
-                            {faq.question}
-                          </span>
-                          <div
-                            className={`mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-transform duration-300 ${isOpen ? 'rotate-180 bg-cyan-100 text-cyan-600' : 'bg-slate-100 text-slate-400'}`}
-                          >
-                            <ChevronDown className="h-4 w-4" />
-                          </div>
-                        </button>
+                        <span>{cat.label}</span>
+                        {isActive ? (
+                          <ChevronRight className="h-5 w-5 text-blue-400" />
+                        ) : (
+                          <ChevronRight className="h-5 w-5 text-slate-300" />
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
 
+            {/* DANH SÁCH CÂU HỎI & PHÂN TRANG */}
+            <div className="lg:col-span-8">
+              {currentFaqs.length > 0 ? (
+                <>
+                  {/* List Câu hỏi */}
+                  <div className="space-y-4">
+                    {currentFaqs.map((faq) => {
+                      const isExpanded = expandedId === faq.id
+                      return (
                         <div
-                          className={`grid transition-all duration-300 ease-in-out ${
-                            isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                          key={faq.id}
+                          className={`rounded-2xl border bg-white transition-all duration-300 ${
+                            isExpanded
+                              ? 'border-blue-200 shadow-md'
+                              : 'border-slate-200 hover:border-slate-300'
                           }`}
                         >
-                          <div className="overflow-hidden">
-                            <div className="mt-2 border-t border-slate-100 px-6 pt-4 pb-6 leading-relaxed font-medium text-slate-600">
-                              {' '}
+                          <button
+                            onClick={() => toggleFaq(faq.id)}
+                            className="flex w-full items-start justify-between gap-6 p-6 text-left focus:outline-hidden"
+                          >
+                            <span
+                              className={`text-base leading-snug font-black transition-colors md:text-lg ${
+                                isExpanded ? 'text-blue-700' : 'text-slate-900'
+                              }`}
+                            >
+                              {faq.question}
+                            </span>
+                            <div
+                              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${
+                                isExpanded
+                                  ? 'bg-blue-100 text-blue-600'
+                                  : 'bg-slate-50 text-slate-400'
+                              }`}
+                            >
+                              <ChevronDown
+                                className={`h-5 w-5 transition-transform duration-300 ${
+                                  isExpanded ? 'rotate-180' : ''
+                                }`}
+                              />
+                            </div>
+                          </button>
+
+                          <div
+                            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                              isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                            }`}
+                          >
+                            <div className="mt-2 border-t border-slate-100 px-6 pt-2 pb-6 leading-relaxed font-medium text-slate-600">
                               {faq.answer}
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  })}
-                </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Thanh Phân Trang */}
+                  {totalPages > 1 && (
+                    <div className="mt-8 flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => {
+                          setCurrentPage((p) => Math.max(1, p - 1))
+                          setExpandedId(null)
+                        }}
+                        disabled={currentPage === 1}
+                        className="rounded-xl border border-slate-200 bg-white p-3 text-slate-600 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
+
+                      {Array.from({ length: totalPages }).map((_, index) => {
+                        const pageNumber = index + 1
+                        const isActive = pageNumber === currentPage
+                        return (
+                          <button
+                            key={pageNumber}
+                            onClick={() => {
+                              setCurrentPage(pageNumber)
+                              setExpandedId(null)
+                            }}
+                            className={`h-12 w-12 rounded-xl font-black shadow-sm transition-all ${
+                              isActive
+                                ? 'border border-blue-600 bg-blue-600 text-white'
+                                : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                            }`}
+                          >
+                            {pageNumber}
+                          </button>
+                        )
+                      })}
+
+                      <button
+                        onClick={() => {
+                          setCurrentPage((p) => Math.min(totalPages, p + 1))
+                          setExpandedId(null)
+                        }}
+                        disabled={currentPage === totalPages}
+                        className="rounded-xl border border-slate-200 bg-white p-3 text-slate-600 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <ChevronRight className="h-5 w-5" />
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
-                <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white py-20 text-center">
-                  <Search className="mb-4 h-12 w-12 text-slate-300" />
-                  <p className="text-lg font-bold text-slate-900">Không tìm thấy câu hỏi phù hợp</p>
-                  <p className="mt-2 font-medium text-slate-500">
-                    Vui lòng thử từ khóa khác hoặc liên hệ trực tiếp với chúng tôi.
+                <div className="flex flex-col items-center rounded-[2rem] border border-slate-200 bg-white py-20 text-center">
+                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
+                    <Search className="h-8 w-8 text-slate-300" />
+                  </div>
+                  <h3 className="mb-2 text-xl font-black text-slate-900">
+                    Không tìm thấy câu trả lời
+                  </h3>
+                  <p className="font-medium text-slate-500">
+                    Thử sử dụng từ khóa khác hoặc gửi yêu cầu hỗ trợ trực tiếp.
                   </p>
                 </div>
               )}
@@ -301,53 +455,97 @@ export default function SupportCenterPage() {
       </section>
 
       {/* ==========================================
-          4. KÊNH HỖ TRỢ (CONTACT CHANNELS) VỚI SLA
+          3. KHỐI LIÊN HỆ TRỰC TIẾP (Y HỆT HÌNH AE7BA4)
           ========================================== */}
       <section className="border-t border-slate-200 bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-black text-slate-900 md:text-5xl">
-              Bạn vẫn cần sự trợ giúp?
-            </h2>
-            <p className="text-lg font-medium text-slate-500">
+            <p className="text-lg leading-relaxed font-medium text-slate-500 md:text-xl">
               Đội ngũ chuyên gia kỹ thuật và tư vấn viên của RICVINA luôn sẵn sàng đồng hành cùng
               doanh nghiệp của bạn ở bất kỳ cấp độ nào.
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {SUPPORT_CHANNELS.map((channel, idx) => {
-              const Icon = channel.icon
-              return (
-                <div
-                  key={idx}
-                  className={`relative flex flex-col rounded-[2rem] border p-8 transition-all hover:-translate-y-1 hover:shadow-xl ${channel.theme.split(' ')[2]} bg-white`}
-                >
-                  <div
-                    className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl ${channel.theme.split(' ')[0]} ${channel.theme.split(' ')[1]}`}
-                  >
-                    <Icon className="h-7 w-7" />
-                  </div>
-                  <h3 className="mb-3 text-xl font-black text-slate-900">{channel.title}</h3>
-                  <p className="mb-6 flex-1 leading-relaxed font-medium text-slate-600">
-                    {channel.desc}
-                  </p>
-                  <div className="mb-8 rounded-xl border border-slate-100 bg-slate-50 p-4">
-                    <p className="mb-1 text-[11px] font-bold tracking-widest text-slate-400 uppercase">
-                      Cam kết chất lượng (SLA)
-                    </p>
-                    <p className="text-sm font-semibold text-slate-700">{channel.sla}</p>
-                  </div>
-                  {/* 🔥 ĐÃ FIX LỖI: Sửa </button> thành </Link> */}
-                  <Link
-                    href={channel.link}
-                    className={`inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 px-6 py-3 font-bold transition-colors ${channel.theme.split(' ')[0]} ${channel.theme.split(' ')[1]} ${channel.theme.split(' ')[2]} hover:bg-transparent`}
-                  >
-                    {channel.action}
-                  </Link>
-                </div>
-              )
-            })}
+            {/* Card 1: Ticket */}
+            <div className="flex flex-col rounded-[2.5rem] border border-blue-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl">
+              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                <LifeBuoy className="h-8 w-8" />
+              </div>
+              <h3 className="mb-4 text-2xl font-black text-slate-900">
+                Hỗ trợ Kỹ thuật (Gửi Ticket)
+              </h3>
+              <p className="mb-8 leading-relaxed font-medium text-slate-600">
+                Giải quyết các vấn đề liên quan đến lỗi phần mềm, gián đoạn kết nối API hoặc cấu
+                hình hệ thống.
+              </p>
+
+              <div className="mt-auto mb-8 rounded-2xl border border-slate-100 bg-slate-50 p-5">
+                <span className="mb-2 block text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                  Cam kết chất lượng (SLA)
+                </span>
+                <p className="text-sm font-bold text-slate-700">
+                  Thời gian phản hồi: Dưới 30 phút (Hỗ trợ 24/7 đối với sự cố P1)
+                </p>
+              </div>
+
+              <button className="w-full rounded-xl border border-blue-200 bg-blue-50 py-4 font-bold text-blue-600 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white">
+                Tạo Ticket Mới
+              </button>
+            </div>
+
+            {/* Card 2: Hotline (Nổi bật) */}
+            <div className="relative flex flex-col rounded-[2.5rem] border border-emerald-100 bg-white p-8 shadow-[0_10px_40px_rgba(16,185,129,0.1)] transition-all hover:shadow-[0_20px_50px_rgba(16,185,129,0.2)] md:-translate-y-4">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-emerald-100 px-4 py-1 text-xs font-black tracking-wider text-emerald-700 uppercase">
+                Phản hồi nhanh
+              </div>
+              <div className="mt-2 mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                <PhoneCall className="h-8 w-8" />
+              </div>
+              <h3 className="mb-4 text-2xl font-black text-slate-900">Tổng đài Hotline</h3>
+              <p className="mb-8 leading-relaxed font-medium text-slate-600">
+                Đường dây nóng dành riêng cho các vấn đề khẩn cấp, cần can thiệp hệ thống ngay lập
+                tức.
+              </p>
+
+              <div className="mt-auto mb-8 rounded-2xl border border-slate-100 bg-slate-50 p-5">
+                <span className="mb-2 block text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                  Cam kết chất lượng (SLA)
+                </span>
+                <p className="text-sm font-bold text-slate-700">
+                  Hoạt động: Trong giờ hành chính (8h00 - 18h00, T2 - T7)
+                </p>
+              </div>
+
+              <button className="w-full rounded-xl border border-emerald-200 bg-emerald-50 py-4 font-bold text-emerald-700 transition-colors hover:border-emerald-600 hover:bg-emerald-600 hover:text-white">
+                Gọi 1900 1000
+              </button>
+            </div>
+
+            {/* Card 3: Tư vấn */}
+            <div className="flex flex-col rounded-[2.5rem] border border-purple-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl">
+              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-50 text-purple-600">
+                <MessageCircle className="h-8 w-8" />
+              </div>
+              <h3 className="mb-4 text-2xl font-black text-slate-900">Tư vấn Chuyên gia 1:1</h3>
+              <p className="mb-8 leading-relaxed font-medium text-slate-600">
+                Cần tư vấn mở rộng module, nâng cấp gói cước hoặc thiết kế lại luồng quy trình vận
+                hành.
+              </p>
+
+              <div className="mt-auto mb-8 rounded-2xl border border-slate-100 bg-slate-50 p-5">
+                <span className="mb-2 block text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                  Cam kết chất lượng (SLA)
+                </span>
+                <p className="text-sm font-bold text-slate-700">
+                  Thời gian sắp xếp cuộc gọi: Trong vòng 24 giờ làm việc
+                </p>
+              </div>
+
+              <button className="w-full rounded-xl border border-purple-200 bg-purple-50 py-4 font-bold text-purple-600 transition-colors hover:border-purple-600 hover:bg-purple-600 hover:text-white">
+                Đặt lịch gọi
+              </button>
+            </div>
           </div>
         </div>
       </section>
