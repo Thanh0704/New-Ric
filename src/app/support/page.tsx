@@ -211,7 +211,7 @@ const FAQS: FAQ[] = [
 // ==============================================================================
 // ⚙️ CẤU HÌNH PHÂN TRANG
 // ==============================================================================
-const ITEMS_PER_PAGE = 5 // Hiển thị 5 câu/trang để vừa khít với chiều cao của menu bên trái
+const ITEMS_PER_PAGE = 5
 
 export default function SupportPage() {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -273,7 +273,7 @@ export default function SupportPage() {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value)
-                setCurrentPage(1) // Reset trang khi tìm kiếm
+                setCurrentPage(1)
                 setExpandedId(null)
               }}
               className="w-full rounded-full bg-white py-4 pr-6 pl-14 font-medium text-slate-900 shadow-2xl focus:ring-4 focus:ring-blue-500/20 focus:outline-hidden"
@@ -309,7 +309,7 @@ export default function SupportPage() {
                         key={cat.id}
                         onClick={() => {
                           setActiveCategory(cat.id)
-                          setCurrentPage(1) // Reset trang khi đổi danh mục
+                          setCurrentPage(1)
                           setExpandedId(null)
                         }}
                         className={`flex w-full items-center justify-between rounded-xl px-6 py-4 font-bold transition-all ${
@@ -335,7 +335,6 @@ export default function SupportPage() {
             <div className="lg:col-span-8">
               {currentFaqs.length > 0 ? (
                 <>
-                  {/* List Câu hỏi */}
                   <div className="space-y-4">
                     {currentFaqs.map((faq) => {
                       const isExpanded = expandedId === faq.id
@@ -388,7 +387,6 @@ export default function SupportPage() {
                     })}
                   </div>
 
-                  {/* Thanh Phân Trang */}
                   {totalPages > 1 && (
                     <div className="mt-8 flex items-center justify-center gap-2">
                       <button
@@ -455,7 +453,7 @@ export default function SupportPage() {
       </section>
 
       {/* ==========================================
-          3. KHỐI LIÊN HỆ TRỰC TIẾP (Y HỆT HÌNH AE7BA4)
+          3. KHỐI LIÊN HỆ TRỰC TIẾP (STICKY STACKING CARDS CHUẨN UX)
           ========================================== */}
       <section className="border-t border-slate-200 bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
@@ -466,9 +464,11 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* Card 1: Ticket */}
-            <div className="flex flex-col rounded-[2.5rem] border border-blue-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl">
+          {/* 💡 THAY ĐỔI LỚN NHẤT: Dùng flex-col kết hợp gap-[15vh] trên Mobile để đảm bảo chúng chung 1 trục cuộn.
+              Vào Laptop (md:) thì tự động bung ra lại thành Grid 3 cột xếp ngang */}
+          <div className="relative flex flex-col gap-[15vh] pb-10 md:grid md:grid-cols-3 md:gap-8 md:pb-0">
+            {/* 💡 Card 1: z-10, sticky top-24 */}
+            <div className="sticky top-24 z-10 flex flex-col rounded-[2.5rem] border border-blue-100 bg-white p-8 shadow-sm transition-all md:relative md:top-auto md:z-auto md:hover:shadow-xl">
               <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
                 <LifeBuoy className="h-8 w-8" />
               </div>
@@ -494,8 +494,8 @@ export default function SupportPage() {
               </button>
             </div>
 
-            {/* Card 2: Hotline (Nổi bật) */}
-            <div className="relative flex flex-col rounded-[2.5rem] border border-emerald-100 bg-white p-8 shadow-[0_10px_40px_rgba(16,185,129,0.1)] transition-all hover:shadow-[0_20px_50px_rgba(16,185,129,0.2)] md:-translate-y-4">
+            {/* 💡 Card 2: z-20, CÙNG ĐIỂM DỪNG top-24 ĐỂ ĐÈ KÍN BƯNG LÊN CARD 1. Tăng shadow-2xl để hiệu ứng 3D đổ bóng rõ ràng hơn */}
+            <div className="sticky top-24 z-20 flex flex-col rounded-[2.5rem] border border-emerald-100 bg-white p-8 shadow-2xl shadow-emerald-900/10 transition-all md:relative md:top-auto md:z-auto md:-translate-y-4 md:shadow-md md:hover:shadow-2xl md:hover:shadow-emerald-500/20">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-emerald-100 px-4 py-1 text-xs font-black tracking-wider text-emerald-700 uppercase">
                 Phản hồi nhanh
               </div>
@@ -522,8 +522,8 @@ export default function SupportPage() {
               </button>
             </div>
 
-            {/* Card 3: Tư vấn */}
-            <div className="flex flex-col rounded-[2.5rem] border border-purple-100 bg-white p-8 shadow-sm transition-all hover:shadow-xl">
+            {/* 💡 Card 3: z-30, VẪN LÀ top-24 ĐỂ ĐÈ KÍN LÊN CARD 2. Cùng bóng đổ mạnh như Card 2 */}
+            <div className="sticky top-24 z-30 flex flex-col rounded-[2.5rem] border border-purple-100 bg-white p-8 shadow-2xl shadow-purple-900/10 transition-all md:relative md:top-auto md:z-auto md:shadow-sm md:hover:shadow-xl">
               <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-50 text-purple-600">
                 <MessageCircle className="h-8 w-8" />
               </div>
