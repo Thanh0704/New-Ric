@@ -56,12 +56,14 @@ const comingSoonProducts = [
     title: 'RIC ERP',
     tagline: 'Quản trị tổng thể doanh nghiệp',
     image: '/images/solutions/ric-erp.jpg',
+    link: '/products/ric-erp', // ĐÃ THÊM LINK
   },
   {
     id: 'zhub',
     title: 'ZHUB (AI Chat)',
     tagline: 'Hộp thoại CSKH hợp nhất đa kênh',
     image: '/images/solutions/zhub.jpg',
+    link: '/products/zhub', // ĐÃ THÊM LINK
   },
 ]
 
@@ -250,7 +252,7 @@ export function ProductShowcase() {
 
                 <div className="mt-auto pb-4">
                   <Link
-                    href="/contact"
+                    href={product.link} // ĐÃ SỬA TỪ "/contact" VỀ ĐÚNG LINK SẢN PHẨM
                     draggable={false}
                     onClick={preventClickIfDragging}
                     className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-900 transition-shadow hover:bg-amber-400 hover:shadow-[0_0_15px_rgba(245,158,11,0.4)]"
@@ -321,7 +323,7 @@ export function ProductShowcase() {
                       </p>
                     </div>
                     <Link
-                      href="/contact"
+                      href={product.link} // ĐÃ SỬA TỪ "/contact" VỀ ĐÚNG LINK SẢN PHẨM
                       className="mx-auto inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-bold text-white transition-colors hover:border-cyan-500 hover:bg-cyan-500 hover:text-white sm:mx-0 sm:w-max sm:rounded-xl sm:text-xs"
                     >
                       <BellRing className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" /> Đăng ký nhận thông báo

@@ -24,6 +24,7 @@ import {
   Layers,
   Database,
   Link2,
+  Clock,
 } from 'lucide-react'
 
 // ==============================================================================
@@ -59,7 +60,6 @@ type ProductData = {
 // ----------------------------------------------------------------------
 // DATABASE: NỘI DUNG CHI TIẾT SẢN PHẨM
 // ----------------------------------------------------------------------
-// ✅ Đã sửa 'any' thành 'ProductData'
 const productDetails: Record<string, ProductData> = {
   ecom: {
     name: 'RIC ECOM',
@@ -548,8 +548,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-5 py-2 text-xs font-bold tracking-widest text-slate-300 uppercase backdrop-blur-md">
-                <Rocket className="h-4 w-4 text-amber-400" /> {product.category}
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <div className="inline-flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-5 py-2 text-xs font-bold tracking-widest text-slate-300 uppercase backdrop-blur-md">
+                  <Rocket className="h-4 w-4 text-amber-400" /> {product.category}
+                </div>
+
+                {/* Đoạn này chỉ được vẽ ra nếu id là 'zhub' hoặc 'ric-erp' */}
+                {(id === 'zhub' || id === 'ric-erp') && (
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs font-bold tracking-widest text-amber-400 uppercase shadow-[0_0_15px_rgba(245,158,11,0.15)] backdrop-blur-md">
+                    <Clock className="h-4 w-4" /> Sắp ra mắt (Coming soon)
+                  </div>
+                )}
               </div>
 
               <h1 className="mb-6 text-5xl leading-[1.1] font-black tracking-tight md:text-6xl lg:text-7xl">
@@ -565,16 +574,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {product.description}
               </p>
 
-              {/* ==========================================
-                 🚀 ĐÃ TỐI ƯU CỤM NÚT CTA BÁN HÀNG
-                 ========================================== */}
               <div className="flex w-full flex-col gap-3 sm:w-max sm:flex-row sm:gap-4">
-                <Link
-                  href={`/contact?interest=${id}`}
-                  className={`flex w-full items-center justify-center rounded-full bg-linear-to-r px-8 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-105 sm:w-auto sm:px-10 sm:py-4 ${product.theme}`}
-                >
-                  Đăng ký Demo 1:1
-                </Link>
+                {/* 🔥 ĐÃ FIX: Ẩn hoàn toàn nút CTA thứ nhất nếu là sản phẩm sắp ra mắt */}
+                {!(id === 'zhub' || id === 'ric-erp') && (
+                  <Link
+                    href={`/contact?interest=${id}`}
+                    className={`flex w-full items-center justify-center rounded-full bg-linear-to-r px-8 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-105 sm:w-auto sm:px-10 sm:py-4 ${product.theme}`}
+                  >
+                    Đăng ký Demo 1:1
+                  </Link>
+                )}
+
                 <a
                   href="#details"
                   className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-700 px-8 py-3.5 font-bold text-white transition-all hover:bg-slate-800 sm:w-auto sm:px-10 sm:py-4"
@@ -583,9 +593,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </a>
               </div>
 
-              {/* ==========================================
-                 🚀 ĐÃ TỐI ƯU CỤM NÚT TẢI APP (GRID 2 CỘT)
-                 ========================================== */}
               {id === 'ricio' && (
                 <div className="mt-8 border-t border-white/10 pt-8 md:mt-10">
                   <p className="mb-4 text-sm font-medium tracking-wide text-slate-400">
@@ -593,7 +600,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   </p>
 
                   <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:gap-4">
-                    {/* Nút Ricio */}
                     <Link
                       href="#"
                       target="_blank"
@@ -618,7 +624,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                       </div>
                     </Link>
 
-                    {/* Nút Check Home */}
                     <Link
                       href="#"
                       target="_blank"
@@ -672,7 +677,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* =========================================================
-         2. KHỐI ƯU ĐIỂM (Slider vuốt ngang Mobile - w-[75vw])
+         2. KHỐI ƯU ĐIỂM
          ========================================================= */}
       <section id="details" className="relative z-10 overflow-hidden bg-white py-24">
         <div className="container mx-auto px-6 md:px-20">
@@ -705,7 +710,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* =========================================================
-         3. LỢI ÍCH (Slider vuốt ngang Mobile - w-[75vw])
+         3. LỢI ÍCH
          ========================================================= */}
       <section className="relative z-10 overflow-hidden border-y border-slate-200 bg-slate-50 py-24">
         <div className="container mx-auto px-6 md:px-20">
@@ -812,7 +817,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* 5. KHỐI CTA */}
+      {/* 5. KHỐI CTA CẢ DƯỚI CÙNG NỮA */}
       <section className="relative container mx-auto border-t border-slate-100 bg-white px-6 py-20 md:px-20">
         <div className="relative overflow-hidden rounded-[3rem] bg-slate-900 px-8 py-20 text-center shadow-2xl md:px-16 md:py-24">
           <div
@@ -830,7 +835,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               href={`/contact?interest=${id}`}
               className="inline-flex rounded-full bg-white px-10 py-4 font-bold text-slate-900 transition-all hover:scale-105 hover:shadow-[0_20px_40px_rgba(255,255,255,0.2)]"
             >
-              Liên hệ chuyên gia tư vấn
+              {id === 'zhub' || id === 'ric-erp'
+                ? 'Đăng ký nhận thông báo ngay'
+                : 'Liên hệ chuyên gia tư vấn'}
             </Link>
           </div>
         </div>

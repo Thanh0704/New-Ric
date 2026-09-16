@@ -59,9 +59,9 @@ const newNavData = [
       {
         category: 'Theo giai đoạn',
         items: [
-          { label: 'Bắt đầu số hóa', href: '#' },
-          { label: 'Tự động hóa quy trình', href: '#' },
-          { label: 'Mở rộng & Tăng trưởng', href: '#' },
+          { label: 'Bắt đầu số hóa', href: '/stages/start' },
+          { label: 'Tự động hóa quy trình', href: '/stages/automate' },
+          { label: 'Mở rộng & Tăng trưởng', href: '/stages/scale' },
         ],
       },
     ],
@@ -74,9 +74,8 @@ const newNavData = [
         category: '',
         items: [
           { label: 'Tin tức & Sự kiện', href: '/news' },
-          { label: 'Blog chuyển đổi số', href: '/blog' },
-          { label: 'Thư viện tài liệu', href: '/resources/library' },
-          { label: 'Trung tâm hỗ trợ', href: '/help-center' },
+          { label: 'Thư viện tài liệu', href: '/documents' },
+          { label: 'Trung tâm hỗ trợ', href: '/support' },
         ],
       },
     ],
@@ -88,8 +87,8 @@ const newNavData = [
       {
         category: '',
         items: [
-          { label: 'Câu chuyện của chúng tôi', href: '#' },
-          { label: 'Hệ sinh thái RIC', href: '/?scrollTo=ecosystem' },
+          { label: 'Câu chuyện của chúng tôi', href: '/about' },
+          { label: 'Hệ sinh thái RIC', href: '/ecosystem' },
           { label: 'Đối tác', href: '#' },
           { label: 'Tuyển dụng', href: '/careers' },
           { label: 'Liên hệ', href: '/contact' },
